@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
-public class PickUp : MonoBehaviour
+public class Movement : MonoBehaviour
 {
 
 
@@ -17,7 +17,7 @@ public class PickUp : MonoBehaviour
         if (clicked == true)
         {
             Vector3 temp = Input.mousePosition;
-            temp.z = 75f; // Set this to be the distance you want the object to be placed in front of the camera.
+            temp.z = 50f; // Set this to be the distance you want the object to be placed in front of the camera.
             transform.position = Camera.main.ScreenToWorldPoint(temp);
         }
         Debug.Log(transform.position);
@@ -35,5 +35,17 @@ public class PickUp : MonoBehaviour
         }
     }
 
+    void OnMouseEnter()
+    {
+        transform.position += Vector3.up * 10;
+        transform.position += Vector3.forward * 10;
+    }
+    
+    void OnMouseExit()
+    {
+        transform.position += Vector3.down * 10;
+        transform.position += Vector3.back * 10;
+
+    }
 
 }
