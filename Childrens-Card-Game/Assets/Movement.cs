@@ -20,7 +20,7 @@ public class Movement : MonoBehaviour
             temp.z = 50f; // Set this to be the distance you want the object to be placed in front of the camera.
             transform.position = Camera.main.ScreenToWorldPoint(temp);
         }
-        Debug.Log(transform.position);
+        
     }
 
 
