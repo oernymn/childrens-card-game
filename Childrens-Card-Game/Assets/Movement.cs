@@ -1,35 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+
 
 public class Movement : MonoBehaviour
 {
 
 
-    bool clicked = false;
-
-    float height = 2.0f;
+    public bool clicked = false;
+    public GameObject thisCardsHand;
 
     // Update is called once per frame
     void Update()
     {
+        // Click and drag
         if (clicked == true)
         {
             Vector3 temp = Input.mousePosition;
             temp.z = 50f; // Set this to be the distance you want the object to be placed in front of the camera.
             transform.position = Camera.main.ScreenToWorldPoint(temp);
         }
-        
+
     }
 
 
     void OnMouseDown()
     {
+        // Set clicked status
         if (clicked == false)
         {
             clicked = true;
-        } else
+
+
+        }
+        else
         {
             clicked = false;
         }
@@ -37,15 +41,23 @@ public class Movement : MonoBehaviour
 
     void OnMouseEnter()
     {
-        transform.position += Vector3.up * 10;
-        transform.position += Vector3.forward * 10;
+        // zoom in on mouse over in hand
+        if (transform.parent.name == "hand")
+
+        {
+            
+            transform.position += new Vector3(0, 10, 20);
+        }
+ 
     }
-    
+
     void OnMouseExit()
     {
-        transform.position += Vector3.down * 10;
-        transform.position += Vector3.back * 10;
-
+        // put it back down after you stop hovering
+        if (transform.parent.name == "hand")
+        {
+            transform.position += new Vector3(0, -10, -20);
+        }
     }
 
 }
