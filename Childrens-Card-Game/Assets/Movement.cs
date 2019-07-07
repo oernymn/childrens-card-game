@@ -42,7 +42,7 @@ public class Movement : MonoBehaviour
     void OnMouseEnter()
     {
         // zoom in on mouse over in hand
-        if (transform.parent.name == "hand")
+        if (transform.parent.name == "hand1" || transform.parent.name == "hand2")
 
         {
             
@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour
     void OnMouseExit()
     {
         // put it back down after you stop hovering
-        if (transform.parent.name == "hand")
+        if (transform.parent.name == "hand1" || transform.parent.name == "hand2")
         {
             transform.position += new Vector3(0, -10, -20);
         }
