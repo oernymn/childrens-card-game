@@ -5,18 +5,34 @@ using UnityEngine;
 public class cardEffectFunctions : MonoBehaviour
 {
     public GameObject allCards;
+    public Transform everything;
+    public Transform everythingBefore;
+
     public Transform hand1;
     public Transform hand2;
     public Transform deck1;
     public Transform deck2;
 
+
     // Start is called before the first frame update
     void Start()
     {
+        int[] indexes = { 0, 4, 6 };
 
-        Draw(1, 5);
+        TransferCard(hand1, deck1, indexes);
+
+        // hand1.GetChild(0).transform.localScale = Vector3.zero;
     }
 
+
+    public class Location
+    {
+        public int index;
+        public Transform parent;
+    }
+
+
+  
 
     private void updateAll()
     {
@@ -26,27 +42,54 @@ public class cardEffectFunctions : MonoBehaviour
     }
 
 
+    public void runEffects(Transform before, Transform after) {
+         Debug.Log($"before parent: {before.transform.parent}");
+         Debug.Log($"after parent: {after.transform.parent}");
+
+        foreach(Transform collection in everything)
+        {
+            foreach (Transform card in collection)
+            {
+
+            }
+        }
+
+    }
     // draw the card at the indexes
-    public void TransferCard(Transform target, Transform deck, int[] indexes)
+    public void TransferCard(Transform target, Transform source, int[] indexes)
     {
-
-
 
         for (int i = 0; i < indexes.Length; i++)
         {
 
-            // when you move the card from the deck it changes the index so you basically inflate the index each iteration, so you conpensate by reducing the target index by i
+            // when you move the card from the deck it changes the index so you basically inflate the index each iteration, so you conpensate by reducing the target index by i.
             // 0 *1* 2 3 4      
             // 1 2 *3* 4 
             // 2 3 4 *5* 6
             // vs      
             // 0 *1* 2 3
-            //  1 *2* 3 4   3 - 1 = 2
-            //  2 *3* 4 5   5 - 2 = 3
+            // 1 *2* 3 4   3 - 1 = 2
+            // 2 *3* 4 5   5 - 2 = 3
 
-            deck.GetChild(indexes[i] - i).transform.parent = target;
-           
+            // copies everything in everythingBefore and makes everythingBefore invisible.
+            Transform everythingBefore = Instantiate(everything);
+            everythingBefore.localScale = Vector3.zero;
+
+
+            Transform before = everythingBefore.Find(source.name).GetChild(indexes[i]);
+
+
+    // links after to the object
+    Transform after = source.GetChild(indexes[i] - i);
+
+            after.transform.parent = target;
+
+            runEffects(before, after);
+
+            updateAll();
         }
+
+      
 
     }
 
