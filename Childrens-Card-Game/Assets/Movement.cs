@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour
         if (clicked == true)
         {
             Vector3 temp = Input.mousePosition;
-            temp.z = 50f; // Set this to be the distance you want the object to be placed in front of the camera.
+            temp.z = 2f; // Set this to be the distance you want the object to be placed in front of the camera.
             transform.position = Camera.main.ScreenToWorldPoint(temp);
         }
 
@@ -46,7 +46,7 @@ public class Movement : MonoBehaviour
 
         {
             
-            transform.position += new Vector3(0, 10, 20);
+            transform.position += new Vector3(0, 1, 2);
         }
  
     }
@@ -56,7 +56,7 @@ public class Movement : MonoBehaviour
         // put it back down after you stop hovering
         if (transform.parent.name == "hand1" || transform.parent.name == "hand2")
         {
-            transform.position += new Vector3(0, -10, -20);
+            transform.position += new Vector3(0, -1, -2);
         }
     }
 
