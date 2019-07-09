@@ -22,15 +22,9 @@ public class cardEffectFunctions : MonoBehaviour
 
         TransferCard(hand1, deck1, indexes);
 
-        // hand1.GetChild(0).transform.localScale = Vector3.zero;
+        
     }
 
-
-    public class Location
-    {
-        public int index;
-        public Transform parent;
-    }
 
 
 
@@ -52,7 +46,7 @@ public class cardEffectFunctions : MonoBehaviour
         {
             foreach (Transform card in collection)
             {
-                // card.GetComponent<cardEffect>().
+                card.GetComponent<CardEffect>().cardEffect(before, after);
             }
         }
 
@@ -64,7 +58,8 @@ public class cardEffectFunctions : MonoBehaviour
         for (int i = 0; i < indexes.Length; i++)
         {
 
-            // when you move the card from the deck it changes the index so you basically inflate the index each iteration, so you conpensate by reducing the target index by i.
+            // when you move the card from the deck it changes the index so you basically inflate the index each iteration,
+            // so you conpensate by reducing the target index by i.
             // 0 *1* 2 3 4      
             // 1 2 *3* 4 
             // 2 3 4 *5* 6
@@ -73,20 +68,38 @@ public class cardEffectFunctions : MonoBehaviour
             // 1 *2* 3 4   3 - 1 = 2
             // 2 *3* 4 5   5 - 2 = 3
 
-            // copies everything in everythingBefore and makes everythingBefore invisible.
+            // copies everything to everythingBefore and makes everythingBefore invisible.
             Transform everythingBefore = Instantiate(everything);
             everythingBefore.localScale = Vector3.zero;
 
+            // identifies the object as they were before 
 
-            Transform before = everythingBefore.Find(source.name).GetChild(indexes[i]);
+            Transform before;
+            Transform after;
+
+            // if the deck doesn't have enough cards to contain the card at indexes[i] -i then send error message.
+            if (source.childCount < indexes[i] - i + 1 ) {
+
+                Debug.Log("No cards left");
+
+            } else
+                // if the deck does have enough cards: Identifies the cards as they were before and after
+                // then transfers the card to the target location, 
+                // then checks every other card if htey have an effect they triggers off of the transfer.
+            {
+                before = everythingBefore.Find(source.name).GetChild(indexes[i] - i);
+                // links after to the object
+                after = source.GetChild(indexes[i] - i);
+                after.transform.parent = target;
+                runEffects(before, after);
+
+            }
 
 
-            // links after to the object
-            Transform after = source.GetChild(indexes[i] - i);
 
-            after.transform.parent = target;
 
-            runEffects(before, after);
+
+
 
             updateAll();
         }

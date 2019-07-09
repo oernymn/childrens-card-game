@@ -15,8 +15,6 @@ public class hand : MonoBehaviour
     public void updateHand()
     {
       
-
-        
         int cardsInHand = transform.childCount;
         int i = 0;
 
@@ -30,7 +28,7 @@ public class hand : MonoBehaviour
             float y = 0.1f * i;
             Vector3 p = new Vector3(x, y, transform.position.z);
             child.transform.position = p;
-            //child.transform.position = Vector3.MoveTowards(transform.position, p, 1);
+            // child.transform.position = Vector3.MoveTowards(transform.position, p, 1);
 
             i++;
         }

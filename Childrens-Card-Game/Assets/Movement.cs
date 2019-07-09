@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
 
 
     public bool clicked = false;
-    public GameObject thisCardsHand;
+   
 
     // Update is called once per frame
     void Update()
