@@ -26,6 +26,25 @@ public class cardEffectFunctions : MonoBehaviour
     }
 
 
+    // copies everything to everythingBefore and makes everythingBefore invisible.
+    public Transform SetEverythingBefore()
+    {
+        Transform everythingBefore;
+        // if everythingBefore doesn't exits it make it a copy of everything and renames itself to "everythingBefore"
+        if (!(GameObject.Find("everythingBefore")))
+        {
+            everythingBefore = Instantiate(everything);
+            everythingBefore.name = "everythingBefore";
+
+        }
+        else
+        {
+            everythingBefore = GameObject.Find("everythingBefore").transform;
+        }
+
+        everythingBefore.localScale = Vector3.zero;
+        return everythingBefore;
+    }
 
 
 
@@ -39,14 +58,20 @@ public class cardEffectFunctions : MonoBehaviour
 
     public void runEffects(Transform before, Transform after)
     {
-        Debug.Log($"before parent: {before.transform.parent}");
-        Debug.Log($"after parent: {after.transform.parent}");
+        //Debug.Log($"before parent: {before.transform.parent}");
+        //Debug.Log($"after parent: {after.transform.parent}");
 
         foreach (Transform collection in everything)
         {
             foreach (Transform card in collection)
             {
                 card.GetComponent<CardEffect>().cardEffect(before, after);
+
+              // Component Card = card.GetComponent("CardEffect");
+              // Card.cardEffect(before, after);
+
+            
+
             }
         }
 
@@ -68,14 +93,8 @@ public class cardEffectFunctions : MonoBehaviour
             // 1 *2* 3 4   3 - 1 = 2
             // 2 *3* 4 5   5 - 2 = 3
 
-            // copies everything to everythingBefore and makes everythingBefore invisible.
-            Transform everythingBefore = Instantiate(everything);
-            everythingBefore.localScale = Vector3.zero;
 
-            // identifies the object as they were before 
-
-            Transform before;
-            Transform after;
+            
 
             // if the deck doesn't have enough cards to contain the card at indexes[i] -i then send error message.
             if (source.childCount < indexes[i] - i + 1 ) {
@@ -83,23 +102,24 @@ public class cardEffectFunctions : MonoBehaviour
                 Debug.Log("No cards left");
 
             } else
-                // if the deck does have enough cards: Identifies the cards as they were before and after
-                // then transfers the card to the target location, 
-                // then checks every other card if htey have an effect they triggers off of the transfer.
+                
+               
             {
-                before = everythingBefore.Find(source.name).GetChild(indexes[i] - i);
-                // links after to the object
-                after = source.GetChild(indexes[i] - i);
+
+                // if the deck does have enough cards: Identifies the cards as they were before
+
+                Transform everythingBefore = SetEverythingBefore();
+                Transform before = everythingBefore.Find(source.name).GetChild(indexes[i] - i);
+
+                // links 'after' to the card. When 'after' changes so will the card.
+                Transform after = source.GetChild(indexes[i] - i);
+
+                // then transfers the card to the target location, 
                 after.transform.parent = target;
+                //  checks every other card if they have an effect they triggers off of the transfer.
                 runEffects(before, after);
 
             }
-
-
-
-
-
-
 
             updateAll();
         }

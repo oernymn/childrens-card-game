@@ -25,7 +25,7 @@ public class hand : MonoBehaviour
             // position every card after that a card's length to the right of eachother 
             float x = leftMostPosition + (margin * i);
             // stack them on top of eachother
-            float y = 0.1f * i;
+            float y = transform.position.y + 0.01f * i;
             Vector3 p = new Vector3(x, y, transform.position.z);
             child.transform.position = p;
             // child.transform.position = Vector3.MoveTowards(transform.position, p, 1);

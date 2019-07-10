@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1240015888444629152}
   - component: {fileID: 1240015888444629153}
   - component: {fileID: 1240015888444629181}
-  - component: {fileID: 1928484546015094996}
+  - component: {fileID: 2478021447864291810}
   m_Layer: 0
   m_Name: card
   m_TagString: Untagged
@@ -105,9 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117f2bd75a356ad49a723b55144ffab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clicked: 0
-  thisCardsHand: {fileID: 0}
---- !u!114 &1928484546015094996
+--- !u!114 &2478021447864291810
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +114,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240015888444629154}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 906297d8d3b2e7541b4e98b6faade56b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e9c52755d20f484d93c329cf064935f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atk: 0
