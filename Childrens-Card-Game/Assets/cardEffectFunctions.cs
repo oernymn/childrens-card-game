@@ -65,7 +65,7 @@ public class cardEffectFunctions : MonoBehaviour
         {
             foreach (Transform card in collection)
             {
-                card.GetComponent<CardEffect>().cardEffect(before, after);
+                card.GetComponent<Card>().CardEffect(before, after);
 
               // Component Card = card.GetComponent("CardEffect");
               // Card.cardEffect(before, after);
@@ -106,12 +106,10 @@ public class cardEffectFunctions : MonoBehaviour
                
             {
 
-                // if the deck does have enough cards: Identifies the cards as they were before
+                // if the deck does have enough cards: Identifies the cards as they were before and after the effect.
 
                 Transform everythingBefore = SetEverythingBefore();
                 Transform before = everythingBefore.Find(source.name).GetChild(indexes[i] - i);
-
-                // links 'after' to the card. When 'after' changes so will the card.
                 Transform after = source.GetChild(indexes[i] - i);
 
                 // then transfers the card to the target location, 
