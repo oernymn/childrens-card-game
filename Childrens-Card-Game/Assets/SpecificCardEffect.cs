@@ -7,7 +7,9 @@ public class SpecificCard : Minion
 
     public override int Atk { get; set; }
 
-    
+
+
+    Status status = Status.Attacking;
 
     public override void CardEffect(Transform before, Transform after)
     {
@@ -27,7 +29,7 @@ public class SpecificCard : Minion
 
     private void Update()
     {
-        Debug.Log(atk);
+        Debug.Log(Atk);
     }
 
 }
