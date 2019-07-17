@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Card;
 
 public class cardEffectFunctions : MonoBehaviour
 {
@@ -14,15 +15,23 @@ public class cardEffectFunctions : MonoBehaviour
     public Transform deck2;
     public Transform board;
 
+    //public delegate void CardTrigger(Transform before, Transform after);
+
+
+    public void runEffects(Transform before, Transform after) { }
+
+        
 
     // Start is called before the first frame update
     void Start()
     {
+
+
         int[] indexes = { 0, 4, 6 };
 
-        TransferCard(hand1, deck1, indexes);
+        TransferCard(transform, hand1, deck1, indexes);
 
-        
+
     }
 
 
@@ -56,8 +65,11 @@ public class cardEffectFunctions : MonoBehaviour
     }
 
 
+    /*
     public void runEffects(Transform before, Transform after)
     {
+       
+
         //Debug.Log($"before parent: {before.transform.parent}");
         //Debug.Log($"after parent: {after.transform.parent}");
 
@@ -67,54 +79,52 @@ public class cardEffectFunctions : MonoBehaviour
             {
                 card.GetComponent<Card>().CardEffect(before, after);
 
-              // Component Card = card.GetComponent("CardEffect");
-              // Card.cardEffect(before, after);
+                // Component Card = card.GetComponent("CardEffect");
+                // Card.cardEffect(before, after);
 
-            
+
 
             }
         }
 
     }
+    */
     // draw the card at the indexes
-    public void TransferCard(Transform target, Transform source, int[] indexes)
+    public Transform TransferCard(Transform caller, Transform target, Transform source, int[] indexes)
     {
 
         for (int i = 0; i < indexes.Length; i++)
         {
 
-            // when you move the card from the deck it changes the index so you basically inflate the index each iteration,
-            // so you conpensate by reducing the target index by i.
-            // 0 *1* 2 3 4      
-            // 1 2 *3* 4 
-            // 2 3 4 *5* 6
-            // vs      
-            // 0 *1* 2 3
-            // 1 *2* 3 4   3 - 1 = 2
-            // 2 *3* 4 5   5 - 2 = 3
-
-
-            
-
             // if the deck doesn't have enough cards to contain the card at indexes[i] -i then send error message.
-            if (source.childCount < indexes[i] - i + 1 ) {
+            if (source.childCount < indexes[i] - i + 1)
+            {
 
                 Debug.Log("No cards left");
 
-            } else
-                
-               
+            }
+            else
+
             {
 
                 // if the deck does have enough cards: Identifies the cards as they were before and after the effect.
-
+                // -i to prevent index inflation from movement
                 Transform everythingBefore = SetEverythingBefore();
                 Transform before = everythingBefore.Find(source.name).GetChild(indexes[i] - i);
                 Transform after = source.GetChild(indexes[i] - i);
 
+                after.GetComponent<Card>().status = Status.BeingDrawn;
+                after.GetComponent<Card>().targeter = caller;
+                caller.GetComponent<Card>().target = after;
+
+                runEffects(before, after);
+                before = after;
+
                 // then transfers the card to the target location, 
                 after.transform.parent = target;
-                //  checks every other card if they have an effect they triggers off of the transfer.
+                after.GetComponent<Card>().status = Status.Neutral;
+
+                //  checks every other card if they have an effect that triggers off of the transfer.
                 runEffects(before, after);
 
             }
@@ -123,7 +133,7 @@ public class cardEffectFunctions : MonoBehaviour
         }
 
 
-
+        return caller;
     }
 
     public void Draw(int allegiance, int cardToBeDrawn = 1)
