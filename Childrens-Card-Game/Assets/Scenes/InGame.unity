@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 961895228}
   - component: {fileID: 961895229}
   m_Layer: 0
-  m_Name: cardsFunctionEtc
+  m_Name: cardsFunctionsEtc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -925,6 +925,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906297d8d3b2e7541b4e98b6faade56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardsFunctionsEtc: {fileID: 961895227}
+  everything: {fileID: 600428036}
+  hand1: {fileID: 1684789894}
+  hand2: {fileID: 1719845850}
+  deck1: {fileID: 614150025}
+  deck2: {fileID: 1695352930}
+  board1: {fileID: 1208887179}
+  board2: {fileID: 60789454}
+  Functions: {fileID: 0}
+  status: 0
+  target: {fileID: 0}
+  targeter: {fileID: 0}
 --- !u!1001 &1076157831
 PrefabInstance:
   m_ObjectHideFlags: 0

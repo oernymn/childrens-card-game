@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +8,11 @@ public class SpecificCard : Card
 
     //public override int Atk { get; set; }
 
-    public override void CardEffect(object sender, ListEventArgs e)
+    public override void CardEffect(object sender, EventArgs e)
     {
 
         Debug.Log("Specific card effect was run!");
-        Debug.Log(e.Data);
+        Debug.Log(sender);
 
         /*
         if (before.transform.parent.name == "deck1" && after.transform.parent.name == "hand1")
@@ -26,11 +27,4 @@ public class SpecificCard : Card
 
     }
 
-    private void Update()
-    {
-      //  Debug.Log(Atk);
-    }
-
-
-    
 }

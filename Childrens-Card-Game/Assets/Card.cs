@@ -10,41 +10,43 @@ using UnityEngine;
 public class Card : MonoBehaviour
 {
 
-    public class ListEventArgs : EventArgs
+    public Transform cardsFunctionsEtc;
+    public Transform everything;
+    public Transform hand1;
+    public Transform hand2;
+    public Transform deck1;
+    public Transform deck2;
+    public Transform board1;
+    public Transform board2;
+
+    public cardEffectFunctions Functions = new cardEffectFunctions();
+
+    private void Awake()
     {
-        public List<int> Data { get; set; }
-        public ListEventArgs(List<int> data)
-        {
-            Data = data;
-        }
+        cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
+        everything = GameObject.Find("everything").transform;
+        hand1 = GameObject.Find("hand1").transform;
+        hand2 = GameObject.Find("hand2").transform;
+        deck1 = GameObject.Find("deck1").transform;
+        deck2 = GameObject.Find("deck2").transform;
+        board1 = GameObject.Find("board1").transform;
+        board2 = GameObject.Find("board2").transform;
+
+        
+    }
+
+    private void Start()
+    {
+        int[] indexes = { 0, 3, 6 };
+        Functions.TransferCard(this.transform, hand1, deck1, indexes);
     }
 
 
-    // public delegate void (Transform before, Transform after);
-
-    public delegate void EventHandler(int before, int after);
-    public static event EventHandler<ListEventArgs> runEffects;
-
-
-
-    public virtual void CardEffect(object sender, ListEventArgs e) {
-    }
     public Status status;
     public Transform target;
     public Transform targeter;
 
-    public void Awake()
-    {
-
-        runEffects += CardEffect;
-
-        List<int> intList = new List<int> { 1, 4, 7 };
-
-        ListEventArgs listArg = new ListEventArgs(intList);
-
-        runEffects(this, listArg);
-    }
-
+    public virtual void CardEffect(object sender, EventArgs e) { }
 
     public enum Status
     {
@@ -56,13 +58,18 @@ public class Card : MonoBehaviour
 
     }
 
-  
+
+
 }
 
-public abstract class Minion : Card
-{
 
 
-    public abstract int Atk { get; set; }
 
-}
+
+/*
+ private void Awake()
+    {
+     
+
+    int[] indexes = { 0, 4, 6 };
+    }*/ 
