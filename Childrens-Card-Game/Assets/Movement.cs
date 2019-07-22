@@ -28,14 +28,7 @@ void Update()
             transform.position = Camera.main.ScreenToWorldPoint(temp);
         }
 
-        // if it is within the boundries of the board
-        if (transform.position.x > -3.75f && transform.position.x < 3.75f
-                 && transform.position.z > -2 && transform.position.z < 0)
-        {
-            Debug.Log("parent should be board1");
-            transform.SetParent(board1);
-            Debug.Log(transform.parent);
-        }
+        
 
     }
 
@@ -53,11 +46,17 @@ void Update()
         else
         {
             clicked = false;
-            
-            
-        }
 
-       
+            // if it is within the boundries of the board 
+            if (transform.position.x > -3.75f && transform.position.x < 3.75f
+                     && transform.position.z > -2 && transform.position.z < 0)
+            {
+
+                transform.SetParent(board1);
+                
+            }
+
+        }
 
     }
 
