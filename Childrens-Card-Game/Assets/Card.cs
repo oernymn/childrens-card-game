@@ -10,7 +10,7 @@ public class Card : MonoBehaviour
 {
     [HideInInspector]
     public string parentName;
-
+    public int index;
     [HideInInspector]
     public Transform cardsFunctionsEtc;
     [HideInInspector]

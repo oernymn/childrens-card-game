@@ -33,33 +33,30 @@ public class cardEffectFunctions : MonoBehaviour
 
 
     // psuedo overload to make it easier to make individual cards.
-    public void RunEffects(Transform before, Transform after)
+    public Transform RunEffects(Transform before, Transform after)
     {
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
         runEffects(this, beforeAfter);
         updateAll();
         Destroy(before.gameObject);
-
+        before = SetBefore(after);
+        return before;
     }
-
-    public void Awake()
-    {
-        // Add CardEffects to the runEffects Event.
-       // runEffects += this.GetComponent<Card>().CardEffect;
-    }
-
 
     public Transform SetBefore(Transform after)
     {
+        // need to set After inactive because otherwise before will run its effects.
+        after.gameObject.SetActive(false);
         Transform before = Instantiate(after);
-        before.gameObject.SetActive(false);
+        after.gameObject.SetActive(true);
         before.gameObject.GetComponent<Card>().parentName = after.parent.name;
+        before.gameObject.GetComponent<Card>().index = after.GetSiblingIndex();
         return before;
     }
 
 
 
-    private void updateAll()
+    public void updateAll()
     {
         hand1.GetComponent<hand>().updateHand();
         hand2.GetComponent<hand>().updateHand();
@@ -92,24 +89,13 @@ public class cardEffectFunctions : MonoBehaviour
 
 
                 Transform after = source.GetChild(indexes[i] - i);
-
                 Transform before = SetBefore(after);
-                before = SetBefore(after);
-                before = SetBefore(after);
-                before = SetBefore(after);
-                before = SetBefore(after);
-                before = SetBefore(after);
-                before = SetBefore(after);
-                before = SetBefore(after);
-                before = SetBefore(after);
-
-                before = SetBefore(after);
 
                 after.GetComponent<Card>().status = Status.BeingDrawn;
                 after.GetComponent<Card>().targeter = caller;
                 caller.GetComponent<Card>().target = after;
 
-                RunEffects(before, after);
+                before = RunEffects(before, after);
 
                 // then transfers the card to the target location, 
                 after.transform.parent = target;
