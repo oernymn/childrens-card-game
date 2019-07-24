@@ -31,7 +31,6 @@ public class cardEffectFunctions : MonoBehaviour
 
     public event EventHandler<EffectEventArgs> runEffects;
 
-
     // psuedo overload to make it easier to make individual cards.
     public Transform RunEffects(Transform before, Transform after)
     {
@@ -43,12 +42,21 @@ public class cardEffectFunctions : MonoBehaviour
         return before;
     }
 
+
+
     public Transform SetBefore(Transform after)
     {
+       
+       // Destroy all previous before-cards so they don't accumelate.
+        foreach (Transform card in everythingBefore)
+        {
+            Destroy(card.gameObject);
+        }
         // need to set After inactive because otherwise before will run its effects.
         after.gameObject.SetActive(false);
-        Transform before = Instantiate(after);
+        Transform before = Instantiate(after, everythingBefore);
         after.gameObject.SetActive(true);
+        // Registers previous parent and index.
         before.gameObject.GetComponent<Card>().parentName = after.parent.name;
         before.gameObject.GetComponent<Card>().index = after.GetSiblingIndex();
         return before;
@@ -58,8 +66,12 @@ public class cardEffectFunctions : MonoBehaviour
 
     public void updateAll()
     {
-        hand1.GetComponent<hand>().updateHand();
-        hand2.GetComponent<hand>().updateHand();
+        GetComponent<Update>().updateHand(hand1);
+        GetComponent<Update>().updateHand(hand2);
+        GetComponent<Update>().updateBoard(board1);
+        GetComponent<Update>().updateBoard(board1);
+
+
 
     }
 

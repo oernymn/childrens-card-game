@@ -863,6 +863,8 @@ GameObject:
   - component: {fileID: 961895226}
   - component: {fileID: 961895228}
   - component: {fileID: 961895229}
+  - component: {fileID: 961895231}
+  - component: {fileID: 961895230}
   m_Layer: 0
   m_Name: cardsFunctionsEtc
   m_TagString: Untagged
@@ -915,8 +917,8 @@ MonoBehaviour:
   hand2: {fileID: 1719845850}
   deck1: {fileID: 614150025}
   deck2: {fileID: 1695352930}
-  board1: {fileID: 0}
-  board2: {fileID: 0}
+  board1: {fileID: 1208887179}
+  board2: {fileID: 60789454}
 --- !u!114 &961895229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,18 +933,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentName: 
   index: 0
-  cardsFunctionsEtc: {fileID: 0}
-  everything: {fileID: 0}
-  everythingBefore: {fileID: 0}
-  hand1: {fileID: 0}
-  hand2: {fileID: 0}
-  deck1: {fileID: 0}
-  deck2: {fileID: 0}
-  board1: {fileID: 0}
-  board2: {fileID: 0}
   status: 0
+  type: 0
   target: {fileID: 0}
   targeter: {fileID: 0}
+--- !u!114 &961895230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961895225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f25a5121c65be074f81424c80aa5aa63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Functions: {fileID: 0}
+--- !u!114 &961895231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961895225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d478ce907c21b4e8f13b3381e431f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  margin: 0.63
+  maxHandSize: 7
+  hand1: {fileID: 0}
+  hand2: {fileID: 0}
+  board1: {fileID: 0}
+  board2: {fileID: 0}
 --- !u!1001 &980799757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1364,6 +1389,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardNoEffect hand1
       objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629154, guid: 25a0ca5f381d9a5468e26d25dc62c092,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1240015888444629182, guid: 25a0ca5f381d9a5468e26d25dc62c092,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1549,6 +1579,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   margin: 0.63
   maxHandSize: 7
+  hand1: {fileID: 0}
+  hand2: {fileID: 0}
+  board1: {fileID: 0}
+  board2: {fileID: 0}
 --- !u!1 &1695352929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,6 +1658,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   margin: 0
   maxHandSize: 0
+  hand1: {fileID: 0}
+  hand2: {fileID: 0}
+  board1: {fileID: 0}
+  board2: {fileID: 0}
 --- !u!1 &1792796594
 GameObject:
   m_ObjectHideFlags: 0

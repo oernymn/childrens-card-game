@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ec09ef4d51a77c4eb96bc4337e3d91d, type: 2}
+  - {fileID: 2100000, guid: 457f1a4c25667874c8383147cd7d8102, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,6 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board1: {fileID: 0}
+  board2: {fileID: 0}
+  cardsFunctionsEtc: {fileID: 0}
 --- !u!114 &2478021447864291810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,8 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9c52755d20f484d93c329cf064935f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentName: 
+  index: 0
   cardsFunctionsEtc: {fileID: 0}
   everything: {fileID: 0}
+  everythingBefore: {fileID: 0}
   hand1: {fileID: 0}
   hand2: {fileID: 0}
   deck1: {fileID: 0}

@@ -12,29 +12,29 @@ public class Card : MonoBehaviour
     public string parentName;
     public int index;
     [HideInInspector]
-    public Transform cardsFunctionsEtc;
+    protected Transform cardsFunctionsEtc;
     [HideInInspector]
-    public Transform everything;
+    protected Transform everything;
     [HideInInspector]
-    public Transform everythingBefore;
+    protected Transform everythingBefore;
     [HideInInspector]
-    public Transform hand1;
+    protected Transform hand1;
     [HideInInspector]
-    public Transform hand2;
+    protected Transform hand2;
     [HideInInspector]
-    public Transform deck1;
+    protected Transform deck1;
     [HideInInspector]
-    public Transform deck2;
+    protected Transform deck2;
     [HideInInspector]
-    public Transform board1;
+    protected Transform board1;
     [HideInInspector]
-    public Transform board2;
+    protected Transform board2;
 
     protected cardEffectFunctions Functions;
 
     private void Awake()
     {
-        cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
+        
         everything = GameObject.Find("everything").transform;
         everythingBefore = GameObject.Find("everythingBefore").transform;
 
@@ -45,12 +45,15 @@ public class Card : MonoBehaviour
         board1 = GameObject.Find("board1").transform;
         board2 = GameObject.Find("board2").transform;
 
+        cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
         Functions = cardsFunctionsEtc.GetComponent<cardEffectFunctions>();
 
+        // subscribes to runEffects
         Functions.runEffects += CardEffect;
     }
 
     public Status status;
+    public Type type;
     public Transform target;
     public Transform targeter;
 
@@ -63,8 +66,17 @@ public class Card : MonoBehaviour
         Defending,
         BeingBounced,
         BeingDrawn,
-
+        BeingPlayed
     }
+
+    public enum Type
+    {
+        Minion,
+        Enchantment,
+        Spell
+    }
+
+
 
     
 

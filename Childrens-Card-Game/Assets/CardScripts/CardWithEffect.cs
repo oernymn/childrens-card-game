@@ -12,13 +12,8 @@ public class CardWithEffect : Card
 
     public override void CardEffect(object sender, EffectEventArgs e)
     {
-        /*
-        if (this.transform.parent == null)
-        {
-            return;
-        }
-        */
-       // Debug.Log("Specific card effect was run!");
+      
+        Debug.Log("Specific card effect was run!");
 
         if (e.before.GetComponent<Card>().parentName == "deck1" && e.after.transform.parent.name == "hand1")
         {

@@ -35,15 +35,12 @@ public class Movement : MonoBehaviour
         transform.position = Camera.main.ScreenToWorldPoint(temp);
     }
 
-    /*
+    
 
 
-            // if it is within the boundries of the board 
-            if (transform.position.x > -3.75f && transform.position.x < 3.75f
-                     && transform.position.z > -2 && transform.position.z < 0)
-            {}
+           
 
-    */
+    
 
 
     private void OnMouseDown()
@@ -53,12 +50,34 @@ public class Movement : MonoBehaviour
             transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
         }
     }
-
+    // Playing cards
     private void OnMouseUp()
     {
+        // Snaps cards back to the hand if it isn't played.
         if(transform.position.z < -2)
         {
             Functions.updateAll();
+        } else
+
+        // If it is within the boundries of the board and it's a minion it plays it.
+        if (transform.position.x > -3.75f && transform.position.x < 3.75f
+            && transform.position.z > -2 && transform.position.z < 0 
+            && this.GetComponent<Card>().type == Card.Type.Minion)
+        {
+            Debug.Log(transform + " played from " + transform.parent);
+
+            Transform after = transform;
+            Transform before = Functions.SetBefore(after);
+
+            after.GetComponent<Card>().status = Card.Status.BeingPlayed;
+            // Runs any OnPlay effects.
+            before = Functions.RunEffects(before, after);
+
+            after.transform.parent = board1;
+            // Checks OnSummon effects.
+            Functions.RunEffects(before, after);
+
+
         }
     }
 
