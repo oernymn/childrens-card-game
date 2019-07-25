@@ -6,23 +6,20 @@ using UnityEngine;
 public class CardWithEffect : Card
 {
 
-    
+    public int atk;
 
     //public override int Atk { get; set; }
 
     public override void CardEffect(object sender, EffectEventArgs e)
     {
       
-        Debug.Log("Specific card effect was run!");
+       
 
-        if (e.before.GetComponent<Card>().parentName == "deck1" && e.after.transform.parent.name == "hand1")
+        if (e.before.GetComponent<Card>().parentName == "deck1" && e.after.transform.parent == hand1)
         {
-             Debug.Log("SUCCESS! Pog");
+             Debug.Log($"{transform.name} got transfered from {e.before.GetComponent<Card>().parentName} to {e.after.transform.parent.name}");
         }
-        else
-        {
-            Debug.Log("EPIC FAIL :tf:");
-        }
+        
         
 
     }

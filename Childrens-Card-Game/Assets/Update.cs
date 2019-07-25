@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 
 public class Update : MonoBehaviour
@@ -29,7 +29,7 @@ public class Update : MonoBehaviour
             // position every card after that a card's length to the right of eachother 
             float x = leftMostPosition + (margin * i);
             // stack them on top of eachother
-            float y = hand.position.y + 0.01f * i;
+            float y = hand.position.y + 0.001f * i;
             Vector3 p = new Vector3(x, y, hand.position.z);
             child.transform.position = p;
 
@@ -38,21 +38,43 @@ public class Update : MonoBehaviour
 
     }
 
+    public int maxBoardSize;
+
     public void updateBoard(Transform board)
     {
+
+        List<Transform> CardList = new List<Transform>();
+        foreach (Transform card in board)
+        {
+            CardList.Add(card);    
+        }
+
+
+        CardList.Sort((p, q) => p.position.x.CompareTo(q.position.x));
+
+       
+        for (int n = 0; n < CardList.Count; n++)
+        {
+            CardList[n].SetSiblingIndex(n);
+         //   Debug.Log($"{n}: Card List: {CardList[n].name}  \n Board: {board.GetChild(n).name}");
+
+        }
+
         int cardsOnBoard = board.childCount;
+
         int i = 0;
 
         foreach (Transform child in board)
         {
-            // set the position of the leftmost card
+            // set the position of the leftmost card equal to half the card's length
             float leftMostPosition = board.position.x - (margin / 2 * (cardsOnBoard - 1));
-            // position every card after that a card's length to the right of eachother 
+            // position every card after that one card's length to the right of eachother 
             float x = leftMostPosition + (margin * i);
-            // stack them on top of eachother
+            
+
+            
             Vector3 p = new Vector3(x, 0, board.position.z);
             child.transform.position = p;
-          
 
             i++;
         }

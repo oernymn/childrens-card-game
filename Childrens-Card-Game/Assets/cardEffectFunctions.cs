@@ -32,16 +32,18 @@ public class cardEffectFunctions : MonoBehaviour
     public event EventHandler<EffectEventArgs> runEffects;
 
     // psuedo overload to make it easier to make individual cards.
-    public Transform RunEffects(Transform before, Transform after)
+    public Transform RunEffects(Transform before, Transform after, bool update = true)
     {
+
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
         runEffects(this, beforeAfter);
-        updateAll();
+        if (update == true) {
+            updateAll();
+        }
         Destroy(before.gameObject);
         before = SetBefore(after);
         return before;
     }
-
 
 
     public Transform SetBefore(Transform after)
@@ -66,12 +68,11 @@ public class cardEffectFunctions : MonoBehaviour
 
     public void updateAll()
     {
+        
+        GetComponent<Update>().updateBoard(board1);
         GetComponent<Update>().updateHand(hand1);
         GetComponent<Update>().updateHand(hand2);
-        GetComponent<Update>().updateBoard(board1);
-        GetComponent<Update>().updateBoard(board1);
-
-
+        //      GetComponent<Update>().updateBoard(board2);
 
     }
 

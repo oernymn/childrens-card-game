@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StartOfGame : MonoBehaviour
 {
-    public cardEffectFunctions Functions;
+    private cardEffectFunctions Functions;
     
 
 
