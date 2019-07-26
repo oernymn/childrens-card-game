@@ -8,7 +8,9 @@ public class Movement : MonoBehaviour
 
     
 
-    private bool hovered = false;
+
+
+    public Transform cam;
 
     public Transform board1;
     public Transform board2;
@@ -23,6 +25,8 @@ public class Movement : MonoBehaviour
         cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
         Functions = cardsFunctionsEtc.GetComponent<cardEffectFunctions>();
 
+        cam = Functions.cam;
+
         board1 = Functions.board1;
         board2 = Functions.board2;
         hand1 = Functions.hand1;
@@ -36,7 +40,7 @@ public class Movement : MonoBehaviour
     {
         // Click and drag
         Vector3 temp = Input.mousePosition;
-        temp.z = 5 - transform.position.y; // Set this to be the distance you want the object to be placed in front of the camera.
+        temp.z = cam.position.y - transform.position.y; // Set this to be the distance you want the object to be placed in front of the camera.
         transform.position = Camera.main.ScreenToWorldPoint(temp);
     }
 
@@ -84,8 +88,7 @@ public class Movement : MonoBehaviour
     void OnMouseEnter()
     {
         // zoom in on mouse over in hand
-        hovered = true;
-
+       
         // If it's in the right position  in the hand
         if ((transform.parent == hand1 && transform.position.z == hand1.position.z)
             || (transform.parent == hand2 && transform.position.z == hand2.position.z))
@@ -102,12 +105,12 @@ public class Movement : MonoBehaviour
 
     void OnMouseExit()
     {
-        hovered = false;
         // put it back down after you stop hovering
-        if (transform.position.z == -2)
+        if ((transform.parent == hand1 )
+            || (transform.parent == hand2))
         {
             transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
-            transform.position = new Vector3(transform.position.x, transform.position.y, -2.5f);
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.parent.position.z);
         }
     }
 

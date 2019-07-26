@@ -42,7 +42,7 @@ public class Update : MonoBehaviour
 
     public void updateBoard(Transform board)
     {
-
+        // Sort objects by their x position
         List<Transform> CardList = new List<Transform>();
         foreach (Transform card in board)
         {
@@ -70,10 +70,8 @@ public class Update : MonoBehaviour
             float leftMostPosition = board.position.x - (margin / 2 * (cardsOnBoard - 1));
             // position every card after that one card's length to the right of eachother 
             float x = leftMostPosition + (margin * i);
-            
 
-            
-            Vector3 p = new Vector3(x, 0, board.position.z);
+            Vector3 p = new Vector3(x, board.localScale.y, board.position.z);
             child.transform.position = p;
 
             i++;

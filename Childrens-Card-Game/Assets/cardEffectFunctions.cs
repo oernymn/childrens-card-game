@@ -18,6 +18,7 @@ public class EffectEventArgs : EventArgs
 
 public class cardEffectFunctions : MonoBehaviour
 {
+    public Transform cam;
 
     public Transform everything;
     public Transform everythingBefore;
