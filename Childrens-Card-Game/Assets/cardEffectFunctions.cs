@@ -26,9 +26,12 @@ public class cardEffectFunctions : MonoBehaviour
     public Transform hand2;
     public Transform deck1;
     public Transform deck2;
-    public Transform board1;
-    public Transform board2;
 
+    public Transform board1;
+    public Transform board12;
+
+    public Transform board2;
+    public Transform board22;
 
     public event EventHandler<EffectEventArgs> runEffects;
 
@@ -71,6 +74,10 @@ public class cardEffectFunctions : MonoBehaviour
     {
         
         GetComponent<Update>().updateBoard(board1);
+        GetComponent<Update>().updateBoard(board12);
+        GetComponent<Update>().updateBoard(board2);
+        GetComponent<Update>().updateBoard(board22);
+
         GetComponent<Update>().updateHand(hand1);
         GetComponent<Update>().updateHand(hand2);
         //      GetComponent<Update>().updateBoard(board2);

@@ -1021,7 +1021,9 @@ MonoBehaviour:
   deck1: {fileID: 614150025}
   deck2: {fileID: 1695352930}
   board1: {fileID: 1570985900}
+  board12: {fileID: 1399856224}
   board2: {fileID: 2086227465}
+  board22: {fileID: 1295844868}
 --- !u!114 &961895229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2177,7 +2179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849447472}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: -0.143}
+  m_LocalPosition: {x: 0, y: 0.05, z: -0.15}
   m_LocalScale: {x: 0.126, y: 0.001, z: 0.088}
   m_Children: []
   m_Father: {fileID: 0}
