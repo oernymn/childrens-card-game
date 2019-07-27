@@ -6,10 +6,6 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
 
-    
-
-
-
     public Transform cam;
 
     public Transform board1;
@@ -47,90 +43,141 @@ public class Movement : MonoBehaviour
     private void OnMouseDrag()
     {
         // Click and drag
-        Vector3 temp = Input.mousePosition;
-        temp.z = cam.position.y - transform.position.y; // Set this to be the distance you want the object to be placed in front of the camera.
-        transform.position = Camera.main.ScreenToWorldPoint(temp);
+        if ((transform.parent == hand1)
+            || (transform.parent == hand2))
+        {
+            Vector3 temp = Input.mousePosition;
+            temp.z = cam.position.y - transform.position.y; // Set this to be the distance you want the object to be placed in front of the camera.
+            transform.position = Camera.main.ScreenToWorldPoint(temp);
+        }
     }
 
     private void OnMouseDown()
     {
+        if ((transform.parent == hand1)
+            || (transform.parent == hand2))
+        {
             transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
+        }
     }
 
     // Playing cards
     private void OnMouseUp()
     {
-        // Snaps cards back to the hand if it isn't played.
+        // Ignore raycast.
+        transform.gameObject.layer = 2;
+
+
         Transform boardX;
         Transform boardXX;
-        Transform targetBoard;
-     
+        
 
-          if ( transform.parent == hand1)
+        Transform before;
+        Transform after;
+
+        // Defines the board according to which hand the card belongs to.
+        // If it doesn't have a hand, this function ends.
+        if (transform.parent == hand1)
         {
             boardX = board1;
             boardXX = board12;
-        } else if (transform.parent == hand2 ) {
+        }
+        else if (transform.parent == hand2)
+        {
             boardX = board2;
             boardXX = board22;
-        } else
+        }
+        else
         {
             Functions.updateAll();
             return;
         }
 
-        // If it is within the boundries of the board and it's a minion it plays it.
-        if (transform.position.x > boardX.position.x - boardX.localScale.x / 2
-            && transform.position.x < boardX.position.x + boardX.localScale.x / 2
+        Transform droppedOn;
 
-            && transform.position.z > boardX.position.z - boardX.localScale.z / 2
-            && transform.position.z < boardX.position.z + boardX.localScale.z / 2
-            && this.GetComponent<Card>().type == Card.Type.Minion)
+        // Defines the thing it's dropped on.
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
+            droppedOn = hit.transform;
 
-            targetBoard = boardX;
-
-        } else if (transform.position.x > boardXX.position.x - boardXX.localScale.x / 2
-            && transform.position.x < boardXX.position.x + boardXX.localScale.x / 2
-
-            && transform.position.z > boardXX.position.z - boardXX.localScale.z / 2
-            && transform.position.z < boardXX.position.z + boardXX.localScale.z / 2
-            && this.GetComponent<Card>().type == Card.Type.Minion)
-        {
-
-            targetBoard = boardXX;
-     
-        } else
+        }
+        else
         {
             Functions.updateAll();
             return;
         }
 
-        // Snaps back if the board is full.
 
-        if (targetBoard.childCount >= cardsFunctionsEtc.GetComponent<Update>().maxBoardSize)
+
+        // If it's a spell.
+        if (GetComponent<Card>().type == Card.Type.Spell)
+        {
+
+            if (GetComponent<Card>().GetSelection() != null)
             {
-                Functions.updateAll();
-                return;
+
+                List<Transform> cardSelectionList = GetComponent<Card>().GetSelection();
+
+                foreach (Transform card in cardSelectionList)
+                {
+                    if (card == droppedOn)
+                    {
+                        after = transform;
+                        before = Functions.SetBefore(after);
+
+
+
+                        //    GetComponent<Card>().CardEffect()
+                    }
+                }
             }
+        }
 
-            Transform after = transform;
-            Transform before = Functions.SetBefore(after);
+        // If it is within the boundries of boardX and it's a minion it plays it.
+        else if (droppedOn == boardX && GetComponent<Card>().type == Card.Type.Minion)
+        {
+            PlayToBoard(transform, boardX);
+        }
 
-            after.GetComponent<Card>().status = Card.Status.BeingPlayed;
-            // Runs any OnPlay effects. Not updating because then it would update
-            before = Functions.RunEffects(before, after, false);
+        // if it is within boardXX and it's an enchantment play it.
+        else if (droppedOn == boardXX && GetComponent<Card>().type == Card.Type.Enchantment)
+        {
+            PlayToBoard(transform, boardXX);
+        }
 
-            after.transform.parent = targetBoard;
-            // Checks OnSummon effects.
-            Functions.RunEffects(before, after);
- 
+
+        // Sets layer back to default.
+
+        transform.gameObject.layer = 0;
+        Functions.updateAll();
     }
+
+    public void PlayToBoard(Transform card, Transform targetBoard)
+    {
+        // Snaps back if the board is full.
+        if (targetBoard.childCount >= cardsFunctionsEtc.GetComponent<Update>().maxBoardSize)
+        {
+            Functions.updateAll();
+            return;
+        }
+
+        Transform after = transform;
+        Transform before = Functions.SetBefore(after);
+
+        after.GetComponent<Card>().status = Card.Status.BeingPlayed;
+        // Runs any OnPlay effects. Not updating because then it would update the hand and screw up the x positions
+        before = Functions.RunEffects(before, after, false);
+
+        after.transform.parent = targetBoard;
+        // Checks OnSummon effects.
+        Functions.RunEffects(before, after);
+    }
+
 
     void OnMouseEnter()
     {
         // zoom in on mouse over in hand
-       
+
         // If it's in the right position  in the hand
         if ((transform.parent == hand1 && transform.position.z == hand1.position.z)
             || (transform.parent == hand2 && transform.position.z == hand2.position.z))
@@ -138,8 +185,8 @@ public class Movement : MonoBehaviour
             // Increase the card's size and sets the z position so it fits the screen 
 
             transform.localScale = new Vector3(0.063f * 2, 0.002f * 2, 0.088f * 2);
-         
-           transform.localPosition += new Vector3(0, 0, 0.06f);
+
+            transform.localPosition += new Vector3(0, 0, 0.06f);
 
             //Debug.Log(transform.localScale.z);
         }
@@ -148,7 +195,7 @@ public class Movement : MonoBehaviour
     void OnMouseExit()
     {
         // put it back down after you stop hovering
-        if ((transform.parent == hand1 )
+        if ((transform.parent == hand1)
             || (transform.parent == hand2))
         {
             transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
@@ -157,7 +204,7 @@ public class Movement : MonoBehaviour
     }
 
 
-  
+
 
 
 }

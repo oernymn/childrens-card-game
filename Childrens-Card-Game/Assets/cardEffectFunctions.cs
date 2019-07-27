@@ -58,7 +58,7 @@ public class cardEffectFunctions : MonoBehaviour
         {
             Destroy(card.gameObject);
         }
-        // need to set After inactive because otherwise before will run its effects.
+        // need to set After inactive because otherwise 'before' will run its effects.
         after.gameObject.SetActive(false);
         Transform before = Instantiate(after, everythingBefore);
         after.gameObject.SetActive(true);

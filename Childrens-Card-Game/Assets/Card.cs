@@ -58,6 +58,9 @@ public class Card : MonoBehaviour
     public Transform targeter;
 
     public virtual void CardEffect(object sender, EffectEventArgs e) { }
+    public virtual List<Transform> GetSelection() {
+        return null;
+    }
 
     public enum Status
     {
