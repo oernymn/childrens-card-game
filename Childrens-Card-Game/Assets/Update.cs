@@ -9,10 +9,19 @@ public class Update : MonoBehaviour
     public float margin;
     public int maxHandSize;
 
-    public Transform hand1;
-    public Transform hand2;
-    public Transform board1;
-    public Transform board2;
+
+
+    public void update(Transform container)
+    {
+        if (container.name == "board1" || container.name == "board2")
+        {
+            updateBoard(container);
+        } else if (container.name == "hand")
+        {
+            updateHand(container);
+        }
+    }
+
 
 
     // puts the cards in the right position

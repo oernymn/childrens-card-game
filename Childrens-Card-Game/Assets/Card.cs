@@ -8,27 +8,34 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
+    
+    public virtual int manaCost { get; set; }
+    public virtual int baseAttack { get; set; }
+    public virtual int attack { get; set; }
+    public virtual int baseHealth { get; set; }
+    public virtual int health { get; set; }
+    public virtual int maxHealth { get; set; }
+    
+
+
+
     [HideInInspector]
+    public int board1Index = 0;
+    [HideInInspector]
+    public int board2Index = 1;
+    [HideInInspector]
+    public int handIndex = 2;
+    [HideInInspector]
+    public int deckIndex = 3;
+
     public string parentName;
     public int index;
-    [HideInInspector]
-    protected Transform cardsFunctionsEtc;
-    [HideInInspector]
-    protected Transform everything;
-    [HideInInspector]
-    protected Transform everythingBefore;
-    [HideInInspector]
-    protected Transform hand1;
-    [HideInInspector]
-    protected Transform hand2;
-    [HideInInspector]
-    protected Transform deck1;
-    [HideInInspector]
-    protected Transform deck2;
-    [HideInInspector]
-    protected Transform board1;
-    [HideInInspector]
-    protected Transform board2;
+
+
+    Transform everything;
+    Transform everythingBefore;
+    Transform cardsFunctionsEtc;
+
 
     protected cardEffectFunctions Functions;
 
@@ -37,13 +44,6 @@ public class Card : MonoBehaviour
         
         everything = GameObject.Find("everything").transform;
         everythingBefore = GameObject.Find("everythingBefore").transform;
-
-        hand1 = GameObject.Find("hand1").transform;
-        hand2 = GameObject.Find("hand2").transform;
-        deck1 = GameObject.Find("deck1").transform;
-        deck2 = GameObject.Find("deck2").transform;
-        board1 = GameObject.Find("board1").transform;
-        board2 = GameObject.Find("board2").transform;
 
         cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
         Functions = cardsFunctionsEtc.GetComponent<cardEffectFunctions>();

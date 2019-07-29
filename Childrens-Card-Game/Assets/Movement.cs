@@ -8,17 +8,14 @@ public class Movement : MonoBehaviour
 
     public Transform cam;
 
-    public Transform board1;
-    public Transform board12;
 
-    public Transform board2;
-    public Transform board22;
-
-    public Transform hand1;
-    public Transform hand2;
     public Transform cardsFunctionsEtc;
-
     protected cardEffectFunctions Functions;
+
+    Transform board1;
+    Transform board2;
+    Transform hand;
+    Transform deck;
 
     private void Awake()
     {
@@ -27,14 +24,11 @@ public class Movement : MonoBehaviour
 
         cam = Functions.cam;
 
-        board1 = Functions.board1;
-        board12 = Functions.board12;
-
-        board2 = Functions.board2;
-        board22 = Functions.board22;
-
-        hand1 = Functions.hand1;
-        hand2 = Functions.hand2;
+        hand = transform.parent.parent.GetChild(Functions.handIndex);
+        board1 = transform.parent.parent.GetChild(Functions.board1Index);
+        board2 = transform.parent.parent.GetChild(Functions.board2Index);
+        deck = transform.parent.parent.GetChild(Functions.deckIndex);
+       
     }
 
 
@@ -43,8 +37,7 @@ public class Movement : MonoBehaviour
     private void OnMouseDrag()
     {
         // Click and drag
-        if ((transform.parent == hand1)
-            || (transform.parent == hand2))
+        if (transform.parent == hand)
         {
             Vector3 temp = Input.mousePosition;
             temp.z = cam.position.y - transform.position.y; // Set this to be the distance you want the object to be placed in front of the camera.
@@ -54,8 +47,7 @@ public class Movement : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if ((transform.parent == hand1)
-            || (transform.parent == hand2))
+        if (transform.parent == hand)
         {
             transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
         }
@@ -64,36 +56,26 @@ public class Movement : MonoBehaviour
     // Playing cards
     private void OnMouseUp()
     {
-        // Ignore raycast.
+        // Ignore raycast. Otherwise the card will block the raycast.
         transform.gameObject.layer = 2;
-
-
-        Transform boardX;
-        Transform boardXX;
-        
 
         Transform before;
         Transform after;
+        Transform droppedOn;
 
-        // Defines the board according to which hand the card belongs to.
-        // If it doesn't have a hand, this function ends.
-        if (transform.parent == hand1)
+
+       Transform board1 = transform.parent.parent.GetChild(Functions.board1Index);
+       Transform board2 = transform.parent.parent.GetChild(Functions.board2Index);
+       Transform hand = transform.parent.parent.GetChild(Functions.handIndex);
+        
+
+    // Need to play cards from hand.
+        if (transform.parent != hand)
         {
-            boardX = board1;
-            boardXX = board12;
-        }
-        else if (transform.parent == hand2)
-        {
-            boardX = board2;
-            boardXX = board22;
-        }
-        else
-        {
-            Functions.updateAll();
+            Debug.Log("Trying to play a card that's not in you hand.");
             return;
         }
 
-        Transform droppedOn;
 
         // Defines the thing it's dropped on.
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
@@ -107,42 +89,52 @@ public class Movement : MonoBehaviour
             return;
         }
 
+        Debug.Log( $" Dropped on: {droppedOn}.");
 
 
-        // If it's a spell.
-        if (GetComponent<Card>().type == Card.Type.Spell)
+        // If it's a targeting spell.
+        if (GetComponent<Card>().type == Card.Type.Spell && GetComponent<Card>().GetSelection() != null)
         {
-
-            if (GetComponent<Card>().GetSelection() != null)
-            {
 
                 List<Transform> cardSelectionList = GetComponent<Card>().GetSelection();
 
                 foreach (Transform card in cardSelectionList)
                 {
+                    // If the card the spell dropped on matches a card that the card can target.
                     if (card == droppedOn)
                     {
+
+                    Debug.Log($"Spell cast on {droppedOn}");
+
                         after = transform;
                         before = Functions.SetBefore(after);
 
+                    
 
+                    after.GetComponent<Card>().status = Card.Status.BeingPlayed;
 
-                        //    GetComponent<Card>().CardEffect()
+                    // This card's target is the matched card.
+                    after.GetComponent<Card>().target = card;
+                    card.GetComponent<Card>().targeter = after;
+
+                    Functions.RunEffects(before, after);
                     }
                 }
-            }
+            
         }
 
+        
+
         // If it is within the boundries of boardX and it's a minion it plays it.
-        else if (droppedOn == boardX && GetComponent<Card>().type == Card.Type.Minion)
+        else if (droppedOn == board1  && GetComponent<Card>().type == Card.Type.Minion)
         {
-            PlayToBoard(transform, boardX);
+            PlayToBoard(transform, board1);
         }
 
         // if it is within boardXX and it's an enchantment play it.
-        else if (droppedOn == boardXX && GetComponent<Card>().type == Card.Type.Enchantment)
+        else if (droppedOn == board2 && GetComponent<Card>().type == Card.Type.Enchantment)
         {
-            PlayToBoard(transform, boardXX);
+            PlayToBoard(transform, board2);
         }
 
 
@@ -179,8 +171,7 @@ public class Movement : MonoBehaviour
         // zoom in on mouse over in hand
 
         // If it's in the right position  in the hand
-        if ((transform.parent == hand1 && transform.position.z == hand1.position.z)
-            || (transform.parent == hand2 && transform.position.z == hand2.position.z))
+        if (transform.parent == hand && transform.position.z == hand.position.z)
         {
             // Increase the card's size and sets the z position so it fits the screen 
 
@@ -195,8 +186,7 @@ public class Movement : MonoBehaviour
     void OnMouseExit()
     {
         // put it back down after you stop hovering
-        if ((transform.parent == hand1)
-            || (transform.parent == hand2))
+        if (transform.parent == hand)
         {
             transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.parent.position.z);

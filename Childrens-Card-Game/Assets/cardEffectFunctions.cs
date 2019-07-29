@@ -22,16 +22,25 @@ public class cardEffectFunctions : MonoBehaviour
 
     public Transform everything;
     public Transform everythingBefore;
-    public Transform hand1;
-    public Transform hand2;
-    public Transform deck1;
-    public Transform deck2;
+    public Transform Alliance;
+    public Transform Horde;
 
-    public Transform board1;
-    public Transform board12;
 
-    public Transform board2;
-    public Transform board22;
+    public int board1Index = 0;
+    public int board2Index = 1;
+    public int handIndex = 2;
+    public int deckIndex = 3;
+
+    Update UpdateFunctions;
+
+    private void Awake()
+    {
+        UpdateFunctions = GetComponent<Update>();
+
+
+    }
+
+
 
     public event EventHandler<EffectEventArgs> runEffects;
 
@@ -41,7 +50,8 @@ public class cardEffectFunctions : MonoBehaviour
 
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
         runEffects(this, beforeAfter);
-        if (update == true) {
+        if (update == true)
+        {
             updateAll();
         }
         Destroy(before.gameObject);
@@ -52,8 +62,8 @@ public class cardEffectFunctions : MonoBehaviour
 
     public Transform SetBefore(Transform after)
     {
-       
-       // Destroy all previous before-cards so they don't accumelate.
+
+        // Destroy all previous before-cards so they don't accumelate.
         foreach (Transform card in everythingBefore)
         {
             Destroy(card.gameObject);
@@ -70,20 +80,39 @@ public class cardEffectFunctions : MonoBehaviour
 
 
 
+
+
     public void updateAll()
     {
-        
-        GetComponent<Update>().updateBoard(board1);
-        GetComponent<Update>().updateBoard(board12);
-        GetComponent<Update>().updateBoard(board2);
-        GetComponent<Update>().updateBoard(board22);
 
-        GetComponent<Update>().updateHand(hand1);
-        GetComponent<Update>().updateHand(hand2);
-        //      GetComponent<Update>().updateBoard(board2);
+        foreach (Transform Allegiance in everything)
+        {
+            foreach (Transform container in Allegiance)
+            {
+                UpdateFunctions.update(container);
+            }
 
+
+        }
     }
 
+    public Transform GetEnemyAllegiance(Transform grandParent)
+    {
+        Transform enemy;
+
+        if (grandParent == Alliance)
+        {
+            enemy = Horde;
+        } else 
+        if (grandParent == Horde)
+        {
+            enemy = Alliance;
+        } else
+        {
+            return null;
+        }
+        return enemy;
+    }
 
 
     // draw the card at the indexes
