@@ -30,6 +30,11 @@ public class cardEffectFunctions : MonoBehaviour
     public int board2Index = 1;
     public int handIndex = 2;
     public int deckIndex = 3;
+    public int graveyardIndex = 4;
+
+    public Vector3 cardSize = new Vector3(0.063f, 0.002f, 0.088f);
+
+    
 
     Update UpdateFunctions;
 
@@ -37,7 +42,7 @@ public class cardEffectFunctions : MonoBehaviour
     {
         UpdateFunctions = GetComponent<Update>();
 
-
+       
     }
 
 
@@ -45,10 +50,15 @@ public class cardEffectFunctions : MonoBehaviour
     public event EventHandler<EffectEventArgs> runEffects;
 
     // psuedo overload to make it easier to make individual cards.
+
+        
     public Transform RunEffects(Transform before, Transform after, bool update = true)
     {
 
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
+
+
+
         runEffects(this, beforeAfter);
         if (update == true)
         {
@@ -73,7 +83,7 @@ public class cardEffectFunctions : MonoBehaviour
         Transform before = Instantiate(after, everythingBefore);
         after.gameObject.SetActive(true);
         // Registers previous parent and index.
-        before.gameObject.GetComponent<Card>().parentName = after.parent.name;
+        before.gameObject.GetComponent<Card>().Parent = after.parent;
         before.gameObject.GetComponent<Card>().index = after.GetSiblingIndex();
         return before;
     }
@@ -84,7 +94,7 @@ public class cardEffectFunctions : MonoBehaviour
 
     public void updateAll()
     {
-
+        // Update all containers.
         foreach (Transform Allegiance in everything)
         {
             foreach (Transform container in Allegiance)

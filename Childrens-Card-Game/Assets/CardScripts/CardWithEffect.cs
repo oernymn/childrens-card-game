@@ -22,6 +22,8 @@ public class CardWithEffect : Card
 
             if (target.type == Type.Minion)
             {
+                
+
                 Debug.Log(target.health);
 
                 target.health -= 2;

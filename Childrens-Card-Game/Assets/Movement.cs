@@ -45,11 +45,13 @@ public class Movement : MonoBehaviour
         }
     }
 
+
+   // Shrinks the card when you try to play it. 
     private void OnMouseDown()
     {
         if (transform.parent == hand)
         {
-            transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
+            transform.localScale = Functions.cardSize;
         }
     }
 
@@ -73,6 +75,7 @@ public class Movement : MonoBehaviour
         if (transform.parent != hand)
         {
             Debug.Log("Trying to play a card that's not in you hand.");
+            transform.gameObject.layer = 0;
             return;
         }
 
@@ -114,11 +117,16 @@ public class Movement : MonoBehaviour
                     after.GetComponent<Card>().status = Card.Status.BeingPlayed;
 
                     // This card's target is the matched card.
-                    after.GetComponent<Card>().target = card;
+                    after.GetComponent<Card>().target = droppedOn;
                     card.GetComponent<Card>().targeter = after;
 
-                    Functions.RunEffects(before, after);
-                    }
+                    before = Functions.RunEffects(before, after);
+
+                    after.GetComponent<Card>().status = Card.Status.Neutral;
+                    after.parent = transform.parent.parent.GetChild(Functions.graveyardIndex);
+
+                    before = Functions.RunEffects(before, after);
+                }
                 }
             
         }
@@ -158,11 +166,13 @@ public class Movement : MonoBehaviour
 
         after.GetComponent<Card>().status = Card.Status.BeingPlayed;
         // Runs any OnPlay effects. Not updating because then it would update the hand and screw up the x positions
+
+        Debug.Log($"Before: {before.name}. After: {after.name}");
         before = Functions.RunEffects(before, after, false);
 
         after.transform.parent = targetBoard;
         // Checks OnSummon effects.
-        Functions.RunEffects(before, after);
+       before = Functions.RunEffects(before, after);
     }
 
 
@@ -175,7 +185,7 @@ public class Movement : MonoBehaviour
         {
             // Increase the card's size and sets the z position so it fits the screen 
 
-            transform.localScale = new Vector3(0.063f * 2, 0.002f * 2, 0.088f * 2);
+            transform.localScale = Functions.cardSize * 2;
 
             transform.localPosition += new Vector3(0, 0, 0.06f);
 
@@ -188,7 +198,7 @@ public class Movement : MonoBehaviour
         // put it back down after you stop hovering
         if (transform.parent == hand)
         {
-            transform.localScale = new Vector3(0.063f, 0.002f, 0.088f);
+            transform.localScale = Functions.cardSize; ;
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.parent.position.z);
         }
     }

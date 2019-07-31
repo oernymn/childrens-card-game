@@ -8,14 +8,17 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    
-    public virtual int manaCost { get; set; }
+    /*
+    public virtual int manaCost { get; set; };
     public virtual int baseAttack { get; set; }
     public virtual int attack { get; set; }
     public virtual int baseHealth { get; set; }
     public virtual int health { get; set; }
     public virtual int maxHealth { get; set; }
-    
+    */
+
+   
+    public int health;
 
 
 
@@ -27,16 +30,16 @@ public class Card : MonoBehaviour
     public int handIndex = 2;
     [HideInInspector]
     public int deckIndex = 3;
+    [HideInInspector]
+    public int graveyardIndex = 4;
 
-    public string parentName;
+    public Transform Parent;
     public int index;
 
 
     Transform everything;
     Transform everythingBefore;
     Transform cardsFunctionsEtc;
-
-
     protected cardEffectFunctions Functions;
 
     private void Awake()
