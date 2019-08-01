@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static cardEffectFunctions;
 
 public class Card : MonoBehaviour
 {
@@ -20,21 +20,10 @@ public class Card : MonoBehaviour
    
     public int health;
 
-
-
-    [HideInInspector]
-    public int board1Index = 0;
-    [HideInInspector]
-    public int board2Index = 1;
-    [HideInInspector]
-    public int handIndex = 2;
-    [HideInInspector]
-    public int deckIndex = 3;
-    [HideInInspector]
-    public int graveyardIndex = 4;
-
+    // For the 'before' cards.
     public Transform Parent;
     public int index;
+
 
 
     Transform everything;
@@ -53,37 +42,30 @@ public class Card : MonoBehaviour
 
         // subscribes to runEffects
         Functions.runEffects += CardEffect;
+
+        HashSet<Status> Is = new HashSet<Status> {Status.Neutral};
+
     }
 
     public Status status;
-    public Type type;
+    public CardType type;
     public Transform target;
     public Transform targeter;
+    
 
     public virtual void CardEffect(object sender, EffectEventArgs e) { }
-    public virtual List<Transform> GetSelection() {
+    public virtual List<Transform> GetSelection()
+    {
         return null;
     }
 
-    public enum Status
-    {
-        Neutral,
-        Attacking,
-        Defending,
-        BeingBounced,
-        BeingDrawn,
-        BeingPlayed
-    }
+   
+}
 
-    public enum Type
-    {
-        Minion,
-        Enchantment,
-        Spell
-    }
+   
 
 
 
     
 
-}
+

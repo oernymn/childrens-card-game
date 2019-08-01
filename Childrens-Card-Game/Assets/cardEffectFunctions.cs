@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Card;
 
 public class EffectEventArgs : EventArgs
 {
@@ -18,6 +17,49 @@ public class EffectEventArgs : EventArgs
 
 public class cardEffectFunctions : MonoBehaviour
 {
+
+    public event EventHandler<EffectEventArgs> runEffects;
+    public event EventHandler<EffectEventArgs> runWheneverEffects;
+
+    // psuedo overload to make it easier to make individual cards.  
+    public Transform RunEffects(Transform before, Transform after, bool update = true)
+    {
+
+        EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
+
+    //    runWheneverEffects(this, beforeAfter);
+
+        runEffects(this, beforeAfter);
+
+        if (update == true)
+        {
+            updateAll();
+        }
+        Destroy(before.gameObject);
+        before = SetBefore(after);
+        return before;
+    }
+
+    public Transform SetBefore(Transform after)
+    {
+
+        // Destroy all previous before-cards so they don't accumelate.
+        
+        foreach (Transform card in everythingBefore)
+        {
+            Destroy(card.gameObject);
+        }
+        
+        // need to set After inactive because otherwise 'before' will run its effects.
+        after.gameObject.SetActive(false);
+        Transform before = Instantiate(after, everythingBefore);
+        after.gameObject.SetActive(true);
+        // Registers previous parent and index.
+        before.gameObject.GetComponent<Card>().Parent = after.parent;
+        before.gameObject.GetComponent<Card>().index = after.GetSiblingIndex();
+        return before;
+    }
+
     public Transform cam;
 
     public Transform everything;
@@ -34,7 +76,25 @@ public class cardEffectFunctions : MonoBehaviour
 
     public Vector3 cardSize = new Vector3(0.063f, 0.002f, 0.088f);
 
-    
+    public enum Status
+    {
+        Neutral,
+        Attacking,
+        Defending,
+        BeingBounced,
+        BeingDrawn,
+        BeingPlayed,
+        BeingDamaged,
+    }
+
+
+    public enum CardType
+    {
+        Minion,
+        Enchantment,
+        Spell
+    }
+
 
     Update UpdateFunctions;
 
@@ -45,52 +105,7 @@ public class cardEffectFunctions : MonoBehaviour
        
     }
 
-
-
-    public event EventHandler<EffectEventArgs> runEffects;
-
-    // psuedo overload to make it easier to make individual cards.
-
-        
-    public Transform RunEffects(Transform before, Transform after, bool update = true)
-    {
-
-        EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
-
-
-
-        runEffects(this, beforeAfter);
-        if (update == true)
-        {
-            updateAll();
-        }
-        Destroy(before.gameObject);
-        before = SetBefore(after);
-        return before;
-    }
-
-
-    public Transform SetBefore(Transform after)
-    {
-
-        // Destroy all previous before-cards so they don't accumelate.
-        foreach (Transform card in everythingBefore)
-        {
-            Destroy(card.gameObject);
-        }
-        // need to set After inactive because otherwise 'before' will run its effects.
-        after.gameObject.SetActive(false);
-        Transform before = Instantiate(after, everythingBefore);
-        after.gameObject.SetActive(true);
-        // Registers previous parent and index.
-        before.gameObject.GetComponent<Card>().Parent = after.parent;
-        before.gameObject.GetComponent<Card>().index = after.GetSiblingIndex();
-        return before;
-    }
-
-
-
-
+   
 
     public void updateAll()
     {
@@ -124,6 +139,19 @@ public class cardEffectFunctions : MonoBehaviour
         return enemy;
     }
 
+    public Transform GetWhatIsMousedOver()
+    {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        {
+            return hit.transform;
+
+        }
+        else
+        {
+            updateAll();
+            return null;
+        }
+    }
 
     // draw the card at the indexes
     public void TransferCard(Transform caller, Transform target, Transform source, int[] indexes)
