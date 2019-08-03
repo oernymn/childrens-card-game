@@ -7,7 +7,7 @@ using static cardEffectFunctions;
 public class Spell : Card
 {
 
-    public override void CardEffect (object sender, EffectEventArgs e)
+    public override void AfterCardEffect (object sender, EffectEventArgs e)
     {
         // When this card is played.
         if (e.before.GetComponent<Card>().status != Status.BeingPlayed && e.after.GetComponent<Card>().status == Status.BeingPlayed

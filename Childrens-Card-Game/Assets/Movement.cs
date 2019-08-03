@@ -6,9 +6,6 @@ using static cardEffectFunctions;
 public class Movement : MonoBehaviour
 {
 
-    public Transform cam;
-
-
     public Transform cardsFunctionsEtc;
     protected cardEffectFunctions Functions;
 
@@ -19,10 +16,10 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
-        Functions = cardsFunctionsEtc.GetComponent<cardEffectFunctions>();
+         cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
+         Functions = cardsFunctionsEtc.GetComponent<cardEffectFunctions>();
 
-        cam = Functions.cam;
+   
 
         hand = transform.parent.parent.GetChild(Functions.handIndex);
         board1 = transform.parent.parent.GetChild(Functions.board1Index);
@@ -108,19 +105,17 @@ public class Movement : MonoBehaviour
                     
                     Transform after = transform;
                     Transform before = Functions.SetBefore(after);
-
+                 
                     after.GetComponent<Card>().status = Status.BeingPlayed;
-
-                    // This card's target is the matched card.
                     after.GetComponent<Card>().target = droppedOn;
-                    droppedOn.GetComponent<Card>().targeter = after;
 
-                    before = Functions.RunEffects(before, after);
+                     Functions.RunWheneverEffects(before, after);
+                     before = Functions.RunAfterEffects(before, after);
 
                     after.GetComponent<Card>().status = Status.Neutral;
                     after.parent = transform.parent.parent.GetChild(Functions.graveyardIndex);
 
-                    before = Functions.RunEffects(before, after);
+                    
                 }
             }
 
@@ -145,6 +140,11 @@ public class Movement : MonoBehaviour
 
         transform.gameObject.layer = 0;
         Functions.updateAll();
+    }
+
+    public void PlayCard(Transform after, Transform target)
+    {
+      
     }
 
     public void PlayToBoard(Transform card, Transform targetBoard)

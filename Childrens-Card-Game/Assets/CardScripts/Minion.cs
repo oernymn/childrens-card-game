@@ -17,7 +17,7 @@ public class Minion : Card
     
 
 
-    public override void CardEffect(object sender, EffectEventArgs e)
+    public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
 
 

@@ -31,9 +31,25 @@ public class Card : MonoBehaviour
     Transform cardsFunctionsEtc;
     protected cardEffectFunctions Functions;
 
+   
+
+    public Status status;
+    public CardType type;
+    public Transform target;
+
+    
+
+    public virtual void AfterCardEffect(object sender, EffectEventArgs e) { }
+    public virtual void WheneverCardEffect(object sender, EffectEventArgs e) { }
+
+    public virtual List<Transform> GetSelection()
+    {
+        return null;
+    }
+
     private void Awake()
     {
-        
+
         everything = GameObject.Find("everything").transform;
         everythingBefore = GameObject.Find("everythingBefore").transform;
 
@@ -41,25 +57,13 @@ public class Card : MonoBehaviour
         Functions = cardsFunctionsEtc.GetComponent<cardEffectFunctions>();
 
         // subscribes to runEffects
-        Functions.runEffects += CardEffect;
+        Functions.runEffects += AfterCardEffect;
+        Functions.runWheneverEffects += WheneverCardEffect;
 
-        HashSet<Status> Is = new HashSet<Status> {Status.Neutral};
+        HashSet<Status> Is = new HashSet<Status> { Status.Neutral };
 
     }
 
-    public Status status;
-    public CardType type;
-    public Transform target;
-    public Transform targeter;
-    
-
-    public virtual void CardEffect(object sender, EffectEventArgs e) { }
-    public virtual List<Transform> GetSelection()
-    {
-        return null;
-    }
-
-   
 }
 
    

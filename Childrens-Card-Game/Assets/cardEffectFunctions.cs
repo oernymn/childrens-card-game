@@ -22,12 +22,30 @@ public class cardEffectFunctions : MonoBehaviour
     public event EventHandler<EffectEventArgs> runWheneverEffects;
 
     // psuedo overload to make it easier to make individual cards.  
-    public Transform RunEffects(Transform before, Transform after, bool update = true)
+    public void RunWheneverEffects(Transform before, Transform after)
     {
+        // Makes copies of after to signal what is going to happen.
+        Transform becomingAfter = SetBefore(after);
 
+
+        // Revert after. Now we have what is going to be after the effect has happened (becomingAfter) and what is before the effect happened (after, before in WheneverCardEffect).
+
+        after = Instantiate(before);
+        after.parent = before.GetComponent<Card>().Parent;
+        after.SetSiblingIndex(before.GetComponent<Card>().index);
+        after.gameObject.SetActive(true);
+
+
+        EffectEventArgs becomingBeforeAfter = new EffectEventArgs(after, becomingAfter);
+        runWheneverEffects(this, becomingBeforeAfter);
+
+        // Applies the effect after the whenever effects have triggered.
+
+    }
+
+    public Transform RunAfterEffects(Transform before, Transform after, bool update = true)
+    {
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
-
-    //    runWheneverEffects(this, beforeAfter);
 
         runEffects(this, beforeAfter);
 
@@ -57,6 +75,7 @@ public class cardEffectFunctions : MonoBehaviour
         // Registers previous parent and index.
         before.gameObject.GetComponent<Card>().Parent = after.parent;
         before.gameObject.GetComponent<Card>().index = after.GetSiblingIndex();
+        before.name = after.name;
         return before;
     }
 
@@ -180,7 +199,7 @@ public class cardEffectFunctions : MonoBehaviour
                 Transform before = SetBefore(after);
 
                 after.GetComponent<Card>().status = Status.BeingDrawn;
-                after.GetComponent<Card>().targeter = caller;
+
                 caller.GetComponent<Card>().target = after;
 
                 before = RunEffects(before, after);
@@ -188,7 +207,7 @@ public class cardEffectFunctions : MonoBehaviour
                 // then transfers the card to the target location, 
                 after.transform.parent = target;
                 after.GetComponent<Card>().status = Status.Neutral;
-                after.GetComponent<Card>().targeter = null;
+                
                 caller.GetComponent<Card>().target = null;
                 //  checks every other card if they have an effect that triggers off the transfer.
 
