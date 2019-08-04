@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static cardEffectFunctions;
+using static Variables;
+
 
 public class Spell : Card
 {
@@ -23,6 +24,9 @@ public class Spell : Card
 
                 target.health -= 2;
                 Debug.Log(target.health);
+                
+                
+
             }
         }
     }
@@ -31,7 +35,7 @@ public class Spell : Card
     {
         Transform enemyAllegiance = Functions.GetEnemyAllegiance(transform.parent.parent);
 
-        Transform enemyBoard1 = enemyAllegiance.GetChild(Functions.board1Index);
+        Transform enemyBoard1 = enemyAllegiance.GetChild(board1Index);
 
         List<Transform> selection = new List<Transform>();
 
@@ -49,7 +53,7 @@ public class Spell : Card
         GetComponent<Card>().type = CardType.Spell;
 
         int[] indexes = { 0, 1, 2 };
-        Functions.TransferCard(transform, transform.parent.parent.GetChild(Functions.handIndex), transform.parent.parent.GetChild(Functions.deckIndex), indexes);
+        Functions.TransferCard(transform, transform.parent.parent.GetChild(handIndex), transform.parent.parent.GetChild(deckIndex), indexes);
             
        
     }

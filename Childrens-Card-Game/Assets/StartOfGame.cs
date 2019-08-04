@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class StartOfGame : MonoBehaviour
 {
-    private cardEffectFunctions Functions;
+    private Functions Functions;
     
 
 
     // Start is called before the first frame update
     void Awake()
     {
-      Functions = GetComponent<cardEffectFunctions>();
+      Functions = GetComponent<Functions>();
 }
 
     private void Start()

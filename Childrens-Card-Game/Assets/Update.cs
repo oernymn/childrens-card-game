@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Variables;
 using System.Linq;
 
 
@@ -8,10 +9,6 @@ public class Update : MonoBehaviour
 {
     public float margin;
     public int maxHandSize;
-
-    public cardEffectFunctions Functions;
-    
-
 
     public void update(Transform container)
     {
@@ -40,7 +37,7 @@ public class Update : MonoBehaviour
 
         foreach (Transform child in hand)
         {
-            child.localScale = Functions.cardSize;
+            child.localScale = cardSize;
             // set the position of the leftmost card
             float leftMostPosition = hand.position.x - (margin / 2 * (cardsInHand - 1));
             // position every card after that a card's length to the right of eachother 
@@ -84,7 +81,7 @@ public class Update : MonoBehaviour
         foreach (Transform child in board)
         {
             // Sets the cards scale to its default size in global scale by dividing it by the parent's size.
-            child.localScale = new Vector3(Functions.cardSize.x / board.localScale.x, Functions.cardSize.y / board.localScale.y, Functions.cardSize.z / board.localScale.z);
+            child.localScale = new Vector3(cardSize.x / board.localScale.x, cardSize.y / board.localScale.y, cardSize.z / board.localScale.z);
 
             // set the position of the leftmost card equal to half the card's length
             float leftMostPosition = board.position.x - (margin / 2 * (cardsOnBoard - 1));
@@ -107,7 +104,7 @@ public class Update : MonoBehaviour
             {
                 card.localScale = Vector3.zero;
             }
-            card.position = new Vector3(graveyard.position.x, graveyard.position.y + (graveyard.childCount * Functions.cardSize.y) - (i * Functions.cardSize.y), graveyard.position.z);
+            card.position = new Vector3(graveyard.position.x, graveyard.position.y + (graveyard.childCount * cardSize.y) - (i * cardSize.y), graveyard.position.z);
 
             i++;
         }

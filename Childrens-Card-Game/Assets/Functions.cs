@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Variables;
 
 public class EffectEventArgs : EventArgs
 {
@@ -12,17 +13,31 @@ public class EffectEventArgs : EventArgs
     {
         before = Before;
         after = After;
+
+        
     }
 }
 
-public class cardEffectFunctions : MonoBehaviour
-{
 
-    public event EventHandler<EffectEventArgs> runEffects;
-    public event EventHandler<EffectEventArgs> runWheneverEffects;
+
+public class Functions : MonoBehaviour
+{
+   
+   static public event EventHandler<EffectEventArgs> runAfterEffects;
+   static public event EventHandler<EffectEventArgs> runWheneverEffects;
+
+    static public Transform RunEffects(Transform before, Transform after, bool update = true)
+    {
+        RunWheneverEffects(before, after);
+        // Applies the effect after the whenever effects have triggered.
+
+
+        before = RunAfterEffects(before, after, update);
+        return before;
+    }
 
     // psuedo overload to make it easier to make individual cards.  
-    public void RunWheneverEffects(Transform before, Transform after)
+   static private void RunWheneverEffects(Transform before, Transform after)
     {
         // Makes copies of after to signal what is going to happen.
         Transform becomingAfter = SetBefore(after);
@@ -30,24 +45,27 @@ public class cardEffectFunctions : MonoBehaviour
 
         // Revert after. Now we have what is going to be after the effect has happened (becomingAfter) and what is before the effect happened (after, before in WheneverCardEffect).
 
-        after = Instantiate(before);
-        after.parent = before.GetComponent<Card>().Parent;
-        after.SetSiblingIndex(before.GetComponent<Card>().index);
-        after.gameObject.SetActive(true);
-
+        after = Revert(before);
 
         EffectEventArgs becomingBeforeAfter = new EffectEventArgs(after, becomingAfter);
-        runWheneverEffects(this, becomingBeforeAfter);
-
-        // Applies the effect after the whenever effects have triggered.
+        runWheneverEffects(after, becomingBeforeAfter);
 
     }
 
-    public Transform RunAfterEffects(Transform before, Transform after, bool update = true)
+   static private Transform Revert(Transform before)
+    {
+        Transform after = Instantiate(before);
+        after.parent = before.GetComponent<Card>().Parent;
+        after.SetSiblingIndex(before.GetComponent<Card>().index);
+        after.gameObject.SetActive(true);
+        return after;
+    }
+
+   static private Transform RunAfterEffects(Transform before, Transform after, bool update = true)
     {
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
 
-        runEffects(this, beforeAfter);
+        runAfterEffects(after, beforeAfter);
 
         if (update == true)
         {
@@ -58,7 +76,7 @@ public class cardEffectFunctions : MonoBehaviour
         return before;
     }
 
-    public Transform SetBefore(Transform after)
+    static public Transform SetBefore(Transform after)
     {
 
         // Destroy all previous before-cards so they don't accumelate.
@@ -79,54 +97,9 @@ public class cardEffectFunctions : MonoBehaviour
         return before;
     }
 
-    public Transform cam;
-
-    public Transform everything;
-    public Transform everythingBefore;
-    public Transform Alliance;
-    public Transform Horde;
-
-
-    public int board1Index = 0;
-    public int board2Index = 1;
-    public int handIndex = 2;
-    public int deckIndex = 3;
-    public int graveyardIndex = 4;
-
-    public Vector3 cardSize = new Vector3(0.063f, 0.002f, 0.088f);
-
-    public enum Status
-    {
-        Neutral,
-        Attacking,
-        Defending,
-        BeingBounced,
-        BeingDrawn,
-        BeingPlayed,
-        BeingDamaged,
-    }
-
-
-    public enum CardType
-    {
-        Minion,
-        Enchantment,
-        Spell
-    }
-
-
-    Update UpdateFunctions;
-
-    private void Awake()
-    {
-        UpdateFunctions = GetComponent<Update>();
-
-       
-    }
-
    
 
-    public void updateAll()
+   static public void updateAll()
     {
         // Update all containers.
         foreach (Transform Allegiance in everything)
@@ -140,7 +113,7 @@ public class cardEffectFunctions : MonoBehaviour
         }
     }
 
-    public Transform GetEnemyAllegiance(Transform grandParent)
+    static public Transform GetEnemyAllegiance(Transform grandParent)
     {
         Transform enemy;
 
@@ -158,22 +131,10 @@ public class cardEffectFunctions : MonoBehaviour
         return enemy;
     }
 
-    public Transform GetWhatIsMousedOver()
-    {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-        {
-            return hit.transform;
 
-        }
-        else
-        {
-            updateAll();
-            return null;
-        }
-    }
 
     // draw the card at the indexes
-    public void TransferCard(Transform caller, Transform target, Transform source, int[] indexes)
+    static public void TransferCard(Transform caller, Transform target, Transform source, int[] indexes)
     {
 
         for (int i = 0; i < indexes.Length; i++)

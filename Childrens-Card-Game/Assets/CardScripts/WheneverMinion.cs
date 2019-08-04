@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static cardEffectFunctions;
+using static Functions;
+using static Variables;
 
 public class WheneverMinion : Card
 {
@@ -15,7 +16,7 @@ public class WheneverMinion : Card
         if (e.before.GetComponent<Card>().status != Status.BeingPlayed && e.after.GetComponent<Card>().status == Status.BeingPlayed)
         {
      
-
+            
         }
     }
 
@@ -24,9 +25,6 @@ public class WheneverMinion : Card
     {
         GetComponent<Card>().type = CardType.Minion;
 
-        
-            
-       
     }
 
 }

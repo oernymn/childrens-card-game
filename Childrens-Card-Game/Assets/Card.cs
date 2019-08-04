@@ -4,7 +4,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static cardEffectFunctions;
+using static Functions;
+using static Variables;
+
 
 public class Card : MonoBehaviour
 {
@@ -29,7 +31,7 @@ public class Card : MonoBehaviour
     Transform everything;
     Transform everythingBefore;
     Transform cardsFunctionsEtc;
-    protected cardEffectFunctions Functions;
+    private Functions Functions;
 
    
 
@@ -54,10 +56,10 @@ public class Card : MonoBehaviour
         everythingBefore = GameObject.Find("everythingBefore").transform;
 
         cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
-        Functions = cardsFunctionsEtc.GetComponent<cardEffectFunctions>();
+        Functions = cardsFunctionsEtc.GetComponent<Functions>();
 
         // subscribes to runEffects
-        Functions.runEffects += AfterCardEffect;
+        Functions.runAfterEffects += AfterCardEffect;
         Functions.runWheneverEffects += WheneverCardEffect;
 
         HashSet<Status> Is = new HashSet<Status> { Status.Neutral };
