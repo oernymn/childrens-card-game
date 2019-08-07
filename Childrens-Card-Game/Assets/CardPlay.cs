@@ -43,10 +43,10 @@ public class CardPlay : MonoBehaviour
         Debug.Log($" Dropped on: {droppedOn}.");
 
         // If it's a targeting spell.
-        if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetSelection() != null)
+        if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
         {
 
-            List<Transform> cardSelectionList = GetComponent<Card>().GetSelection();
+            List<Transform> cardSelectionList = GetComponent<Card>().GetTargets();
 
             foreach (Transform card in cardSelectionList)
             {
@@ -68,6 +68,7 @@ public class CardPlay : MonoBehaviour
                     after.GetComponent<Card>().status = Status.Neutral;
                     after.parent = transform.parent.parent.GetChild(graveyardIndex);
 
+                    RunEffects(before, after);
 
                 }
             }

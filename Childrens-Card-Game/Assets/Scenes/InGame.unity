@@ -980,6 +980,7 @@ GameObject:
   - component: {fileID: 961895229}
   - component: {fileID: 961895231}
   - component: {fileID: 961895230}
+  - component: {fileID: 961895232}
   m_Layer: 0
   m_Name: cardsFunctionsEtc
   m_TagString: Untagged
@@ -1026,17 +1027,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b23f00e0b4b9e4fad11781657669f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 501686742}
-  everything: {fileID: 600428036}
-  everythingBefore: {fileID: 1792796595}
-  Alliance: {fileID: 588600064}
-  Horde: {fileID: 1302044534}
-  board1Index: 0
-  board2Index: 1
-  handIndex: 2
-  deckIndex: 3
-  graveyardIndex: 4
-  cardSize: {x: 0.063, y: 0.002, z: 0.088}
 --- !u!114 &961895229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1055,7 +1045,6 @@ MonoBehaviour:
   status: 0
   type: 0
   target: {fileID: 0}
-  targeter: {fileID: 0}
 --- !u!114 &961895230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,8 +1071,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   margin: 0.063
   maxHandSize: 7
-  Functions: {fileID: 961895228}
   maxBoardSize: 4
+--- !u!114 &961895232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961895225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f768f5437cca94bbb303280b93402a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1119087996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1590,7 +1590,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   margin: 0.63
   maxHandSize: 7
-  Functions: {fileID: 0}
   maxBoardSize: 0
 --- !u!1 &1695352929
 GameObject:
@@ -1667,7 +1666,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   margin: 0
   maxHandSize: 0
-  Functions: {fileID: 0}
   maxBoardSize: 0
 --- !u!1 &1792796594
 GameObject:

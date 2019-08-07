@@ -19,48 +19,47 @@ public class Card : MonoBehaviour
     public virtual int maxHealth { get; set; }
     */
 
-   
+
     public int health;
 
     // For the 'before' cards.
-    public Transform Parent;
-    public int index;
+    public Transform Allegiance;
+    public Transform Container;
+    public int Index;
 
-
-
-    Transform everything;
-    Transform everythingBefore;
-    Transform cardsFunctionsEtc;
-    private Functions Functions;
-
-   
+    public Transform board1;
+    public Transform board2;
+    public Transform hand;
+    public Transform deck;
 
     public Status status;
     public CardType type;
     public Transform target;
+    public Transform targeter;
 
-    
 
     public virtual void AfterCardEffect(object sender, EffectEventArgs e) { }
     public virtual void WheneverCardEffect(object sender, EffectEventArgs e) { }
 
-    public virtual List<Transform> GetSelection()
+
+    public virtual List<Transform> GetTargets()
     {
         return null;
     }
 
     private void Awake()
-    {
+    {    
 
-        everything = GameObject.Find("everything").transform;
-        everythingBefore = GameObject.Find("everythingBefore").transform;
 
-        cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
-        Functions = cardsFunctionsEtc.GetComponent<Functions>();
+        // Subscribes to runEffects
+        runAfterEffects += AfterCardEffect;
+        runWheneverEffects += WheneverCardEffect;
 
-        // subscribes to runEffects
-        Functions.runAfterEffects += AfterCardEffect;
-        Functions.runWheneverEffects += WheneverCardEffect;
+        // Registers this card's side's containers.
+        hand = transform.parent.parent.GetChild(handIndex);
+        board1 = transform.parent.parent.GetChild(board1Index);
+        board2 = transform.parent.parent.GetChild(board2Index);
+        deck = transform.parent.parent.GetChild(deckIndex);
 
         HashSet<Status> Is = new HashSet<Status> { Status.Neutral };
 
@@ -68,10 +67,10 @@ public class Card : MonoBehaviour
 
 }
 
-   
 
 
 
-    
+
+
 
 

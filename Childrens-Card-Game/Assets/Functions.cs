@@ -9,12 +9,20 @@ public class EffectEventArgs : EventArgs
     public Transform before { get; set; }
     public Transform after { get; set; }
 
+    public List<Transform> BeforeList;
+    public List<Transform> AfterList;
+
     public EffectEventArgs(Transform Before, Transform After)
     {
         before = Before;
-        after = After;
+        after = After;    
+    }
+    public EffectEventArgs(List<Transform> Before, List<Transform> After)
+    {
+        BeforeList = Before;
+        AfterList = After;
 
-        
+
     }
 }
 
@@ -26,11 +34,13 @@ public class Functions : MonoBehaviour
    static public event EventHandler<EffectEventArgs> runAfterEffects;
    static public event EventHandler<EffectEventArgs> runWheneverEffects;
 
-    static public Transform RunEffects(Transform before, Transform after, bool update = true)
+   
+
+    static public Transform RunEffects(Transform before, Transform after, Action<Transform> CardEffect, bool update = true)
     {
         RunWheneverEffects(before, after);
         // Applies the effect after the whenever effects have triggered.
-
+        CardEffect(after);
 
         before = RunAfterEffects(before, after, update);
         return before;
@@ -45,23 +55,60 @@ public class Functions : MonoBehaviour
 
         // Revert after. Now we have what is going to be after the effect has happened (becomingAfter) and what is before the effect happened (after, before in WheneverCardEffect).
 
-        after = Revert(before);
+        after = RevertTo(before);
 
         EffectEventArgs becomingBeforeAfter = new EffectEventArgs(after, becomingAfter);
         runWheneverEffects(after, becomingBeforeAfter);
 
+        Destroy(becomingAfter);
     }
 
-   static private Transform Revert(Transform before)
+    static private void RunWheneverEffects(List<Transform> BeforeList, List<Transform> AfterList)
+    {
+        // Makes copies of after to signal what is going to happen.
+        List<Transform> Becoming = SetBefore(AfterList);
+
+
+        // Revert after. Now we have what is going to be after the effect has happened (becomingAfter) and what is before the effect happened (after, before in WheneverCardEffect).
+
+        AfterList = RevertTo(BeforeList);
+
+        EffectEventArgs becomingBeforeAfter = new EffectEventArgs(AfterList, Becoming);
+        runWheneverEffects(AfterList, becomingBeforeAfter);
+
+        foreach ( Transform card in Becoming)
+        {
+            Destroy(card);
+        }
+    }
+
+    static private Transform RevertTo(Transform before)
     {
         Transform after = Instantiate(before);
-        after.parent = before.GetComponent<Card>().Parent;
-        after.SetSiblingIndex(before.GetComponent<Card>().index);
+        after.parent = before.GetComponent<Card>().Container;
+        after.SetSiblingIndex(before.GetComponent<Card>().Index);
         after.gameObject.SetActive(true);
         return after;
     }
 
-   static private Transform RunAfterEffects(Transform before, Transform after, bool update = true)
+    static private List<Transform> RevertTo(List<Transform> BeforeList)
+    {
+        List<Transform> AfterList = new List<Transform>();
+
+        foreach (Transform card in BeforeList)
+        {
+
+            Transform after = Instantiate(card);
+            after.parent = card.GetComponent<Card>().Container;
+            after.SetSiblingIndex(card.GetComponent<Card>().Index);
+            after.gameObject.SetActive(true);
+            AfterList.Add(after);
+            
+        }
+        return AfterList;
+    }
+
+    static private Transform RunAfterEffects(Transform before, Transform after, bool update = true)
     {
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
 
@@ -76,30 +123,75 @@ public class Functions : MonoBehaviour
         return before;
     }
 
-    static public Transform SetBefore(Transform after)
+    static private List<Transform> RunAfterEffects(List<Transform> BeforeList, List<Transform> AfterList, bool update = true)
     {
+        EffectEventArgs beforeAfter = new EffectEventArgs(BeforeList, AfterList);
 
-        // Destroy all previous before-cards so they don't accumelate.
-        
-        foreach (Transform card in everythingBefore)
+        runAfterEffects(AfterList, beforeAfter);
+
+        if (update == true)
+        {
+            updateAll();
+        }
+
+        foreach ( Transform card in BeforeList)
         {
             Destroy(card.gameObject);
         }
         
-        // need to set After inactive because otherwise 'before' will run its effects.
-        after.gameObject.SetActive(false);
-        Transform before = Instantiate(after, everythingBefore);
-        after.gameObject.SetActive(true);
-        // Registers previous parent and index.
-        before.gameObject.GetComponent<Card>().Parent = after.parent;
-        before.gameObject.GetComponent<Card>().index = after.GetSiblingIndex();
-        before.name = after.name;
+        BeforeList = SetBefore(AfterList);
+        return BeforeList;
+    }
+
+    static public Transform SetBefore(Transform after)
+    {
+
+        // Destroy all previous before-cards so they don't accumelate.
+        /*
+        foreach (Transform card in everythingBefore)
+        {
+            Destroy(card.gameObject);
+        }
+        */
+            // Registers previous parent and index.
+            after.GetComponent<Card>().Allegiance = after.parent;
+            after.GetComponent<Card>().Container = after.parent;
+            after.GetComponent<Card>().Index = after.GetSiblingIndex();
+            // Need to set After inactive because otherwise 'before' will run its effects.
+            after.gameObject.SetActive(false);
+            Transform before = Instantiate(after, everythingBefore);
+            after.gameObject.SetActive(true);
+            // Rename to get rid of the (Clone) text.
+            before.name = after.name;
+ 
         return before;
     }
 
-   
+    static public List<Transform> SetBefore(List<Transform> AfterList)
+    {
+        List<Transform> BeforeList = new List<Transform>();
 
-   static public void updateAll()
+        foreach (Transform card in AfterList)
+        {
+
+            // Registers previous parent and index.
+            card.GetComponent<Card>().Allegiance = card.parent;
+            card.GetComponent<Card>().Container = card.parent;
+            card.GetComponent<Card>().Index = card.GetSiblingIndex();
+            // Need to set card inactive because otherwise 'before' will run its effects.
+            card.gameObject.SetActive(false);
+            Transform before = Instantiate(card, everythingBefore);
+            card.gameObject.SetActive(true);
+            // Rename to get rid of the (Clone) text.
+            before.name = card.name;
+            BeforeList.Add(before);
+        }
+        return BeforeList;
+    }
+
+
+
+    static public void updateAll()
     {
         // Update all containers.
         foreach (Transform Allegiance in everything)
@@ -113,17 +205,17 @@ public class Functions : MonoBehaviour
         }
     }
 
-    static public Transform GetEnemyAllegiance(Transform grandParent)
+    static public Transform GetEnemy(Transform container)
     {
         Transform enemy;
 
-        if (grandParent == Alliance)
+        if (container.parent == Alliance)
         {
-            enemy = Horde;
+            enemy = Horde.GetChild(container.GetSiblingIndex());
         } else 
-        if (grandParent == Horde)
+        if (container.parent == Horde)
         {
-            enemy = Alliance;
+            enemy = Alliance.GetChild(container.GetSiblingIndex());
         } else
         {
             return null;
@@ -131,11 +223,15 @@ public class Functions : MonoBehaviour
         return enemy;
     }
 
+   
+
 
 
     // draw the card at the indexes
-    static public void TransferCard(Transform caller, Transform target, Transform source, int[] indexes)
+    static public void TransferCard(Transform caller, Transform targetContainer, Transform source, int[] indexes)
     {
+        List<Transform> AfterList = new List<Transform>();
+        List<Transform> BeforeList = new List<Transform>();
 
         for (int i = 0; i < indexes.Length; i++)
         {
@@ -155,31 +251,59 @@ public class Functions : MonoBehaviour
                 // -i to prevent index inflation from movement
                 // Need to create a copy of everything because the assignment only creates a reference.
 
+                // Single item list. Will be deleted after each iteration.
 
-                Transform after = source.GetChild(indexes[i] - i);
-                Transform before = SetBefore(after);
+                Transform after;
+                Transform before;
 
-                after.GetComponent<Card>().status = Status.BeingDrawn;
+                after = source.GetChild(indexes[i] - i);
+                before = SetBefore(after);
 
-                caller.GetComponent<Card>().target = after;
+                AfterList.Add(after);
+                BeforeList.Add(before);
 
-                before = RunEffects(before, after);
+                Card afterCard = after.GetComponent<Card>();
 
-                // then transfers the card to the target location, 
-                after.transform.parent = target;
-                after.GetComponent<Card>().status = Status.Neutral;
-                
-                caller.GetComponent<Card>().target = null;
-                //  checks every other card if they have an effect that triggers off the transfer.
+                // Transfers the card to the target location. Need to call whenever effect etc manually because the effect delegate can only have one argument.
+                Draw(caller, targetContainer, after, afterCard);
+                RunWheneverEffects(before, after);
+                Draw(caller, targetContainer, after, afterCard);
+                before = RunAfterEffects(before, after);
 
-                RunEffects(before, after);
-
+                ReturnToNeutral(caller, afterCard);
+                RunWheneverEffects(before, after);
+                ReturnToNeutral(caller, afterCard);
+                before = RunAfterEffects(before, after);
 
             }
-
-
         }
+
+        // Already applied effects on the cards in the list.
+
+        RunWheneverEffects(BeforeList, AfterList);
+
+        foreach (Transform card in AfterList)
+        {
+            Card afterCard = card.GetComponent<Card>();
+            Draw(caller, targetContainer, card, afterCard);
+        }
+
+        BeforeList = RunAfterEffects(BeforeList, AfterList);
 
     }
 
+    private static void Draw(Transform caller, Transform targetContainer, Transform after, Card afterCard)
+    {
+        afterCard.status = Status.BeingDrawn;
+        afterCard.targeter = caller;
+        after.transform.parent = targetContainer;
+    }
+
+    private static void ReturnToNeutral(Transform caller, Card afterCard)
+    {
+        afterCard.status = Status.Neutral;
+        caller.GetComponent<Card>().targeter = null;
+    }
+
+    
 }

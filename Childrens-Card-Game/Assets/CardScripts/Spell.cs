@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Variables;
+using static Functions;
 
 
 public class Spell : Card
@@ -15,47 +16,46 @@ public class Spell : Card
             && e.after == transform)
         {
 
-            Card target = e.after.GetComponent<Card>().target.GetComponent<Card>();
+            Transform target = e.after.GetComponent<Card>().target;
+            Transform before = SetBefore(target);
 
-            if (target.type == CardType.Minion)
-            {
-                
-                Debug.Log(target.health);
+            BattleCry(target);
+            RunEffects(before, target, BattleCry);
 
-                target.health -= 2;
-                Debug.Log(target.health);
-                
-                
-
-            }
         }
     }
 
-    public override List<Transform> GetSelection()
+    public void BattleCry(Transform after)
     {
-        Transform enemyAllegiance = Functions.GetEnemyAllegiance(transform.parent.parent);
 
-        Transform enemyBoard1 = enemyAllegiance.GetChild(board1Index);
+        Card target = after.GetComponent<Card>();
+
+        if (target.type == CardType.Minion)
+        {
+
+            Debug.Log($"From {target.health} health");
+            target.health -= 2;
+            Debug.Log($"To {target.health} health");
+        }
+    }
+
+    public override List<Transform> GetTargets()
+    {
+       Transform enemyBoard1 = GetEnemy(board1);
 
         List<Transform> selection = new List<Transform>();
 
         foreach (Transform card in enemyBoard1)
         {
             selection.Add(card);
-            
 
         }
         return selection;
     }
 
-    private void Start()
+    private void Awake()
     {
-        GetComponent<Card>().type = CardType.Spell;
-
-        int[] indexes = { 0, 1, 2 };
-        Functions.TransferCard(transform, transform.parent.parent.GetChild(handIndex), transform.parent.parent.GetChild(deckIndex), indexes);
-            
-       
+        GetComponent<Card>().type = CardType.Spell;    
     }
-
+    
 }

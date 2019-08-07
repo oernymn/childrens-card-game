@@ -5,17 +5,14 @@ using UnityEngine;
 public class Variables : MonoBehaviour
 {
 
-    static public Transform Hand { get
-        {
-            Functions.GetEnemyAllegiance().GetChild(handIndex);
-        }
-    }
+   
 
 
     static public Update UpdateFunctions;
 
     static public Transform cam;
 
+   
     static public Transform everything;
     static public Transform everythingBefore;
     static public Transform Alliance;
@@ -49,5 +46,14 @@ public class Variables : MonoBehaviour
         Spell
     }
 
+    private void Awake()
+    {
+        everything = GameObject.Find("everything").transform;
+        everythingBefore = GameObject.Find("everythingBefore").transform;
+        Alliance = GameObject.Find("Alliance").transform;
+        Horde = GameObject.Find("Horde").transform;
+
+
+    }
 
 }
