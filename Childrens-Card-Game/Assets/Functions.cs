@@ -21,12 +21,8 @@ public class EffectEventArgs : EventArgs
     {
         BeforeList = Before;
         AfterList = After;
-
-
     }
 }
-
-
 
 public class Functions : MonoBehaviour
 {
@@ -47,23 +43,24 @@ public class Functions : MonoBehaviour
     }
 
     // psuedo overload to make it easier to make individual cards.  
-   static private void RunWheneverEffects(Transform before, Transform after)
+   static public Transform RunWheneverEffects(Transform before, Transform after)
     {
         // Makes copies of after to signal what is going to happen.
-        Transform becomingAfter = SetBefore(after);
+        Transform Becoming = SetBefore(after);
 
 
         // Revert after. Now we have what is going to be after the effect has happened (becomingAfter) and what is before the effect happened (after, before in WheneverCardEffect).
+        after = RevertTo(before, after);
 
-        after = RevertTo(before);
+        EffectEventArgs becomingEventArg = new EffectEventArgs(after, Becoming);
+        runWheneverEffects(after, becomingEventArg);
 
-        EffectEventArgs becomingBeforeAfter = new EffectEventArgs(after, becomingAfter);
-        runWheneverEffects(after, becomingBeforeAfter);
+        Destroy(Becoming.gameObject);
 
-        Destroy(becomingAfter);
+        return after;
     }
 
-    static private void RunWheneverEffects(List<Transform> BeforeList, List<Transform> AfterList)
+    static public void RunWheneverEffects(List<Transform> BeforeList, List<Transform> AfterList)
     {
         // Makes copies of after to signal what is going to happen.
         List<Transform> Becoming = SetBefore(AfterList);
@@ -78,12 +75,14 @@ public class Functions : MonoBehaviour
 
         foreach ( Transform card in Becoming)
         {
-            Destroy(card);
+            Destroy(card.gameObject);
         }
     }
 
-    static private Transform RevertTo(Transform before)
+    static private Transform RevertTo(Transform before, Transform oldAfter)
     {
+        Destroy(oldAfter.gameObject);
+        
         Transform after = Instantiate(before);
         after.parent = before.GetComponent<Card>().Container;
         after.SetSiblingIndex(before.GetComponent<Card>().Index);
@@ -108,22 +107,24 @@ public class Functions : MonoBehaviour
         return AfterList;
     }
 
-    static private Transform RunAfterEffects(Transform before, Transform after, bool update = true)
+    static public Transform RunAfterEffects(Transform before, Transform after, bool update = true)
     {
         EffectEventArgs beforeAfter = new EffectEventArgs(before, after);
 
         runAfterEffects(after, beforeAfter);
 
+        Destroy(before.gameObject);
+        before = SetBefore(after);
+
         if (update == true)
         {
             updateAll();
         }
-        Destroy(before.gameObject);
-        before = SetBefore(after);
+
         return before;
     }
 
-    static private List<Transform> RunAfterEffects(List<Transform> BeforeList, List<Transform> AfterList, bool update = true)
+    static public List<Transform> RunAfterEffects(List<Transform> BeforeList, List<Transform> AfterList, bool update = true)
     {
         EffectEventArgs beforeAfter = new EffectEventArgs(BeforeList, AfterList);
 
@@ -154,7 +155,7 @@ public class Functions : MonoBehaviour
         }
         */
             // Registers previous parent and index.
-            after.GetComponent<Card>().Allegiance = after.parent;
+            after.GetComponent<Card>().Allegiance = after.parent.parent;
             after.GetComponent<Card>().Container = after.parent;
             after.GetComponent<Card>().Index = after.GetSiblingIndex();
             // Need to set After inactive because otherwise 'before' will run its effects.
@@ -205,7 +206,7 @@ public class Functions : MonoBehaviour
         }
     }
 
-    static public Transform GetEnemy(Transform container)
+    static public Transform GetEnemyContainer(Transform container)
     {
         Transform enemy;
 
@@ -222,9 +223,6 @@ public class Functions : MonoBehaviour
         }
         return enemy;
     }
-
-   
-
 
 
     // draw the card at the indexes
@@ -246,7 +244,6 @@ public class Functions : MonoBehaviour
             else
 
             {
-
                 // if the deck does have enough cards: Identifies the cards as they were before and after the effect.
                 // -i to prevent index inflation from movement
                 // Need to create a copy of everything because the assignment only creates a reference.

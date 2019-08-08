@@ -78,6 +78,7 @@ public class Update : MonoBehaviour
 
         int i = 0;
 
+        // Positions the cards.
         foreach (Transform child in board)
         {
             // Sets the cards scale to its default size in global scale by dividing it by the parent's size.

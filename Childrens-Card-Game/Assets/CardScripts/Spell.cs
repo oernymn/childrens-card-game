@@ -41,7 +41,7 @@ public class Spell : Card
 
     public override List<Transform> GetTargets()
     {
-       Transform enemyBoard1 = GetEnemy(board1);
+       Transform enemyBoard1 = GetEnemyContainer(board1);
 
         List<Transform> selection = new List<Transform>();
 

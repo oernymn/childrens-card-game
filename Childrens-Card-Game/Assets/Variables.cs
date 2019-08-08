@@ -48,11 +48,12 @@ public class Variables : MonoBehaviour
 
     private void Awake()
     {
+        cam = GameObject.Find("Main Camera").transform;
         everything = GameObject.Find("everything").transform;
         everythingBefore = GameObject.Find("everythingBefore").transform;
         Alliance = GameObject.Find("Alliance").transform;
         Horde = GameObject.Find("Horde").transform;
-
+        UpdateFunctions = GetComponent<Update>();
 
     }
 

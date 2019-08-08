@@ -60,23 +60,22 @@ public class CardPlay : MonoBehaviour
                     Transform after = transform;
                     Transform before = Functions.SetBefore(after);
 
-                    after.GetComponent<Card>().status = Status.BeingPlayed;
-                    after.GetComponent<Card>().target = droppedOn;
+                    PlayCardTargeted(droppedOn, after);
+                    RunWheneverEffects(before, after);
+                    PlayCardTargeted(droppedOn, after);
+                    before = RunAfterEffects(before, after);
 
-                    RunEffects(before, after);
 
-                    after.GetComponent<Card>().status = Status.Neutral;
-                    after.parent = transform.parent.parent.GetChild(graveyardIndex);
+                    SendToGraveYard(after);
+                    RunWheneverEffects(before, after);
+                    SendToGraveYard(after);
+                    RunAfterEffects(before, after);
 
-                    RunEffects(before, after);
 
                 }
             }
 
         }
-
-
-
         // If it is within the boundries of boardX and it's a minion it plays it.
         else if (droppedOn == board1 && GetComponent<Card>().type == CardType.Minion)
         {
@@ -96,15 +95,23 @@ public class CardPlay : MonoBehaviour
         Functions.updateAll();
     }
 
-    public void PlayCard(Transform after, Transform target)
+    private void SendToGraveYard(Transform after)
     {
-
+        after.GetComponent<Card>().status = Status.Neutral;
+        after.parent = transform.parent.parent.GetChild(graveyardIndex);
     }
+
+    private static void PlayCardTargeted(Transform droppedOn, Transform after)
+    {
+        after.GetComponent<Card>().status = Status.BeingPlayed;
+        after.GetComponent<Card>().target = droppedOn;
+    }
+
 
     public void PlayToBoard(Transform card, Transform targetBoard)
     {
         // Snaps back if the board is full.
-        if (targetBoard.childCount >= GetComponent<Update>().maxBoardSize)
+        if (targetBoard.childCount >= UpdateFunctions.maxBoardSize)
         {
             Functions.updateAll();
             return;
@@ -113,15 +120,18 @@ public class CardPlay : MonoBehaviour
         Transform after = transform;
         Transform before = Functions.SetBefore(after);
 
-        after.GetComponent<Card>().status = Status.BeingPlayed;
+
+        PutOnBoard(targetBoard, after);
+        after = RunWheneverEffects(before, after);
+        PutOnBoard(targetBoard, after);
         // Runs any OnPlay effects. Not updating because then it would update the hand and screw up the x positions
+        before = RunAfterEffects(before, after, false);
+    }
 
-        Debug.Log($"Before: {before.name}. After: {after.name}");
-        before = Functions.RunEffects(before, after, false);
-
+    private static void PutOnBoard(Transform targetBoard, Transform after)
+    {
+        after.GetComponent<Card>().status = Status.BeingPlayed;
         after.transform.parent = targetBoard;
-        // Checks OnSummon effects.
-        before = Functions.RunEffects(before, after);
     }
 
     public Transform GetWhatIsMousedOver()

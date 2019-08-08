@@ -47,20 +47,21 @@ public class Card : MonoBehaviour
         return null;
     }
 
-    private void Awake()
-    {    
-
+    private void Start()
+    {
 
         // Subscribes to runEffects
         runAfterEffects += AfterCardEffect;
         runWheneverEffects += WheneverCardEffect;
 
-        // Registers this card's side's containers.
-        hand = transform.parent.parent.GetChild(handIndex);
-        board1 = transform.parent.parent.GetChild(board1Index);
-        board2 = transform.parent.parent.GetChild(board2Index);
-        deck = transform.parent.parent.GetChild(deckIndex);
-
+        if (transform.parent != null)
+        {
+            // Registers this card's side's containers.
+            hand = transform.parent.parent.GetChild(handIndex);
+            board1 = transform.parent.parent.GetChild(board1Index);
+            board2 = transform.parent.parent.GetChild(board2Index);
+            deck = transform.parent.parent.GetChild(deckIndex);
+        }
         HashSet<Status> Is = new HashSet<Status> { Status.Neutral };
 
     }

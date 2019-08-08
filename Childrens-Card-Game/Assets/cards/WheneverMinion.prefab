@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1240015888444629152}
   - component: {fileID: 1240015888444629153}
   - component: {fileID: 1240015888444629181}
+  - component: {fileID: -6714594000356252992}
   - component: {fileID: 1228884459112101637}
   m_Layer: 0
   m_Name: WheneverMinion
@@ -105,8 +106,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117f2bd75a356ad49a723b55144ffab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  cardsFunctionsEtc: {fileID: 0}
+--- !u!114 &-6714594000356252992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240015888444629154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160b2be0e6c7eaf4eb776ad660f378f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1228884459112101637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,10 +131,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  Parent: {fileID: 0}
-  index: 0
+  Allegiance: {fileID: 0}
+  Container: {fileID: 0}
+  Index: 0
+  board1: {fileID: 0}
+  board2: {fileID: 0}
+  hand: {fileID: 0}
+  deck: {fileID: 0}
   status: 0
   type: 0
   target: {fileID: 0}
   targeter: {fileID: 0}
-  isBecoming: 0
