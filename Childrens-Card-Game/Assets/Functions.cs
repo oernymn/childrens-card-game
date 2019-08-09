@@ -52,6 +52,8 @@ public class Functions : MonoBehaviour
         // Revert after. Now we have what is going to be after the effect has happened (becomingAfter) and what is before the effect happened (after, before in WheneverCardEffect).
         after = RevertTo(before, after);
 
+        Debug.Log("WheneverEffects, Board: " + after.parent + "Cards: " + after.parent.childCount);
+
         EffectEventArgs becomingEventArg = new EffectEventArgs(after, Becoming);
         runWheneverEffects(after, becomingEventArg);
 
@@ -81,9 +83,13 @@ public class Functions : MonoBehaviour
 
     static private Transform RevertTo(Transform before, Transform oldAfter)
     {
+        // Need to change parent because destruction is too slow.
+        oldAfter.parent = everythingBefore;
         Destroy(oldAfter.gameObject);
-        
+
         Transform after = Instantiate(before);
+        // Get rid of the (Clone) text.
+        after.name = after.name.Replace("(Clone)", "");
         after.parent = before.GetComponent<Card>().Container;
         after.SetSiblingIndex(before.GetComponent<Card>().Index);
         after.gameObject.SetActive(true);
@@ -147,13 +153,7 @@ public class Functions : MonoBehaviour
     static public Transform SetBefore(Transform after)
     {
 
-        // Destroy all previous before-cards so they don't accumelate.
-        /*
-        foreach (Transform card in everythingBefore)
-        {
-            Destroy(card.gameObject);
-        }
-        */
+       
             // Registers previous parent and index.
             after.GetComponent<Card>().Allegiance = after.parent.parent;
             after.GetComponent<Card>().Container = after.parent;
@@ -162,9 +162,9 @@ public class Functions : MonoBehaviour
             after.gameObject.SetActive(false);
             Transform before = Instantiate(after, everythingBefore);
             after.gameObject.SetActive(true);
-            // Rename to get rid of the (Clone) text.
-            before.name = after.name;
- 
+        // Get rid of the (Clone) text.
+        before.name = before.name.Replace("(Clone)", "");
+
         return before;
     }
 

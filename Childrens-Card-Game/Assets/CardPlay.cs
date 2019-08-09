@@ -66,9 +66,9 @@ public class CardPlay : MonoBehaviour
                     before = RunAfterEffects(before, after);
 
 
-                    SendToGraveYard(after);
+                    SendToGraveyard(after);
                     RunWheneverEffects(before, after);
-                    SendToGraveYard(after);
+                    SendToGraveyard(after);
                     RunAfterEffects(before, after);
 
 
@@ -92,10 +92,10 @@ public class CardPlay : MonoBehaviour
         // Sets layer back to default.
 
         transform.gameObject.layer = 0;
-        Functions.updateAll();
+      //  Functions.updateAll();
     }
 
-    private void SendToGraveYard(Transform after)
+    private void SendToGraveyard(Transform after)
     {
         after.GetComponent<Card>().status = Status.Neutral;
         after.parent = transform.parent.parent.GetChild(graveyardIndex);
@@ -120,18 +120,17 @@ public class CardPlay : MonoBehaviour
         Transform after = transform;
         Transform before = Functions.SetBefore(after);
 
-
         PutOnBoard(targetBoard, after);
         after = RunWheneverEffects(before, after);
         PutOnBoard(targetBoard, after);
         // Runs any OnPlay effects. Not updating because then it would update the hand and screw up the x positions
-        before = RunAfterEffects(before, after, false);
+        before = RunAfterEffects(before, after);
     }
 
     private static void PutOnBoard(Transform targetBoard, Transform after)
     {
         after.GetComponent<Card>().status = Status.BeingPlayed;
-        after.transform.parent = targetBoard;
+        after.parent = targetBoard;
     }
 
     public Transform GetWhatIsMousedOver()

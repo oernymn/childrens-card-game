@@ -63,9 +63,7 @@ public class Update : MonoBehaviour
             CardList.Add(card);
         }
 
-
         CardList.Sort((p, q) => p.position.x.CompareTo(q.position.x));
-
 
         for (int n = 0; n < CardList.Count; n++)
         {
@@ -76,11 +74,17 @@ public class Update : MonoBehaviour
 
         int cardsOnBoard = board.childCount;
 
+        Debug.Log("Cards on Board: " + board.parent + " | " + board.name + " | " + cardsOnBoard);
+
+        
+
         int i = 0;
 
         // Positions the cards.
         foreach (Transform child in board)
         {
+            Debug.Log("Card name: " + child.name);
+
             // Sets the cards scale to its default size in global scale by dividing it by the parent's size.
             child.localScale = new Vector3(cardSize.x / board.localScale.x, cardSize.y / board.localScale.y, cardSize.z / board.localScale.z);
 
