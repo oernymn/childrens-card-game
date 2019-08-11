@@ -10,17 +10,13 @@ using static Variables;
 
 public class Card : MonoBehaviour
 {
-    /*
-    public virtual int manaCost { get; set; };
-    public virtual int baseAttack { get; set; }
-    public virtual int attack { get; set; }
-    public virtual int baseHealth { get; set; }
-    public virtual int health { get; set; }
-    public virtual int maxHealth { get; set; }
-    */
 
 
-    public int health;
+    public int baseHealth;
+    public int maxHealth;
+    public int currentHealth;
+    public int baseAttack;
+    public int attack;
 
     // For the 'before' cards.
     public Transform Allegiance;
@@ -34,8 +30,10 @@ public class Card : MonoBehaviour
 
     public Status status;
     public CardType type;
-    public Transform target;
-    public Transform targeter;
+    public Card target;
+    public Card targeter;
+    public Card affectee;
+    public Card affecter;
 
 
     public virtual void AfterCardEffect(object sender, EffectEventArgs e) { }

@@ -74,10 +74,6 @@ public class Update : MonoBehaviour
 
         int cardsOnBoard = board.childCount;
 
-        Debug.Log("Cards on Board: " + board.parent + " | " + board.name + " | " + cardsOnBoard);
-
-        
-
         int i = 0;
 
         // Positions the cards.

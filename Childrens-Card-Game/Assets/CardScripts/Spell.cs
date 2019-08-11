@@ -16,26 +16,22 @@ public class Spell : Card
             && e.after == transform)
         {
 
-            Transform target = e.after.GetComponent<Card>().target;
-            Transform before = SetBefore(target);
-
-            BattleCry(target);
-            RunEffects(before, target, BattleCry);
+            Card target = e.after.GetComponent<Card>().target;
+            
+            RunEffects(target, this, BattleCry);
 
         }
     }
 
-    public void BattleCry(Transform after)
+    public void BattleCry(Card target, Card affecter)
     {
-
-        Card target = after.GetComponent<Card>();
 
         if (target.type == CardType.Minion)
         {
 
-            Debug.Log($"From {target.health} health");
-            target.health -= 2;
-            Debug.Log($"To {target.health} health");
+            Debug.Log($"From {target.currentHealth} health");
+            target.currentHealth -= 2;
+            Debug.Log($"To {target.currentHealth} health");
         }
     }
 

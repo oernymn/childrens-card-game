@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Minion : Card
 {
     /*
@@ -26,7 +27,8 @@ public class Minion : Card
 
     private void Awake()
     {
-        health = 4;
+        GetComponent<Card>().type = Variables.CardType.Minion;
+        currentHealth = 4;
     }
 
 

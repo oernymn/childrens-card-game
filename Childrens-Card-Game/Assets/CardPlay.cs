@@ -36,6 +36,7 @@ public class CardPlay : MonoBehaviour
         }
         else
         {
+            transform.gameObject.layer = 0;
             return;
         }
 
@@ -57,8 +58,8 @@ public class CardPlay : MonoBehaviour
                     Debug.Log($"Spell cast on {droppedOn}");
 
 
-                    Transform after = transform;
-                    Transform before = Functions.SetBefore(after);
+                    Card after = GetComponent<Card>();
+                    Card before = SetBefore(after);
 
                     PlayCardTargeted(droppedOn, after);
                     RunWheneverEffects(before, after);
@@ -79,12 +80,16 @@ public class CardPlay : MonoBehaviour
         // If it is within the boundries of boardX and it's a minion it plays it.
         else if (droppedOn == board1 && GetComponent<Card>().type == CardType.Minion)
         {
+            transform.gameObject.layer = 0;
+
             PlayToBoard(transform, board1);
         }
 
         // if it is within boardXX and it's an enchantment play it.
         else if (droppedOn == board2 && GetComponent<Card>().type == CardType.Enchantment)
         {
+            transform.gameObject.layer = 0;
+
             PlayToBoard(transform, board2);
         }
 
@@ -95,16 +100,16 @@ public class CardPlay : MonoBehaviour
       //  Functions.updateAll();
     }
 
-    private void SendToGraveyard(Transform after)
+    private void SendToGraveyard(Card after)
     {
-        after.GetComponent<Card>().status = Status.Neutral;
-        after.parent = transform.parent.parent.GetChild(graveyardIndex);
+        after.status = Status.Neutral;
+        after.transform.parent = transform.parent.parent.GetChild(graveyardIndex);
     }
 
-    private static void PlayCardTargeted(Transform droppedOn, Transform after)
+    private static void PlayCardTargeted(Transform droppedOn, Card after)
     {
-        after.GetComponent<Card>().status = Status.BeingPlayed;
-        after.GetComponent<Card>().target = droppedOn;
+        after.status = Status.BeingPlayed;
+        after.target = droppedOn.GetComponent<Card>();
     }
 
 
@@ -117,8 +122,8 @@ public class CardPlay : MonoBehaviour
             return;
         }
 
-        Transform after = transform;
-        Transform before = Functions.SetBefore(after);
+        Card after = GetComponent<Card>();
+        Card before = SetBefore(after);
 
         PutOnBoard(targetBoard, after);
         after = RunWheneverEffects(before, after);
@@ -127,23 +132,11 @@ public class CardPlay : MonoBehaviour
         before = RunAfterEffects(before, after);
     }
 
-    private static void PutOnBoard(Transform targetBoard, Transform after)
+    private static void PutOnBoard(Transform targetBoard, Card after)
     {
-        after.GetComponent<Card>().status = Status.BeingPlayed;
-        after.parent = targetBoard;
+        after.status = Status.BeingPlayed;
+        after.transform.parent = targetBoard;
     }
 
-    public Transform GetWhatIsMousedOver()
-    {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-        {
-            return hit.transform;
-
-        }
-        else
-        {
-            Functions.updateAll();
-            return null;
-        }
-    }
+    
 }

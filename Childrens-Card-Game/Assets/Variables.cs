@@ -30,6 +30,7 @@ public class Variables : MonoBehaviour
     public enum Status
     {
         Neutral,
+        ReadyToAttack,
         Attacking,
         Defending,
         BeingBounced,
