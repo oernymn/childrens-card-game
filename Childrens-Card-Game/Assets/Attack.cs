@@ -11,41 +11,38 @@ public class Attack : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0) && GetWhatIsMousedOver() != null)
 
-        
-
-        // When you click on a card on board1.
-        if (Input.GetMouseButtonDown(0) && GetWhatIsMousedOver() != null && GetWhatIsMousedOver().GetComponent<Card>() != null
-            && GetWhatIsMousedOver().parent.name == "board1")
+        // Selects attacker
+        if (GetWhatIsMousedOver().GetComponent<Card>().type == CardType.Minion
+            && (GetWhatIsMousedOver().parent.name == "board1" && attacker == null))
         {
+            attacker = GetWhatIsMousedOver().GetComponent<Card>();
+           
 
-            Card minion = GetWhatIsMousedOver().GetComponent<Card>();
-
-            if (minion.GetComponent<Card>().type == CardType.Minion && attacker == null)
+        } else if (attacker != null)
             {
-                attacker = minion;
-                attacker.GetComponent<Card>().status = Status.ReadyToAttack;
-
-                Debug.Log(attacker.name + " Ready to attack");
-
-            }
-
-           if (minion.GetComponent<Card>().type == CardType.Minion && minion != attacker)
-            {
-                Debug.Log($"{attacker} attacks {attacked}!");
-
-                Card after = minion;
-               
-
-                RunEffects(after, attacker, Battle);
+                // If it's out of attacks it deselects.
+                if (attacker.GetComponent<Stats>().attacks < 1)
+                {
+                    attacker = null;
+                }
+                // Selects target.
+                else
+                {
+                    attacked = GetWhatIsMousedOver().GetComponent<Card>();
+                    RunEffects(attacked, attacker, Battle);
+                }
 
 
             }
-        }
     }
 
-    private void Battle(Card attacked, Card affacker)
+    private void Battle(Card attacked, Card attacker)
     {
-        attacked.currentHealth -= attacker.attack;
+        Debug.Log($"{attacker} attacks {attacked}!");
+        attacker.status = Status.Attacking;
+        attacked.status = Status.Defending;
+        attacked.GetComponent<Stats>().currentHealth -= attacker.GetComponent<Stats>().attack;
     }
 }

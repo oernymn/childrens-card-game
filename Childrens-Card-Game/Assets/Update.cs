@@ -79,7 +79,6 @@ public class Update : MonoBehaviour
         // Positions the cards.
         foreach (Transform child in board)
         {
-            Debug.Log("Card name: " + child.name);
 
             // Sets the cards scale to its default size in global scale by dividing it by the parent's size.
             child.localScale = new Vector3(cardSize.x / board.localScale.x, cardSize.y / board.localScale.y, cardSize.z / board.localScale.z);

@@ -35,6 +35,7 @@ public class Movement : MonoBehaviour
         if (transform.parent == hand)
         {
             Vector3 temp = Input.mousePosition;
+            
             temp.z = cam.position.y - transform.position.y; // Set this to be the distance you want the object to be placed in front of the camera.
             transform.position = Camera.main.ScreenToWorldPoint(temp);
         }

@@ -8,6 +8,8 @@ using static Functions;
 
 public class Spell : Card
 {
+   
+
 
     public override void AfterCardEffect (object sender, EffectEventArgs e)
     {
@@ -16,7 +18,7 @@ public class Spell : Card
             && e.after == transform)
         {
 
-            Card target = e.after.GetComponent<Card>().target;
+            Card target = e.after.target;
             
             RunEffects(target, this, BattleCry);
 
@@ -29,19 +31,19 @@ public class Spell : Card
         if (target.type == CardType.Minion)
         {
 
-            Debug.Log($"From {target.currentHealth} health");
-            target.currentHealth -= 2;
-            Debug.Log($"To {target.currentHealth} health");
+            Debug.Log($"From {target.GetComponent<Stats>().currentHealth} health");
+            target.GetComponent<Stats>().currentHealth -= 2;
+            Debug.Log($"To {target.GetComponent<Stats>().currentHealth} health");
         }
     }
 
-    public override List<Transform> GetTargets()
+    public override List<Card> GetTargets()
     {
-       Transform enemyBoard1 = GetEnemyContainer(board1);
+        Transform enemyBoard1 = GetContainer(this, true, board1Index);
 
-        List<Transform> selection = new List<Transform>();
+        List<Card> selection = new List<Card>();
 
-        foreach (Transform card in enemyBoard1)
+        foreach (Card card in enemyBoard1)
         {
             selection.Add(card);
 
@@ -51,7 +53,9 @@ public class Spell : Card
 
     private void Awake()
     {
-        GetComponent<Card>().type = CardType.Spell;    
+        type = CardType.Spell;
+       
+
     }
     
 }

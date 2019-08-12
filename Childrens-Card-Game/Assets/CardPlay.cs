@@ -32,11 +32,14 @@ public class CardPlay : MonoBehaviour
         // Defines the thing it's dropped on.
         if (GetWhatIsMousedOver() != null)
         {
+            
             droppedOn = GetWhatIsMousedOver();
         }
         else
         {
+            Debug.Log($"Drop Fail.");
             transform.gameObject.layer = 0;
+            updateAll();
             return;
         }
 
@@ -44,12 +47,12 @@ public class CardPlay : MonoBehaviour
         Debug.Log($" Dropped on: {droppedOn}.");
 
         // If it's a targeting spell.
-        if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
+         if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
         {
 
-            List<Transform> cardSelectionList = GetComponent<Card>().GetTargets();
+            List<Card> SelectionList = GetComponent<Card>().GetTargets();
 
-            foreach (Transform card in cardSelectionList)
+            foreach (Card card in SelectionList)
             {
                 // If the card the spell dropped on matches a card that the card can target.
                 if (card == droppedOn)
@@ -65,6 +68,7 @@ public class CardPlay : MonoBehaviour
                     RunWheneverEffects(before, after);
                     PlayCardTargeted(droppedOn, after);
                     before = RunAfterEffects(before, after);
+
 
 
                     SendToGraveyard(after);
@@ -86,7 +90,7 @@ public class CardPlay : MonoBehaviour
         }
 
         // if it is within boardXX and it's an enchantment play it.
-        else if (droppedOn == board2 && GetComponent<Card>().type == CardType.Enchantment)
+        else if (droppedOn == board2 && GetComponent<Card>().type == CardType.Support)
         {
             transform.gameObject.layer = 0;
 
@@ -97,7 +101,7 @@ public class CardPlay : MonoBehaviour
         // Sets layer back to default.
 
         transform.gameObject.layer = 0;
-      //  Functions.updateAll();
+        updateAll();
     }
 
     private void SendToGraveyard(Card after)
@@ -138,5 +142,5 @@ public class CardPlay : MonoBehaviour
         after.transform.parent = targetBoard;
     }
 
-    
+
 }

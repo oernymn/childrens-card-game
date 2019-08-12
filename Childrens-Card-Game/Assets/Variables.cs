@@ -5,14 +5,14 @@ using UnityEngine;
 public class Variables : MonoBehaviour
 {
 
-   
+
 
 
     static public Update UpdateFunctions;
 
     static public Transform cam;
 
-   
+
     static public Transform everything;
     static public Transform everythingBefore;
     static public Transform Alliance;
@@ -39,12 +39,20 @@ public class Variables : MonoBehaviour
         BeingDamaged,
     }
 
-
     public enum CardType
     {
+        Spell,
         Minion,
-        Enchantment,
-        Spell
+        Support,
+        Container
+
+    }
+
+    public enum Tribe
+    {
+        Beast,
+        Dragon
+
     }
 
     private void Awake()

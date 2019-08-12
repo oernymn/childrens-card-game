@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Variables;
 
+
 public class EffectEventArgs : EventArgs
 {
     public Card before { get; set; }
@@ -54,8 +55,6 @@ public class Functions : MonoBehaviour
 
         // Revert after. Now we have what is going to be after the effect has happened (becomingAfter) and what is before the effect happened (after, before in WheneverCardEffect).
         after = RevertTo(before, after);
-
-        Debug.Log("WheneverEffects, Board: " + after.transform.parent + "Cards: " + after.transform.parent.childCount);
 
         EffectEventArgs becomingEventArg = new EffectEventArgs(after, Becoming);
         runWheneverEffects(after, becomingEventArg);
@@ -209,28 +208,40 @@ public class Functions : MonoBehaviour
         }
     }
 
-    static public Transform GetEnemyContainer(Transform container)
+    static public Transform GetContainer(Card sender, bool isEnemy, int ContainerIndex)
     {
-        Transform enemy;
+        Transform container;
 
-        if (container.parent == Alliance)
+        if (sender.transform.parent.parent == Alliance)
         {
-            enemy = Horde.GetChild(container.GetSiblingIndex());
+            if (isEnemy)
+            {
+                container = Horde.GetChild(ContainerIndex);
+            } else
+            {
+                container = Alliance.GetChild(ContainerIndex);
+            }
         } else 
-        if (container.parent == Horde)
         {
-            enemy = Alliance.GetChild(container.GetSiblingIndex());
-        } else
-        {
-            return null;
-        }
-        return enemy;
+            if (isEnemy)
+            {
+                container = Alliance.GetChild(ContainerIndex);
+            }
+            else
+            {
+                container = Horde.GetChild(ContainerIndex);
+            }
+        } 
+        return container;
     }
+
+
 
    static public Transform GetWhatIsMousedOver()
     {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
+
             return hit.transform;
 
         }
