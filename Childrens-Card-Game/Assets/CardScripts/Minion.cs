@@ -8,6 +8,7 @@ public class Minion : Card
 {
 
 
+
     public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
 
@@ -15,12 +16,19 @@ public class Minion : Card
     }
 
 
-    private void Awake()
+    private void Start()
     {
-        type = Variables.CardType.Minion;
-        GetComponent<Stats>().baseHealth =
-        GetComponent<Stats>().maxHealth =
-        GetComponent<Stats>().currentHealth = 4;
+        if (alreadySet == false)
+        {
+            type = Variables.CardType.Minion;
+            Debug.Log(name + " setting stats...");
+            stats.baseHealth =
+            stats.maxHealth =
+            stats.currentHealth = 4;
+            stats.attack = 2;
+        }
+
+
     }
 
 

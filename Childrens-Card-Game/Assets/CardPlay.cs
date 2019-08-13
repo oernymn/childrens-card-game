@@ -32,7 +32,7 @@ public class CardPlay : MonoBehaviour
         // Defines the thing it's dropped on.
         if (GetWhatIsMousedOver() != null)
         {
-            
+
             droppedOn = GetWhatIsMousedOver();
         }
         else
@@ -47,7 +47,7 @@ public class CardPlay : MonoBehaviour
         Debug.Log($" Dropped on: {droppedOn}.");
 
         // If it's a targeting spell.
-         if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
+        if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
         {
 
             List<Card> SelectionList = GetComponent<Card>().GetTargets();
@@ -67,7 +67,7 @@ public class CardPlay : MonoBehaviour
                     PlayCardTargeted(droppedOn, after);
                     RunWheneverEffects(before, after);
                     PlayCardTargeted(droppedOn, after);
-                    before = RunAfterEffects(before, after);
+                    RunAfterEffects(before, after);
 
 
 
@@ -112,6 +112,7 @@ public class CardPlay : MonoBehaviour
 
     private static void PlayCardTargeted(Transform droppedOn, Card after)
     {
+        Debug.Log("It's Played...");
         after.status = Status.BeingPlayed;
         after.target = droppedOn.GetComponent<Card>();
     }

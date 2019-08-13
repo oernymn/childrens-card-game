@@ -21,7 +21,7 @@ public class Card : MonoBehaviour
     public CardType type;
     HashSet<Tribe> Tribes = new HashSet<Tribe> { };
 
-    public Component stats;
+    public Stats stats;
 
     public Card target;
     public Card targeter;
@@ -31,6 +31,7 @@ public class Card : MonoBehaviour
     public virtual void AfterCardEffect(object sender, EffectEventArgs e) { }
     public virtual void WheneverCardEffect(object sender, EffectEventArgs e) { }
 
+    public bool alreadySet = false;
 
     public virtual List<Card> GetTargets()
     {
@@ -44,9 +45,16 @@ public class Card : MonoBehaviour
         runAfterEffects += AfterCardEffect;
         runWheneverEffects += WheneverCardEffect;
 
-        
-        
+        if (GetComponent<Stats>() != null)
+        { 
+            stats = GetComponent<Stats>();
 
+            if (alreadySet == false)
+            {
+                stats.attacks = 1;
+            }
+        }
+        
     }
 
 }

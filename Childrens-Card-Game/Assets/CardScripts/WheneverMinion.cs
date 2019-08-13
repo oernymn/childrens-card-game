@@ -13,7 +13,7 @@ public class WheneverMinion : Card
 
         
         // When a card is played.
-        if (e.before.GetComponent<Card>().status != Status.BeingPlayed && e.after.GetComponent<Card>().status == Status.BeingPlayed)
+        if (e.before.status != Status.BeingPlayed && e.after.status == Status.BeingPlayed)
         {
      
             
@@ -23,7 +23,7 @@ public class WheneverMinion : Card
 
     private void Start()
     {
-        GetComponent<Card>().type = CardType.Minion;
+        type = CardType.Minion;
 
     }
 

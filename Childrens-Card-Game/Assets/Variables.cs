@@ -5,9 +5,6 @@ using UnityEngine;
 public class Variables : MonoBehaviour
 {
 
-
-
-
     static public Update UpdateFunctions;
 
     static public Transform cam;

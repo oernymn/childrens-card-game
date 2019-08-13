@@ -54,8 +54,6 @@ public class Spell : Card
     private void Awake()
     {
         type = CardType.Spell;
-       
-
     }
     
 }

@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: -6714594000356252992}
   - component: {fileID: 4501684302753695218}
   - component: {fileID: 1228884459112101637}
-  - component: {fileID: -8681205285730380868}
   m_Layer: 0
   m_Name: WheneverMinion
   m_TagString: Untagged
@@ -137,6 +136,7 @@ MonoBehaviour:
   currentHealth: 0
   baseAttack: 0
   attack: 0
+  attacks: 0
 --- !u!114 &1228884459112101637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,17 +159,3 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affected: {fileID: 0}
   affecter: {fileID: 0}
---- !u!114 &-8681205285730380868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240015888444629154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12e4b2ccbea22714998cc85f0cc5d582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attacker: {fileID: 0}
-  attacked: {fileID: 0}
