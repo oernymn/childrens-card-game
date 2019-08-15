@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static Variables;
+using static Functions;
 
 public class Minion : Card
 {
@@ -11,7 +12,10 @@ public class Minion : Card
 
     public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
-
+        if ( e.before.target != this && e.after.target == this)
+        {
+            Debug.Log(name + " targeted.");
+        }
 
     }
 

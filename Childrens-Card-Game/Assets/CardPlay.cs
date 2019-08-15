@@ -14,7 +14,7 @@ public class CardPlay : MonoBehaviour
 
 
         Transform droppedOn;
-
+        Card droppedOnCard;
         Transform board1 = transform.parent.parent.GetChild(board1Index);
         Transform board2 = transform.parent.parent.GetChild(board2Index);
         Transform hand = transform.parent.parent.GetChild(handIndex);
@@ -23,7 +23,6 @@ public class CardPlay : MonoBehaviour
         // Need to play cards from hand.
         if (transform.parent != hand)
         {
-            Debug.Log("Trying to play a card that's not in you hand.");
             transform.gameObject.layer = 0;
             return;
         }
@@ -34,6 +33,8 @@ public class CardPlay : MonoBehaviour
         {
 
             droppedOn = GetWhatIsMousedOver();
+            droppedOnCard = GetWhatIsMousedOver().GetComponent<Card>();
+
         }
         else
         {
@@ -52,29 +53,29 @@ public class CardPlay : MonoBehaviour
 
             List<Card> SelectionList = GetComponent<Card>().GetTargets();
 
+
             foreach (Card card in SelectionList)
             {
                 // If the card the spell dropped on matches a card that the card can target.
-                if (card == droppedOn)
+                if (card == droppedOnCard)
                 {
 
-                    Debug.Log($"Spell cast on {droppedOn}");
+                    Debug.Log($"Spell cast on {droppedOnCard}");
 
 
                     Card after = GetComponent<Card>();
                     Card before = SetBefore(after);
 
-                    PlayCardTargeted(droppedOn, after);
-                    RunWheneverEffects(before, after);
-                    PlayCardTargeted(droppedOn, after);
-                    RunAfterEffects(before, after);
-
+                    PlayCardTargeted(droppedOnCard, after);
+                    after = RunWheneverEffects(before, after);
+                    PlayCardTargeted(droppedOnCard, after);
+                    before = RunAfterEffects(before, after);
 
 
                     SendToGraveyard(after);
-                    RunWheneverEffects(before, after);
+                    after = RunWheneverEffects(before, after);
                     SendToGraveyard(after);
-                    RunAfterEffects(before, after);
+                    before = RunAfterEffects(before, after);
 
 
                 }
@@ -107,14 +108,21 @@ public class CardPlay : MonoBehaviour
     private void SendToGraveyard(Card after)
     {
         after.status = Status.Neutral;
-        after.transform.parent = transform.parent.parent.GetChild(graveyardIndex);
+        Debug.Log(after.transform.parent);
+        Debug.Log(after.transform.parent.parent);
+        Debug.Log(graveyardIndex);
+        Debug.Log(after.transform.parent.parent.GetChild(graveyardIndex));
+
+
+
+        after.transform.parent = after.transform.parent.parent.GetChild(graveyardIndex);
     }
 
-    private static void PlayCardTargeted(Transform droppedOn, Card after)
+    private static void PlayCardTargeted(Card droppedOnCard, Card after)
     {
         Debug.Log("It's Played...");
         after.status = Status.BeingPlayed;
-        after.target = droppedOn.GetComponent<Card>();
+        after.target = droppedOnCard;
     }
 
 
