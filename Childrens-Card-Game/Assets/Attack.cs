@@ -36,10 +36,8 @@ public class Attack : MonoBehaviour
                     attacker.stats.attacks -= 1;
                     attacked = GetWhatIsMousedOver().GetComponent<Card>();
 
-                    List<Card> AfterList = new List<Card>();
-                    AfterList.Add(attacked);
-                    AfterList.Add(attacker);
-
+                    List<Card> AfterList = new List<Card> { attacked, attacker };
+                   
                     RunEffects(AfterList, Battle);
                     Debug.Log("Current health: " + attacked.stats.currentHealth);
                     Debug.Log("Attacks left: " + attacker.stats.attacks);

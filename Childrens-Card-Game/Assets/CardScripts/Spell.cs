@@ -10,22 +10,33 @@ public class Spell : Card
 {
     public override void AfterCardEffect (object sender, EffectEventArgs e)
     {
+        Debug.Log("HELLO");
+
         // When this card is played.
-        if (e.before.status != Status.BeingPlayed && e.after.status == Status.BeingPlayed
-            && e.after == this)
+        for (int i = 0; i < e.AfterList.Count; i++)
         {
 
-            Card target = e.after.target;
-            
+            Debug.Log("e.BeforeList[i].status: " +  e.BeforeList[i].status);
+            Debug.Log("e.AfterList[i].status: " + e.AfterList[i].status);
+            Debug.Log("e.AfterList: " + e.AfterList[i].name);
+            Debug.Log("target: " + target.name);
 
 
-            RunEffects(AfterList, BattleCry);
+            if (e.BeforeList[i].status != Status.BeingPlayed && e.AfterList[i].status == Status.BeingPlayed
+                && e.AfterList[i] == this
+                && target != null)
+            {
 
+                RunEffects(e.AfterList, BattleCry);
+
+            }
         }
     }
 
     public void BattleCry(List<Card> AfterList)
     {
+
+        Card target = AfterList[0];
 
         if (target.type == CardType.Minion)
         {

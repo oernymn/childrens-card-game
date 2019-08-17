@@ -11,13 +11,22 @@ public class WheneverMinion : Card
     public override void WheneverCardEffect (object sender, EffectEventArgs e)
     {
 
-        
         // When a card is played.
-        if (e.before.status != Status.BeingPlayed && e.after.status == Status.BeingPlayed)
+        for (int i = 0; i < e.AfterList.Count; i++)
         {
-     
+
             
+
+
+            if (e.BeforeList[i].status != Status.BeingPlayed && e.AfterList[i].status == Status.BeingPlayed)
+            {
+
+                Debug.Log("Whenever effect: " + e.AfterList[i].name + " played.");
+
+            }
         }
+
+        
     }
 
 

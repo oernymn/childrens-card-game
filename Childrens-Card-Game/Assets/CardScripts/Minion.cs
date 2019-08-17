@@ -12,9 +12,13 @@ public class Minion : Card
 
     public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
-        if ( e.before.target != this && e.after.target == this)
+
+        for (int i = 0; i < e.AfterList.Count; i++)
         {
-            Debug.Log(name + " targeted.");
+            if (e.BeforeList[i].status != Status.BeingPlayed && e.AfterList[i].status == Status.BeingPlayed && e.AfterList[i] == this)
+            {
+                Debug.Log(name + " was played!");
+            }
         }
 
     }

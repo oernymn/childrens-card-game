@@ -25,7 +25,7 @@ public class Card : MonoBehaviour
 
     public Card target;
     public Card targeter;
-    public Card affected;
+    public Card affects;
     public Card affecter;
 
     public virtual void AfterCardEffect(object sender, EffectEventArgs e) { }
@@ -37,6 +37,7 @@ public class Card : MonoBehaviour
     {
         return null;
     }
+
 
     private void Awake()
     {

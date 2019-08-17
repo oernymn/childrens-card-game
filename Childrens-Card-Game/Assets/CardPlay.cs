@@ -63,20 +63,8 @@ public class CardPlay : MonoBehaviour
                     Debug.Log($"Spell cast on {droppedOnCard}");
 
 
-                    Card after = GetComponent<Card>();
-                    Card before = SetBefore(after);
-
-                    PlayCardTargeted(droppedOnCard, after);
-                    after = RunWheneverEffects(before, after);
-                    PlayCardTargeted(droppedOnCard, after);
-                    before = RunAfterEffects(before, after);
-
-
-                    SendToGraveyard(after);
-                    after = RunWheneverEffects(before, after);
-                    SendToGraveyard(after);
-                    before = RunAfterEffects(before, after);
-
+                    List<Card> AfterList = new List<Card> { GetComponent<Card>(), droppedOnCard };
+                    RunEffects(AfterList, PlayCardTargeted);
 
                 }
             }
@@ -105,6 +93,13 @@ public class CardPlay : MonoBehaviour
         updateAll();
     }
 
+    private static void PlayCardTargeted(List<Card> AfterList)
+    {
+        Debug.Log("It's Played...");
+        AfterList[0].status = Status.BeingPlayed;
+        AfterList[0].target = AfterList[1];
+    }
+
     private void SendToGraveyard(Card after)
     {
         after.status = Status.Neutral;
@@ -113,17 +108,10 @@ public class CardPlay : MonoBehaviour
         Debug.Log(graveyardIndex);
         Debug.Log(after.transform.parent.parent.GetChild(graveyardIndex));
 
-
-
         after.transform.parent = after.transform.parent.parent.GetChild(graveyardIndex);
     }
 
-    private static void PlayCardTargeted(Card droppedOnCard, Card after)
-    {
-        Debug.Log("It's Played...");
-        after.status = Status.BeingPlayed;
-        after.target = droppedOnCard;
-    }
+   
 
 
     public void PlayToBoard(Transform card, Transform targetBoard)
@@ -135,20 +123,17 @@ public class CardPlay : MonoBehaviour
             return;
         }
 
-        Card after = GetComponent<Card>();
-        Card before = SetBefore(after);
+        List<Card> AfterList = new List<Card> { GetComponent<Card>(), targetBoard.GetComponent<Card>()};
 
-        PutOnBoard(targetBoard, after);
-        after = RunWheneverEffects(before, after);
-        PutOnBoard(targetBoard, after);
+        RunEffects(AfterList, PutOnBoard);
+
         // Runs any OnPlay effects. Not updating because then it would update the hand and screw up the x positions
-        before = RunAfterEffects(before, after);
     }
 
-    private static void PutOnBoard(Transform targetBoard, Card after)
+    private static void PutOnBoard(List<Card> AfterList)
     {
-        after.status = Status.BeingPlayed;
-        after.transform.parent = targetBoard;
+        AfterList[0].status = Status.BeingPlayed;
+        AfterList[0].transform.parent = AfterList[1].transform;
     }
 
 
