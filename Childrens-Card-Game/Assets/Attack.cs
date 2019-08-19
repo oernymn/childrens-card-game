@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Variables;
 using static Functions;
+using static GetSet;
 
 public class Attack : MonoBehaviour
 {

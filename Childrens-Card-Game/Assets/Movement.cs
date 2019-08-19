@@ -7,8 +7,8 @@ using static Variables;
 public class Movement : MonoBehaviour
 {
 
-//    public Transform cardsFunctionsEtc;
- //   protected Functions Functions;
+    //    public Transform cardsFunctionsEtc;
+    //   protected Functions Functions;
 
     Transform board1;
     Transform board2;
@@ -17,16 +17,17 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-      //   cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
-       //  Functions = cardsFunctionsEtc.GetComponent<Functions>();
+        //   cardsFunctionsEtc = GameObject.Find("cardsFunctionsEtc").transform;
+        //  Functions = cardsFunctionsEtc.GetComponent<Functions>();
 
-       
+        if (transform.parent != null && transform.parent.parent != null)
+        {
 
-        hand = transform.parent.parent.GetChild(handIndex);
-        board1 = transform.parent.parent.GetChild(board1Index);
-        board2 = transform.parent.parent.GetChild(board2Index);
-        deck = transform.parent.parent.GetChild(deckIndex);
-
+            hand = transform.parent.parent.GetChild(handIndex);
+            board1 = transform.parent.parent.GetChild(board1Index);
+            board2 = transform.parent.parent.GetChild(board2Index);
+            deck = transform.parent.parent.GetChild(deckIndex);
+        }
     }
 
     private void OnMouseDrag()
@@ -35,7 +36,7 @@ public class Movement : MonoBehaviour
         if (transform.parent == hand)
         {
             Vector3 temp = Input.mousePosition;
-            
+
             temp.z = cam.position.y - transform.position.y; // Set this to be the distance you want the object to be placed in front of the camera.
             transform.position = Camera.main.ScreenToWorldPoint(temp);
         }

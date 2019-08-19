@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Variables;
 using static Functions;
+using static GetSet;
 
 public class CardPlay : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class CardPlay : MonoBehaviour
             return;
         }
 
-
         // Defines the thing it's dropped on.
         if (GetWhatIsMousedOver() != null)
         {
@@ -44,15 +44,15 @@ public class CardPlay : MonoBehaviour
             return;
         }
 
+        transform.gameObject.layer = 0;
+
 
         Debug.Log($" Dropped on: {droppedOn}.");
 
         // If it's a targeting spell.
         if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
         {
-
             List<Card> SelectionList = GetComponent<Card>().GetTargets();
-
 
             foreach (Card card in SelectionList)
             {
@@ -63,78 +63,73 @@ public class CardPlay : MonoBehaviour
                     Debug.Log($"Spell cast on {droppedOnCard}");
 
 
-                    List<Card> AfterList = new List<Card> { GetComponent<Card>(), droppedOnCard };
-                    RunEffects(AfterList, PlayCardTargeted);
+                  
+                   List<Card> AfterList = RunEffects(new List<Card> { GetComponent<Card>(), droppedOnCard }, PlayCardTargeted);
+                   AfterList = RunEffects(AfterList, SendToGraveyard);
+                
 
                 }
             }
-
+            
         }
+
+        else if (GetComponent<Card>().type == CardType.Spell)
+        {
+            List<Card> AffectedList = RunEffects(new List<Card> { GetComponent<Card>() }, PlayCard);
+        }
+
         // If it is within the boundries of boardX and it's a minion it plays it.
         else if (droppedOn == board1 && GetComponent<Card>().type == CardType.Minion)
         {
-            transform.gameObject.layer = 0;
 
-            PlayToBoard(transform, board1);
+
+            RunEffects(new List<Card> { GetComponent<Card>(), board1.GetComponent<Card>() }, PlayToBoard);
         }
 
         // if it is within boardXX and it's an enchantment play it.
         else if (droppedOn == board2 && GetComponent<Card>().type == CardType.Support)
         {
-            transform.gameObject.layer = 0;
-
-            PlayToBoard(transform, board2);
+            RunEffects(new List<Card> { GetComponent<Card>(), board2.GetComponent<Card>() }, PlayToBoard);
         }
 
 
         // Sets layer back to default.
 
-        transform.gameObject.layer = 0;
         updateAll();
+    }
+
+    private static void PlayCard(List<Card> AfterList)
+    {
+        AfterList[0].status = Status.BeingPlayed;
     }
 
     private static void PlayCardTargeted(List<Card> AfterList)
     {
-        Debug.Log("It's Played...");
         AfterList[0].status = Status.BeingPlayed;
         AfterList[0].target = AfterList[1];
+        Debug.Log($"Target: {AfterList[0].target}");
     }
 
-    private void SendToGraveyard(Card after)
+    private void SendToGraveyard(List<Card> AfterList)
     {
-        after.status = Status.Neutral;
-        Debug.Log(after.transform.parent);
-        Debug.Log(after.transform.parent.parent);
-        Debug.Log(graveyardIndex);
-        Debug.Log(after.transform.parent.parent.GetChild(graveyardIndex));
-
-        after.transform.parent = after.transform.parent.parent.GetChild(graveyardIndex);
+        AfterList[0].transform.parent = AfterList[0].transform.parent.parent.GetChild(graveyardIndex);
     }
 
-   
-
-
-    public void PlayToBoard(Transform card, Transform targetBoard)
+    private void PlayToBoard(List<Card> AfterList)
     {
         // Snaps back if the board is full.
-        if (targetBoard.childCount >= UpdateFunctions.maxBoardSize)
+        if (AfterList[1].transform.childCount >= UpdateFunctions.maxBoardSize)
         {
             Functions.updateAll();
             return;
         }
 
-        List<Card> AfterList = new List<Card> { GetComponent<Card>(), targetBoard.GetComponent<Card>()};
-
-        RunEffects(AfterList, PutOnBoard);
+        AfterList[0].status = Status.BeingPlayed;
+        AfterList[0].transform.parent = AfterList[1].transform;
 
         // Runs any OnPlay effects. Not updating because then it would update the hand and screw up the x positions
     }
 
-    private static void PutOnBoard(List<Card> AfterList)
-    {
-        AfterList[0].status = Status.BeingPlayed;
-        AfterList[0].transform.parent = AfterList[1].transform;
-    }
 
 
 }
