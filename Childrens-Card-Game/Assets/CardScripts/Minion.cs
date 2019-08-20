@@ -29,7 +29,7 @@ public class Minion : Card
         if (alreadySet == false)
         {
             type = Variables.CardType.Minion;
-            Debug.Log(name + " setting stats...");
+           // Debug.Log(name + " setting stats...");
             stats.baseHealth =
             stats.maxHealth =
             stats.currentHealth = 4;

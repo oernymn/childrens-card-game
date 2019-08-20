@@ -89,6 +89,7 @@ public class Functions : MonoBehaviour
             // Need to set this otherwise it will reset the values in the Start() function.
             card.alreadySet = true;
 
+            Debug.Log("Creating " + card.name);
             Card after = Instantiate(card);
             after.transform.parent = card.Container;
             after.transform.SetSiblingIndex(card.Index);
@@ -137,7 +138,7 @@ public class Functions : MonoBehaviour
 
         foreach (Card card in AfterList)
         {
-            Debug.Log(card.name);
+            Debug.Log("Creating " + card.name);
 
             card.gameObject.SetActive(false);
             Card before = Instantiate(card, everythingBefore);
@@ -167,10 +168,8 @@ public class Functions : MonoBehaviour
                 card.Allegiance = card.transform.parent.parent;
             }
 
-            Debug.Log($"Allegiance: {card.Allegiance}");
-
             card.Container = card.transform.parent;
-            Debug.Log(card.Container.name);
+            Debug.Log("Container: " + card.Container.name);
             foreach( Transform child in card.Container)
             {
                 Debug.Log($"Child name: {child.name}");

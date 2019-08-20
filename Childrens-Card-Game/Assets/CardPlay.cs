@@ -60,7 +60,7 @@ public class CardPlay : MonoBehaviour
                 if (card == droppedOnCard)
                 {
 
-                    Debug.Log($"Spell cast on {droppedOnCard}");
+                    // Debug.Log($"Spell cast on {droppedOnCard}");
 
 
                   
@@ -112,6 +112,9 @@ public class CardPlay : MonoBehaviour
 
     private void SendToGraveyard(List<Card> AfterList)
     {
+
+        Debug.Log(AfterList[0].transform.parent.name);
+
         AfterList[0].transform.parent = AfterList[0].transform.parent.parent.GetChild(graveyardIndex);
     }
 

@@ -3,8 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Variables;
 
+
 public class GetSet : MonoBehaviour
 {
+
+    static public Card SetContainer(Card card, int containerIndex)
+    {
+        Card Container;
+
+        card.Container = 
+
+        if (card.transform.parent.parent == null)
+        {
+        } else
+        {
+
+        }
+
+
+    }
+
     static public Transform GetContainer(Card card, bool isEnemy, int ContainerIndex)
     {
         Transform container;
@@ -20,7 +38,7 @@ public class GetSet : MonoBehaviour
                 container = Alliance.GetChild(ContainerIndex);
             }
         }
-        else
+        else if (card.transform.parent.parent == Horde)
         {
             if (isEnemy)
             {
@@ -30,6 +48,9 @@ public class GetSet : MonoBehaviour
             {
                 container = Horde.GetChild(ContainerIndex);
             }
+        } else
+        {
+            return null;
         }
         return container;
     }

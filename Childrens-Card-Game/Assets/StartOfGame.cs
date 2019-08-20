@@ -44,7 +44,8 @@ public class StartOfGame : MonoBehaviour
 
     public void Die(List<Card> AfterList)
     {
-        AfterList[0].transform.parent = GetContainer(AfterList[0], false, graveyardIndex);
+
+        SetContainer(AfterList[0], );
     }
 
 }
