@@ -39,22 +39,20 @@ public class Card : MonoBehaviour
     }
 
 
-    private void Awake()
+    private void Start()
     {
 
         // Subscribes to runEffects
         runAfterEffects += AfterCardEffect;
         runWheneverEffects += WheneverCardEffect;
 
-        if (GetComponent<Stats>() != null)
-        { 
-            stats = GetComponent<Stats>();
-
-            if (alreadySet == false)
+            SetInfo(new List<Card> { this });
+       
+            if (GetComponent<Stats>() != null)
             {
-                stats.attacks = 1;
+                stats = GetComponent<Stats>();
+
             }
-        }
         
     }
 

@@ -138,7 +138,6 @@ public class Functions : MonoBehaviour
 
         foreach (Card card in AfterList)
         {
-            Debug.Log("Creating " + card.name);
 
             card.gameObject.SetActive(false);
             Card before = Instantiate(card, everythingBefore);
@@ -158,23 +157,25 @@ public class Functions : MonoBehaviour
 
         foreach (Card card in AfterList)
         {
-            // If it's a container...
-            if (card.transform.parent == Alliance || card.transform.parent == Horde)
+
+
+            if (card.transform.parent == null)
+            {
+                return AfterList;
+            }
+
+            // If it's a container, it's Allegiance is its parent.
+            else if (card.transform.parent == Alliance || card.transform.parent == Horde)
             {
                 card.Allegiance = card.transform.parent;
             }
-            else
+            // If it's a card, it's Allegiance is its grandparent. 
+            else if (card.transform.parent.parent == Alliance || card.transform.parent.parent == Horde)
             {
                 card.Allegiance = card.transform.parent.parent;
-            }
+            } 
 
             card.Container = card.transform.parent;
-            Debug.Log("Container: " + card.Container.name);
-            foreach( Transform child in card.Container)
-            {
-                Debug.Log($"Child name: {child.name}");
-            }
-
             card.Index = card.transform.GetSiblingIndex();
         }
         return AfterList;

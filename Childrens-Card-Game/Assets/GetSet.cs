@@ -7,49 +7,46 @@ using static Variables;
 public class GetSet : MonoBehaviour
 {
 
-    static public Card SetContainer(Card card, int containerIndex)
+    static public void SetContainer(Card card, bool isAlly, int containerIndex)
     {
-        Card Container;
+        // Wether it's a Becoming card or a real card the container must always be set.
+        card.Container = GetContainer(card, isAlly, containerIndex);
 
-        card.Container = 
-
-        if (card.transform.parent.parent == null)
+        // If it's a real card it changes parent, if you would change the parent of a Becoming card it would jump out of everythingBefore and you'd have more cards. 
+        if (card.transform.parent.parent == Horde || card.transform.parent.parent == Alliance)
         {
-        } else
-        {
-
+            card.transform.parent = card.Container;
         }
-
-
     }
 
-    static public Transform GetContainer(Card card, bool isEnemy, int ContainerIndex)
+    static public Transform GetContainer(Card card, bool isAlly, int ContainerIndex)
     {
         Transform container;
 
-        if (card.transform.parent.parent == Alliance)
+        if (card.Allegiance == Alliance)
         {
-            if (isEnemy)
+            if (isAlly)
             {
-                container = Horde.GetChild(ContainerIndex);
+                container = Alliance.GetChild(ContainerIndex);
             }
             else
             {
-                container = Alliance.GetChild(ContainerIndex);
+                container = Horde.GetChild(ContainerIndex);
             }
         }
-        else if (card.transform.parent.parent == Horde)
+        else if (card.Allegiance == Horde)
         {
-            if (isEnemy)
+            if (isAlly)
             {
-                container = Alliance.GetChild(ContainerIndex);
+                container = Horde.GetChild(ContainerIndex);
             }
             else
             {
-                container = Horde.GetChild(ContainerIndex);
+                container = Alliance.GetChild(ContainerIndex);
             }
         } else
         {
+            Debug.Log(card.Allegiance);
             return null;
         }
         return container;

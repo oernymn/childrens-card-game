@@ -113,9 +113,9 @@ public class CardPlay : MonoBehaviour
     private void SendToGraveyard(List<Card> AfterList)
     {
 
-        Debug.Log(AfterList[0].transform.parent.name);
+   
 
-        AfterList[0].transform.parent = AfterList[0].transform.parent.parent.GetChild(graveyardIndex);
+        SetContainer(AfterList[0], true, graveyardIndex);
     }
 
     private void PlayToBoard(List<Card> AfterList)

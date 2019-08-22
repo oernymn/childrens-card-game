@@ -135,12 +135,13 @@ MonoBehaviour:
   Container: {fileID: 0}
   Index: 0
   status: 0
-  type: 0
+  type: 1
   stats: {fileID: 0}
   target: {fileID: 0}
   targeter: {fileID: 0}
-  affected: {fileID: 0}
+  affects: {fileID: 0}
   affecter: {fileID: 0}
+  alreadySet: 0
 --- !u!114 &1391212466687978008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703cb8baa193aea4b932cca8d21c55a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealth: 0
-  maxHealth: 0
-  currentHealth: 0
-  baseAttack: 0
-  attack: 0
+  baseHealth: 4
+  maxHealth: 4
+  currentHealth: 4
+  baseAttack: 2
+  attack: 2
   attacks: 0

@@ -5,7 +5,7 @@ using static Variables;
 using static Functions;
 
 
-public class CardEffect : MonoBehaviour
+public class CardEffects : MonoBehaviour
 {
     // draw the Card at the indexes
     static public void TransferCard(Card caller, Transform targetContainer, Transform source, int[] indexes)

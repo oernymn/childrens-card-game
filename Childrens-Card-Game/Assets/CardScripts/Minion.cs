@@ -5,10 +5,9 @@ using UnityEngine;
 using static Variables;
 using static Functions;
 
+
 public class Minion : Card
 {
-
-
 
     public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
@@ -22,22 +21,5 @@ public class Minion : Card
         }
 
     }
-
-
-    private void Start()
-    {
-        if (alreadySet == false)
-        {
-            type = Variables.CardType.Minion;
-           // Debug.Log(name + " setting stats...");
-            stats.baseHealth =
-            stats.maxHealth =
-            stats.currentHealth = 4;
-            stats.attack = 2;
-        }
-
-
-    }
-
 
 }
