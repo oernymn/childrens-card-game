@@ -8,14 +8,10 @@ using static GetSet;
 public class StartOfGame : MonoBehaviour
 {
 
-   
-
     private void Start()
     {
         updateAll();
 
     }
-
-   
 
 }

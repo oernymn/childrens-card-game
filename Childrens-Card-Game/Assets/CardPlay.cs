@@ -50,8 +50,11 @@ public class CardPlay : MonoBehaviour
         Debug.Log($" Dropped on: {droppedOn}.");
 
         // If it's a targeting spell.
+
         if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
         {
+            Debug.Log($" Targeting");
+
             List<Card> SelectionList = GetComponent<Card>().GetTargets();
 
             foreach (Card card in SelectionList)
@@ -60,7 +63,7 @@ public class CardPlay : MonoBehaviour
                 if (card == droppedOnCard)
                 {
 
-                    // Debug.Log($"Spell cast on {droppedOnCard}");
+                     Debug.Log($"Spell cast on {droppedOnCard}");
 
 
                   
@@ -75,6 +78,7 @@ public class CardPlay : MonoBehaviour
 
         else if (GetComponent<Card>().type == CardType.Spell)
         {
+            Debug.Log(GetComponent<Card>().name + " played without targets");
             List<Card> AffectedList = RunEffects(new List<Card> { GetComponent<Card>() }, PlayCard);
         }
 
@@ -100,6 +104,7 @@ public class CardPlay : MonoBehaviour
 
     private static void PlayCard(List<Card> AfterList)
     {
+
         AfterList[0].status = Status.BeingPlayed;
     }
 

@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour
             && GetWhatIsMousedOver().GetComponent<Card>() != null && GetWhatIsMousedOver().GetComponent<Stats>() != null)
 
             // Selects attacker
-            if (GetWhatIsMousedOver().parent.name == "board1" && attacker == null)
+            if (GetWhatIsMousedOver().parent.name == "board1" || GetWhatIsMousedOver().parent.name == "board2" && attacker == null)
             {
                 attacker = GetWhatIsMousedOver().GetComponent<Card>();
                 Debug.Log("Attacks at start: " + attacker.stats.attacks);
@@ -37,9 +37,13 @@ public class Attack : MonoBehaviour
                     attacker.stats.attacks -= 1;
                     attacked = GetWhatIsMousedOver().GetComponent<Card>();
 
-                    List<Card> AfterList = new List<Card> { attacked, attacker };
+                    List<Card> AfterList = new List<Card> {  attacker, attacked };
                    
                     RunEffects(AfterList, Battle);
+
+                    attacker.GetComponent<Movement>().AttackAnimation(attacked);
+
+
                     Debug.Log("Current health: " + attacked.stats.currentHealth);
                     Debug.Log("Attacks left: " + attacker.stats.attacks);
                     attacker = null;
@@ -51,10 +55,10 @@ public class Attack : MonoBehaviour
     private void Battle(List<Card> AfterList)
     {
         Debug.Log($"{attacker} attacks {attacked}!");
-        attacker.status = Status.Attacking;
-        attacked.status = Status.Defending;
+        AfterList[0].status = Status.Attacking;
+        AfterList[1].status = Status.Defending;
         Debug.Log($"attacked health: {attacked.stats.currentHealth}. attacker damage: {attacked.stats.attack}!");
 
-        attacked.GetComponent<Stats>().currentHealth -= attacker.GetComponent<Stats>().attack;
+        AfterList[1].GetComponent<Stats>().currentHealth -= AfterList[0].GetComponent<Stats>().attack;
     }
 }

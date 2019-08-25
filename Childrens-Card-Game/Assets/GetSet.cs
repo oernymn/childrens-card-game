@@ -13,7 +13,7 @@ public class GetSet : MonoBehaviour
         card.Container = GetContainer(card, isAlly, containerIndex);
 
         // If it's a real card it changes parent, if you would change the parent of a Becoming card it would jump out of everythingBefore and you'd have more cards. 
-        if (card.transform.parent.parent == Horde || card.transform.parent.parent == Alliance)
+        if (card.transform.parent != everythingBefore)
         {
             card.transform.parent = card.Container;
         }
@@ -23,36 +23,20 @@ public class GetSet : MonoBehaviour
     {
         Transform container;
 
-        if (card.Allegiance == Alliance)
-        {
             if (isAlly)
             {
-                container = Alliance.GetChild(ContainerIndex);
+                container = card.Allegiance.GetChild(ContainerIndex);
             }
-            else
+            else if (card.Allegiance == Alliance)
             {
                 container = Horde.GetChild(ContainerIndex);
-            }
-        }
-        else if (card.Allegiance == Horde)
+            } else
         {
-            if (isAlly)
-            {
-                container = Horde.GetChild(ContainerIndex);
-            }
-            else
-            {
-                container = Alliance.GetChild(ContainerIndex);
-            }
-        } else
-        {
-            Debug.Log(card.Allegiance);
-            return null;
+            container = Alliance.GetChild(ContainerIndex);
         }
+     
         return container;
     }
-
-
 
     static public Transform GetWhatIsMousedOver()
     {

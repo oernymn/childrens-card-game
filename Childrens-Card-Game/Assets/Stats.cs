@@ -11,4 +11,13 @@ public class Stats : MonoBehaviour
     public int attack;
 
     public int attacks;
+
+
+
+    public void SetStats (int atk, int hp)
+    {
+        currentHealth = maxHealth = hp;
+        attack = atk;
+    }
+
 }

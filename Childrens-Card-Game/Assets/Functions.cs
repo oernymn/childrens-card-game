@@ -161,6 +161,7 @@ public class Functions : MonoBehaviour
 
             if (card.transform.parent == null)
             {
+                Debug.Log("No parent.");
                 return AfterList;
             }
 

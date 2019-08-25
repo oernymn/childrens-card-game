@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Functions;
 using static Variables;
+using static GetSet;
 
 public class WheneverMinion : Card
 {
@@ -23,7 +24,7 @@ public class WheneverMinion : Card
                 Transform newMinion = Instantiate(Collections.Minions["Minion"].transform);
                 newMinion.name = "I'm new!";
 
-                RunEffects(new List<Card> { newMinion.GetComponent<Card>() }, Summon);
+                List<Card> AffectedList = RunEffects(new List<Card> { newMinion.GetComponent<Card>() }, Summon);
 
 
                 //   RunEffects(new List<Card> { })
@@ -35,10 +36,11 @@ public class WheneverMinion : Card
 
     public void Summon (List<Card> AffectedList)
     {
-        foreach (Card card in AffectedList)
-        {
+       
+        AffectedList[0].GetComponent<Stats>().SetStats(1, 1);
+        AffectedList[0].Allegiance = Allegiance;
+        SetContainer(AffectedList[0], true, board1Index);
 
-        }
     }
 
 
