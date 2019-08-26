@@ -13,7 +13,7 @@ public class Attack : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && GetWhatIsMousedOver() != null
-            && GetWhatIsMousedOver().GetComponent<Card>() != null && GetWhatIsMousedOver().GetComponent<Stats>() != null)
+            && GetWhatIsMousedOver().GetComponent<Stats>() != null)
 
             // Selects attacker
             if (GetWhatIsMousedOver().parent.name == "board1" || GetWhatIsMousedOver().parent.name == "board2" && attacker == null)

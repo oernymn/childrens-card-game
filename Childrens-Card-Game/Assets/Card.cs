@@ -19,7 +19,7 @@ public class Card : MonoBehaviour
 
     public Status status;
     public CardType type;
-    HashSet<Tribe> Tribes = new HashSet<Tribe> { };
+    public HashSet<Tribe> Tribes = new HashSet<Tribe> { };
 
     public Stats stats;
 

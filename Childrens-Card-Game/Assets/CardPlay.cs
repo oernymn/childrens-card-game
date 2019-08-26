@@ -62,18 +62,14 @@ public class CardPlay : MonoBehaviour
                 // If the card the spell dropped on matches a card that the card can target.
                 if (card == droppedOnCard)
                 {
+                    Debug.Log($"Spell cast on {droppedOnCard}");
 
-                     Debug.Log($"Spell cast on {droppedOnCard}");
-
-
-                  
-                   List<Card> AfterList = RunEffects(new List<Card> { GetComponent<Card>(), droppedOnCard }, PlayCardTargeted);
-                   AfterList = RunEffects(AfterList, SendToGraveyard);
-                
+                    List<Card> AfterList = RunEffects(new List<Card> { GetComponent<Card>(), droppedOnCard }, PlayCardTargeted);
+                    AfterList = RunEffects(AfterList, SendToGraveyard);
 
                 }
             }
-            
+
         }
 
         else if (GetComponent<Card>().type == CardType.Spell)
@@ -118,7 +114,7 @@ public class CardPlay : MonoBehaviour
     private void SendToGraveyard(List<Card> AfterList)
     {
 
-   
+
 
         SetContainer(AfterList[0], true, graveyardIndex);
     }
