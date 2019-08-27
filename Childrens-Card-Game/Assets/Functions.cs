@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Variables;
@@ -32,7 +31,7 @@ public class Functions : MonoBehaviour
         AffectedList = SetInfo(AffectedList);
         List<Card> BeforeList = SetBefore(AffectedList);
 
-        AffectedList = RunWheneverEffects(BeforeList, AffectedList, CardEffect);
+        AffectedList = RunWheneverEffects(AffectedList, CardEffect);
         // Applies the effect after the whenever effects have triggered.
         CardEffect(AffectedList);
 
@@ -58,14 +57,17 @@ public class Functions : MonoBehaviour
         return AffectedList;
     }
 
-    static public List<Card> RunWheneverEffects(List<Card> BeforeList, List<Card> AfterList, Action<List<Card>> CardEffect)
+    static public List<Card> RunWheneverEffects(List<Card> AffectedList, Action<List<Card>> CardEffect)
     {
-        // Makes copies of after to signal what is going to happen.
-        List<Card> Becoming = SetBefore(AfterList);
+        // Makes copies of AffectedList to signal what is going to happen.
+        List<Card> Becoming = SetBefore(AffectedList);
         // Apply the effect.
         CardEffect(Becoming);
 
-        EffectEventArgs BeforeAfter = new EffectEventArgs(AfterList, Becoming);
+        EffectEventArgs BeforeAfter = new EffectEventArgs(AffectedList, Becoming);
+        // Makes the static TheAffectedList equal to the normal one before whenevereffects are checked so the they can change the targets of the effects by
+        // changing TheAffectedList
+        TheAffectedList = AffectedList;
         runWheneverEffects(1, BeforeAfter);
 
 
@@ -73,40 +75,12 @@ public class Functions : MonoBehaviour
         {
             Destroy(card.gameObject);
         }
-        
-        return AfterList;
+        // Returns the modified list.
+        return TheAffectedList;
     }
 
 
-    static private List<Card> RevertTo(List<Card> BeforeList, List<Card> OldAfterList)
-    {
-        List<Card> AfterList = new List<Card>();
-
-        for (int i = 0; i < BeforeList.Count; i++)
-        {
-            Card card = BeforeList[i];
-
-            // Need to set this otherwise it will reset the values in the Start() function.
-            card.alreadySet = true;
-
-            Debug.Log("Creating " + card.name);
-            Card after = Instantiate(card);
-            after.transform.parent = card.Container;
-            after.transform.SetSiblingIndex(card.Index);
-            after.gameObject.SetActive(true);
-            after.name = after.name.Replace("(Clone)", "");
-
-            AfterList.Add(after);
-
-            // Need to change parent because destruction is too slow.
-            Debug.Log("Destroying " + OldAfterList[i]);
-            OldAfterList[i].name = "BadGuy";
-            OldAfterList[i].transform.parent = everythingBefore;
-            Destroy(OldAfterList[i].gameObject);
-        }
-
-        return AfterList;
-    }
+ 
 
     static public List<Card> RunAfterEffects(List<Card> BeforeList, List<Card> AfterList)
     {

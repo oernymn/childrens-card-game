@@ -1824,8 +1824,8 @@ GameObject:
   - component: {fileID: 1645376832}
   - component: {fileID: 1645376831}
   - component: {fileID: 1645376830}
-  m_Layer: 0
-  m_Name: Cylinder
+  m_Layer: 2
+  m_Name: RedDot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -24,6 +24,8 @@ public class Variables : MonoBehaviour
 
     static public Vector3 cardSize = new Vector3(0.063f, 0.002f, 0.088f);
 
+    static public List<Card> TheAffectedList;
+
     public enum Status
     {
         Neutral,

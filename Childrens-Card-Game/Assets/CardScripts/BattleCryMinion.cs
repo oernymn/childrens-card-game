@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using static Functions;
 using static Variables;
 using static GetSet;
 
@@ -21,25 +18,22 @@ public class BattleCryMinion : Card
             {
                 Debug.Log("BattleCry triggered");
 
-                EffectTargeting.targeting = true;
-
-
-             //   List<Card> AffectedList = RunEffects(new List<Card> { .GetComponent<Card>() }, Summon);
-
-
-                //   RunEffects(new List<Card> { })
+                EffectTargeting.SetInfo(this, DamageTarget);
 
             }
         }
     }
 
-
-    public void Summon (List<Card> AffectedList)
+    //  AffectedList[0] = Targeter
+    //  AffectedList[1] = Target
+    public void DamageTarget(List<Card> AffectedList)
     {
-       
-        AffectedList[0].GetComponent<Stats>().SetStats(1, 1);
-        AffectedList[0].Allegiance = Allegiance;
-        SetContainer(AffectedList[0], true, board1Index);
+        Debug.Log(this.name + " deals 1 damage to " + AffectedList[1]);
+
+        SetTarget(AffectedList[0], AffectedList[1]);
+
+        //  SetTarget(, AffectedList[0]);
+        AffectedList[1].stats.currentHealth -= 1;
 
     }
 
