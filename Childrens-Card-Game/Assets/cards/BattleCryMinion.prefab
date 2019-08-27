@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 1240015888444629181}
   - component: {fileID: -6714594000356252992}
   - component: {fileID: 4501684302753695218}
-  - component: {fileID: 1228884459112101637}
+  - component: {fileID: 7329189981937117397}
   m_Layer: 0
-  m_Name: WheneverMinion
+  m_Name: BattleCryMinion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9520e162801180b4ea1bd8456381752e, type: 2}
+  - {fileID: 2100000, guid: 0d295ba9f43616c4286cdda31e81d131, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   baseAttack: 0
   attack: 0
   attacks: 0
---- !u!114 &1228884459112101637
+--- !u!114 &7329189981937117397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240015888444629154}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76b7045a4f257394da338571f1d74ad9, type: 3}
+  m_Script: {fileID: 11500000, guid: c978edd4590335a43b1e72eb970c59ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Allegiance: {fileID: 0}

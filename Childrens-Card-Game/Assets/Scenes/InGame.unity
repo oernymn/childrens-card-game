@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8064cd5c46f7a3d45bd3f987720209f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RedDot: {fileID: 1645376833}
+  RedDot: {fileID: 0}
 --- !u!1001 &186003473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1000,6 +1000,75 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 887224356}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &889276320
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1684789894}
+    m_Modifications:
+    - target: {fileID: 1240015888444629154, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_Name
+      value: BattleCryMinion
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b45d964173ad4f749ac1729a70760a2d, type: 3}
 --- !u!1 &961895225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,6 +1086,7 @@ GameObject:
   - component: {fileID: 961895233}
   - component: {fileID: 961895226}
   - component: {fileID: 961895234}
+  - component: {fileID: 961895235}
   m_Layer: 0
   m_Name: cardsFunctionsEtc
   m_TagString: Untagged
@@ -1152,6 +1222,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33aebc944768fe47ad257a2ecc953af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &961895235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961895225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996c1db4a3f20314ba85595b299a6938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RedDot: {fileID: 1645376833}
 --- !u!1001 &1119087996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1723,6 +1806,12 @@ MonoBehaviour:
   affects: {fileID: 0}
   affecter: {fileID: 0}
   alreadySet: 0
+--- !u!4 &1593969838 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
+    type: 3}
+  m_PrefabInstance: {fileID: 889276320}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1645376829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,6 +1936,7 @@ Transform:
   - {fileID: 189627806}
   - {fileID: 186003474}
   - {fileID: 252510461}
+  - {fileID: 1593969838}
   m_Father: {fileID: 588600064}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

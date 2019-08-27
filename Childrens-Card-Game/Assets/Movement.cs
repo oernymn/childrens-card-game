@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     private Vector3 destination = new Vector3();
     private Vector3 targetPosition = new Vector3();
     private Vector3 originalPosition = new Vector3();
-    private float speed = 0.01f;
+    private float speed = 0.001f;
 
     private bool movingBack = false;
     bool attacking = false;
@@ -24,13 +24,13 @@ public class Movement : MonoBehaviour
     Transform hand;
     Transform deck;
 
-    private void Update()
+    private void FixedUpdate()
     {
 
 
         if (attacking == true)
         {
-            Debug.Log("attacking");
+         //   Debug.Log("attacking");
             if (transform.position == targetPosition)
             {
                 Debug.Log("reached attacker");
@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour
             else
             {
 
-                Debug.Log("Moving towards target");
+            //    Debug.Log("Moving towards target");
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed);
 
             }
@@ -58,7 +58,7 @@ public class Movement : MonoBehaviour
                 destination = transform.position;
             }
 
-            Debug.Log("moving back");
+       //     Debug.Log("moving back");
             transform.position = Vector3.MoveTowards(transform.position, originalPosition, speed);
 
 

@@ -4,7 +4,8 @@ using UnityEngine;
 using static Variables;
 using static GetSet;
 using static Functions;
-public class Targeting : MonoBehaviour
+
+public class AttackTargeting : MonoBehaviour
 {
     public Transform RedDot;
     bool attacking;
@@ -38,7 +39,6 @@ public class Targeting : MonoBehaviour
             Card attacker = GetComponent<Card>();
             Card attacked = GetWhatIsMousedOver().GetComponent<Card>();
 
-            RedDot.gameObject.layer = 0;
             RedDot.position = new Vector3 (69, 69, 69);
 
             attacker.stats.attacks -= 1;
@@ -54,6 +54,8 @@ public class Targeting : MonoBehaviour
             Debug.Log("Attacks left: " + attacker.stats.attacks);
 
             attacking = false;
+            RedDot.gameObject.layer = 0;
+
         }
 
     }

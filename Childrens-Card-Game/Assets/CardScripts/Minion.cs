@@ -9,6 +9,8 @@ using static Functions;
 public class Minion : Card
 {
 
+    
+
     public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
 
