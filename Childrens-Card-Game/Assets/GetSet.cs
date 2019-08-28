@@ -11,9 +11,9 @@ public class GetSet : MonoBehaviour
     {
         List<Card> potentialTargets = new List<Card>();
 
-        foreach (Card card in Container)
+        foreach (Transform child in Container)
         {
-            potentialTargets.Add(card);
+            potentialTargets.Add(child.GetComponent<Card>());
         }
 
         return potentialTargets;
@@ -28,6 +28,18 @@ public class GetSet : MonoBehaviour
         if (card.transform.parent != everythingBefore)
         {
             card.transform.parent = card.Container;
+        }
+    }
+
+    static public void SetContainer(Card card, Transform Container)
+    {
+        // Wether it's a Becoming card or a real card the container must always be set.
+        card.Container = Container;
+
+        // If it's a real card it changes parent, if you would change the parent of a Becoming card it would jump out of everythingBefore and you'd have more cards. 
+        if (card.transform.parent != everythingBefore)
+        {
+            card.transform.parent = Container;
         }
     }
 

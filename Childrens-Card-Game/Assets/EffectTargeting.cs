@@ -14,7 +14,8 @@ public class EffectTargeting : MonoBehaviour
     public static void SetInfo(Card card, Action<List<Card>> Effect)
     {
         targeting = true;
-        AffectedList = new List<Card> { card };
+        // Adds the targeting card to the list.
+        AffectedList.Add(card);
         CardEffect = Effect;
     }
 
@@ -34,7 +35,7 @@ public class EffectTargeting : MonoBehaviour
 
                 if (GetWhatIsMousedOver() != null && GetWhatIsMousedOver().GetComponent<Card>() != null)
                 {
-                    
+                    // Adds the targeted card to the list.
                     AffectedList.Add(GetWhatIsMousedOver().GetComponent<Card>());
                     Functions.RunEffects(AffectedList, CardEffect);
                     targeting = false;

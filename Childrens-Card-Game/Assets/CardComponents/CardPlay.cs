@@ -57,10 +57,8 @@ public class CardPlay : MonoBehaviour
 
             List<Card> SelectionList = GetComponent<Card>().GetEffectTargets();
 
-            foreach (Card card in SelectionList)
-            {
                 // If the card the spell dropped on matches a card that the card can target.
-                if (card == droppedOnCard)
+                if (SelectionList.Contains(droppedOnCard))
                 {
                     Debug.Log($"Spell cast on {droppedOnCard}");
 
@@ -68,7 +66,7 @@ public class CardPlay : MonoBehaviour
                     AfterList = RunEffects(AfterList, SendToGraveyard);
 
                 }
-            }
+            
 
         }
 
@@ -81,8 +79,6 @@ public class CardPlay : MonoBehaviour
         // If it is within the boundries of boardX and it's a minion it plays it.
         else if (droppedOn == board1 && GetComponent<Card>().type == CardType.Minion)
         {
-
-
             RunEffects(new List<Card> { GetComponent<Card>(), board1.GetComponent<Card>() }, PlayToBoard);
         }
 
@@ -107,29 +103,30 @@ public class CardPlay : MonoBehaviour
     private static void PlayCardTargeted(List<Card> AfterList)
     {
         AfterList[0].status = Status.BeingPlayed;
-        AfterList[0].target = AfterList[1];
+        SetTarget(AfterList[0], AfterList[1]);
         Debug.Log($"Target: {AfterList[0].target}");
     }
 
     private void SendToGraveyard(List<Card> AfterList)
     {
-
-
-
         SetContainer(AfterList[0], true, graveyardIndex);
     }
 
     private void PlayToBoard(List<Card> AfterList)
     {
+
+        Debug.Log(AfterList[0].name);
+
         // Snaps back if the board is full.
         if (AfterList[1].transform.childCount >= UpdateFunctions.maxBoardSize)
         {
-            Functions.updateAll();
+            updateAll();
             return;
         }
 
         AfterList[0].status = Status.BeingPlayed;
-        AfterList[0].transform.parent = AfterList[1].transform;
+        SetContainer(AfterList[0], AfterList[1].transform);
+        
 
         // Runs any OnPlay effects. Not updating because then it would update the hand and screw up the x positions
     }

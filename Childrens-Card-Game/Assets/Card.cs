@@ -16,9 +16,23 @@ public class Card : MonoBehaviour
     public Transform Container;
     public int Index;
 
-    Transform hand { get { return Allegiance.GetChild(handIndex); } }
-    Transform enemyHand { get { return GetContainer(this, false, handIndex); } }
+    public Card hero { get { return Allegiance.GetChild(heroIndex).GetComponent<Card>(); } }
+    public Card enemyHero { get { return GetContainer(this, false, heroIndex).GetComponent<Card>(); } }
 
+    public Transform board1 { get { return Allegiance.GetChild(board1Index); } }
+    public Transform enemyBoard1 { get { return GetContainer(this, false, board1Index); } }
+
+    public Transform board2 { get { return Allegiance.GetChild(board2Index); } }
+    public Transform enemyBoard2 { get { return GetContainer(this, false, board2Index); } }
+
+    public Transform hand { get { return Allegiance.GetChild(handIndex); } }
+    public Transform enemyHand { get { return GetContainer(this, false, handIndex); } }
+
+    public Transform deck { get { return Allegiance.GetChild(deckIndex); } }
+    public Transform enemyDeck { get { return GetContainer(this, false, deckIndex); } }
+
+    public Transform graveyard { get { return Allegiance.GetChild(graveyardIndex); } }
+    public Transform enemyGraveyard { get { return GetContainer(this, false, graveyardIndex); } }
 
     public Status status;
     public CardType type;
@@ -40,10 +54,13 @@ public class Card : MonoBehaviour
     {
         List<Card> potentialTargets = new List<Card>();
 
-        potentialTargets = ListCardsInContainer(Alliance.GetChild(board1Index));
-        potentialTargets = ListCardsInContainer(Alliance.GetChild(board2Index));
-        potentialTargets = ListCardsInContainer(Horde.GetChild(board1Index));
-        potentialTargets = ListCardsInContainer(Horde.GetChild(board2Index));
+        potentialTargets.AddRange(ListCardsInContainer(board1));
+        potentialTargets.AddRange(ListCardsInContainer(board2));
+        potentialTargets.AddRange(ListCardsInContainer(enemyBoard1));
+        potentialTargets.AddRange(ListCardsInContainer(enemyBoard2));
+        potentialTargets.Add(hero);
+        potentialTargets.Add(enemyHero);
+
 
         return potentialTargets;
     }
@@ -52,11 +69,12 @@ public class Card : MonoBehaviour
     {
         List<Card> potentialTargets = new List<Card>();
 
-        potentialTargets.AddRange(ListCardsInContainer(Alliance.GetChild(board1Index)));
-        potentialTargets.AddRange(ListCardsInContainer(Alliance.GetChild(board2Index)));
-        potentialTargets.AddRange(ListCardsInContainer(Horde.GetChild(board1Index)));
-        potentialTargets.AddRange(ListCardsInContainer(Horde.GetChild(board2Index)));
-        potentialTargets.Add(Alliance.GetChild(heroIndex).GetComponent<Card>());
+        potentialTargets.AddRange(ListCardsInContainer(board1));
+        potentialTargets.AddRange(ListCardsInContainer(board2));
+        potentialTargets.AddRange(ListCardsInContainer(enemyBoard1));
+        potentialTargets.AddRange(ListCardsInContainer(enemyBoard2));
+
+
 
         return potentialTargets;
     }

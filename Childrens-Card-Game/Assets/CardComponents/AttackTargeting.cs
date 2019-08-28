@@ -40,6 +40,7 @@ public class AttackTargeting : MonoBehaviour
             Card attacked;
 
             List<Card> potentialTargets = GetComponent<Card>().GetAttackTargets();
+
             if (GetWhatIsMousedOver().GetComponent<Card>() != null)
             {
                 targetCard = GetWhatIsMousedOver().GetComponent<Card>();
