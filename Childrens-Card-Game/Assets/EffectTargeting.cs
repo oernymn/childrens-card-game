@@ -34,6 +34,7 @@ public class EffectTargeting : MonoBehaviour
 
                 if (GetWhatIsMousedOver() != null && GetWhatIsMousedOver().GetComponent<Card>() != null)
                 {
+                    
                     AffectedList.Add(GetWhatIsMousedOver().GetComponent<Card>());
                     Functions.RunEffects(AffectedList, CardEffect);
                     targeting = false;

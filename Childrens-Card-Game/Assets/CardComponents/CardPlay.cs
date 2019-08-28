@@ -51,11 +51,11 @@ public class CardPlay : MonoBehaviour
 
         // If it's a targeting spell.
 
-        if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetTargets() != null)
+        if (GetComponent<Card>().type == CardType.Spell && GetComponent<Card>().GetEffectTargets() != null)
         {
             Debug.Log($" Targeting");
 
-            List<Card> SelectionList = GetComponent<Card>().GetTargets();
+            List<Card> SelectionList = GetComponent<Card>().GetEffectTargets();
 
             foreach (Card card in SelectionList)
             {

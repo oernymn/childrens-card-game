@@ -67,7 +67,7 @@ public class Functions : MonoBehaviour
         EffectEventArgs BeforeAfter = new EffectEventArgs(AffectedList, Becoming);
         // Makes the static TheAffectedList equal to the normal one before whenevereffects are checked so the they can change the targets of the effects by
         // changing TheAffectedList
-        TheAffectedList = AffectedList;
+        ChangedAffectedList = AffectedList;
         runWheneverEffects(1, BeforeAfter);
 
 
@@ -76,7 +76,7 @@ public class Functions : MonoBehaviour
             Destroy(card.gameObject);
         }
         // Returns the modified list.
-        return TheAffectedList;
+        return ChangedAffectedList;
     }
 
 

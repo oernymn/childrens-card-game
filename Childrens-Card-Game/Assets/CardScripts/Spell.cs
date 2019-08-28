@@ -5,7 +5,7 @@ using UnityEngine;
 using static Variables;
 using static Functions;
 using static GetSet;
-using static CardEffects;
+using static CardEffectHelpers;
 
 
 public class Spell : Card
@@ -42,7 +42,7 @@ public class Spell : Card
         }
     }
 
-    public override List<Card> GetTargets()
+    public override List<Card> GetEffectTargets()
     {
         Transform enemyBoard1 = GetContainer(this, false, board1Index);
         List<Card> selection = new List<Card>();

@@ -7,6 +7,18 @@ using static Variables;
 public class GetSet : MonoBehaviour
 {
 
+    static public List<Card> ListCardsInContainer (Transform Container)
+    {
+        List<Card> potentialTargets = new List<Card>();
+
+        foreach (Card card in Container)
+        {
+            potentialTargets.Add(card);
+        }
+
+        return potentialTargets;
+    }
+
     static public void SetContainer(Card card, bool isAlly, int containerIndex)
     {
         // Wether it's a Becoming card or a real card the container must always be set.

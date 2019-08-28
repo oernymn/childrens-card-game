@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Functions;
 using static Variables;
-
+using static GetSet;
 
 public class Card : MonoBehaviour
 {
@@ -15,6 +15,9 @@ public class Card : MonoBehaviour
     public Transform Allegiance;
     public Transform Container;
     public int Index;
+
+    Transform hand { get { return Allegiance.GetChild(handIndex); } }
+    Transform enemyHand { get { return GetContainer(this, false, handIndex); } }
 
 
     public Status status;
@@ -33,9 +36,29 @@ public class Card : MonoBehaviour
 
     public bool alreadySet = false;
 
-    public virtual List<Card> GetTargets()
+    public virtual List<Card> GetEffectTargets()
     {
-        return null;
+        List<Card> potentialTargets = new List<Card>();
+
+        potentialTargets = ListCardsInContainer(Alliance.GetChild(board1Index));
+        potentialTargets = ListCardsInContainer(Alliance.GetChild(board2Index));
+        potentialTargets = ListCardsInContainer(Horde.GetChild(board1Index));
+        potentialTargets = ListCardsInContainer(Horde.GetChild(board2Index));
+
+        return potentialTargets;
+    }
+
+    public virtual List<Card> GetAttackTargets()
+    {
+        List<Card> potentialTargets = new List<Card>();
+
+        potentialTargets.AddRange(ListCardsInContainer(Alliance.GetChild(board1Index)));
+        potentialTargets.AddRange(ListCardsInContainer(Alliance.GetChild(board2Index)));
+        potentialTargets.AddRange(ListCardsInContainer(Horde.GetChild(board1Index)));
+        potentialTargets.AddRange(ListCardsInContainer(Horde.GetChild(board2Index)));
+        potentialTargets.Add(Alliance.GetChild(heroIndex).GetComponent<Card>());
+
+        return potentialTargets;
     }
 
 
@@ -46,14 +69,14 @@ public class Card : MonoBehaviour
         runAfterEffects += AfterCardEffect;
         runWheneverEffects += WheneverCardEffect;
 
-            SetInfo(new List<Card> { this });
-       
-            if (GetComponent<Stats>() != null)
-            {
-                stats = GetComponent<Stats>();
+        SetInfo(new List<Card> { this });
 
-            }
-        
+        if (GetComponent<Stats>() != null)
+        {
+            stats = GetComponent<Stats>();
+
+        }
+
     }
 
 }

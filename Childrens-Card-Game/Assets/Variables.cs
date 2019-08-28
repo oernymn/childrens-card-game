@@ -13,18 +13,20 @@ public class Variables : MonoBehaviour
     static public Transform everything;
     static public Transform everythingBefore;
     static public Transform Alliance;
+
     static public Transform Horde;
+    static public Transform RedDot;
 
-
-    static public int board1Index = 0;
-    static public int board2Index = 1;
-    static public int handIndex = 2;
-    static public int deckIndex = 3;
-    static public int graveyardIndex = 4;
+    static public int heroIndex = 0;
+    static public int board1Index = 1;
+    static public int board2Index = 2;
+    static public int handIndex = 3;
+    static public int deckIndex = 4;
+    static public int graveyardIndex = 5;
 
     static public Vector3 cardSize = new Vector3(0.063f, 0.002f, 0.088f);
 
-    static public List<Card> TheAffectedList;
+    static public List<Card> ChangedAffectedList;
 
     public enum Status
     {
@@ -62,6 +64,9 @@ public class Variables : MonoBehaviour
         Alliance = GameObject.Find("Alliance").transform;
         Horde = GameObject.Find("Horde").transform;
         UpdateFunctions = GetComponent<Update>();
+        RedDot = GameObject.Find("RedDot").transform;
+
+
 
     }
 
