@@ -28,6 +28,12 @@ public class Variables : MonoBehaviour
 
     static public List<Card> ChangedAffectedList;
 
+
+    public enum KeyWord
+    {
+        Taunt
+    }
+
     public enum Status
     {
         Neutral,
@@ -45,6 +51,7 @@ public class Variables : MonoBehaviour
         Spell,
         Minion,
         Support,
+        Hero,
         Container
 
     }

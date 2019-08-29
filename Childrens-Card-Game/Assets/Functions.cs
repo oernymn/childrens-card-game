@@ -32,6 +32,8 @@ public class Functions : MonoBehaviour
         List<Card> BeforeList = SetBefore(AffectedList);
 
         AffectedList = RunWheneverEffects(AffectedList, CardEffect);
+        // AffectedList is now equal to ChangedAffectedList. So we need to nullify it 
+        ChangedAffectedList = null;
         // Applies the effect after the whenever effects have triggered.
         CardEffect(AffectedList);
 
@@ -45,6 +47,8 @@ public class Functions : MonoBehaviour
         AffectedList = RunFinalEffects(BeforeList, AffectedList);
 
         AffectedList = ReturnToNeutral(AffectedList);
+
+
         /*
         foreach (Card card in BeforeList)
         {
@@ -65,9 +69,7 @@ public class Functions : MonoBehaviour
         CardEffect(Becoming);
 
         EffectEventArgs BeforeAfter = new EffectEventArgs(AffectedList, Becoming);
-        // Makes the static TheAffectedList equal to the normal one before whenevereffects are checked so the they can change the targets of the effects by
-        // changing TheAffectedList
-    //    ChangedAffectedList = AffectedList;
+        
         runWheneverEffects(1, BeforeAfter);
 
 
@@ -75,8 +77,14 @@ public class Functions : MonoBehaviour
         {
             Destroy(card.gameObject);
         }
-        // Returns the modified list.
-        return AffectedList;
+        // Returns the modified list if it exists.
+        if (ChangedAffectedList != null)
+        {
+            return ChangedAffectedList;
+        } else
+        {
+            return AffectedList;
+        }
     }
 
 

@@ -36,7 +36,8 @@ public class Card : MonoBehaviour
 
     public Status status;
     public CardType type;
-    public HashSet<Tribe> Tribes = new HashSet<Tribe> { };
+    public HashSet<Tribe> Tribes = new HashSet<Tribe>();
+    public HashSet<KeyWord> KeyWords = new HashSet<KeyWord>();
 
     public Stats stats;
 
@@ -48,7 +49,21 @@ public class Card : MonoBehaviour
     public virtual void AfterCardEffect(object sender, EffectEventArgs e) { }
     public virtual void WheneverCardEffect(object sender, EffectEventArgs e) { }
 
-    public bool alreadySet = false;
+  
+
+    public bool IsAttackTarget()
+    {
+        foreach(Transform child in board1)
+        {
+            if (child.GetComponent<Card>().KeyWords.Contains(KeyWord.Taunt))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     public virtual List<Card> GetEffectTargets()
     {
@@ -73,8 +88,8 @@ public class Card : MonoBehaviour
         potentialTargets.AddRange(ListCardsInContainer(board2));
         potentialTargets.AddRange(ListCardsInContainer(enemyBoard1));
         potentialTargets.AddRange(ListCardsInContainer(enemyBoard2));
-
-
+        potentialTargets.Add(hero);
+        potentialTargets.Add(enemyHero);
 
         return potentialTargets;
     }

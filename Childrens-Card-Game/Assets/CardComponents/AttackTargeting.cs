@@ -41,13 +41,13 @@ public class AttackTargeting : MonoBehaviour
 
             List<Card> potentialTargets = GetComponent<Card>().GetAttackTargets();
 
-            if (GetWhatIsMousedOver().GetComponent<Card>() != null)
+            if (GetWhatIsMousedOver().GetComponent<Card>() != null && GetWhatIsMousedOver().GetComponent<Card>().stats != null)
             {
                 targetCard = GetWhatIsMousedOver().GetComponent<Card>();
             }
             else
             {
-                Debug.Log("Invalid attack target.");
+                Debug.Log("Not a card or it doesn't have stats.");
                 return;
             }
 

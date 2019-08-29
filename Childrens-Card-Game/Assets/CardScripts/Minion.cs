@@ -10,10 +10,9 @@ public class Minion : Card
 {
 
     
-
     public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
-
+        
         for (int i = 0; i < e.AfterList.Count; i++)
         {
             if (e.BeforeList[i].status != Status.BeingPlayed && e.AfterList[i].status == Status.BeingPlayed && e.AfterList[i] == this)
@@ -22,6 +21,11 @@ public class Minion : Card
             }
         }
 
+    }
+
+    private void Awake()
+    {
+        KeyWords.Add(KeyWord.Taunt);
     }
 
 }

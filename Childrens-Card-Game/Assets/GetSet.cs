@@ -9,14 +9,14 @@ public class GetSet : MonoBehaviour
 
     static public List<Card> ListCardsInContainer (Transform Container)
     {
-        List<Card> potentialTargets = new List<Card>();
+        List<Card> List = new List<Card>();
 
         foreach (Transform child in Container)
         {
-            potentialTargets.Add(child.GetComponent<Card>());
+            List.Add(child.GetComponent<Card>());
         }
 
-        return potentialTargets;
+        return List;
     }
 
     static public void SetContainer(Card card, bool isAlly, int containerIndex)
@@ -66,9 +66,7 @@ public class GetSet : MonoBehaviour
     {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
-
             return hit.transform;
-
         }
         else
         {

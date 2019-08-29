@@ -15,8 +15,6 @@ public class FinalEffects : MonoBehaviour
 
     public void FinalEffect(object sender, EffectEventArgs e)
     {
-        
-
 
         for (int i = 0; i < e.AfterList.Count; i++)
         {

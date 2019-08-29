@@ -1516,6 +1516,8 @@ GameObject:
   - component: {fileID: 1326812021}
   - component: {fileID: 1326812024}
   - component: {fileID: 1326812023}
+  - component: {fileID: 1326812026}
+  - component: {fileID: 1326812025}
   - component: {fileID: 1326812022}
   m_Layer: 0
   m_Name: Garrosh
@@ -1596,6 +1598,47 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326812020}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1326812025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326812020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3970d14dccbb3f141a30f4da5d4ce081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Allegiance: {fileID: 0}
+  Container: {fileID: 0}
+  Index: 0
+  status: 0
+  type: 0
+  stats: {fileID: 0}
+  target: {fileID: 0}
+  targeter: {fileID: 0}
+  affects: {fileID: 0}
+  affecter: {fileID: 0}
+  alreadySet: 0
+--- !u!114 &1326812026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326812020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703cb8baa193aea4b932cca8d21c55a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHealth: 30
+  maxHealth: 30
+  currentHealth: 2
+  baseAttack: 0
+  attack: 0
+  attacks: 0
 --- !u!1 &1399856223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,6 +2266,8 @@ GameObject:
   - component: {fileID: 1849447475}
   - component: {fileID: 1849447474}
   - component: {fileID: 1849447473}
+  - component: {fileID: 1849447477}
+  - component: {fileID: 1849447478}
   m_Layer: 0
   m_Name: Jaina
   m_TagString: Untagged
@@ -2302,6 +2347,47 @@ Transform:
   m_Father: {fileID: 588600064}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1849447477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849447472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703cb8baa193aea4b932cca8d21c55a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHealth: 30
+  maxHealth: 30
+  currentHealth: 30
+  baseAttack: 0
+  attack: 0
+  attacks: 0
+--- !u!114 &1849447478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849447472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3970d14dccbb3f141a30f4da5d4ce081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Allegiance: {fileID: 0}
+  Container: {fileID: 0}
+  Index: 0
+  status: 0
+  type: 0
+  stats: {fileID: 0}
+  target: {fileID: 0}
+  targeter: {fileID: 0}
+  affects: {fileID: 0}
+  affecter: {fileID: 0}
+  alreadySet: 0
 --- !u!1 &2086227464
 GameObject:
   m_ObjectHideFlags: 0

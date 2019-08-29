@@ -32,7 +32,7 @@ public class BattleCryMinion : Card
 
         SetTarget(AffectedList[0], AffectedList[1]);
 
-        //  SetTarget(, AffectedList[0]);
+        
         AffectedList[1].stats.currentHealth -= 1;
 
     }
