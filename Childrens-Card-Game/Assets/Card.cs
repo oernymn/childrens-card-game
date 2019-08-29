@@ -53,6 +53,7 @@ public class Card : MonoBehaviour
 
     public bool IsAttackTarget()
     {
+        Debug.Log("Checking if this card can be attacked");
         foreach(Transform child in board1)
         {
             if (child.GetComponent<Card>().KeyWords.Contains(KeyWord.Taunt))
@@ -60,7 +61,6 @@ public class Card : MonoBehaviour
                 return false;
             }
         }
-
         return true;
     }
 

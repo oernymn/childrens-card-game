@@ -702,7 +702,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1001 &633451708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -922,7 +921,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1001 &887224356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1174,7 +1172,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!114 &961895230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,7 +1465,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1 &1302044533
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,7 +1616,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!114 &1326812026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1753,7 +1748,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1001 &1475864478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1820,21 +1814,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240015888444629182, guid: 25a0ca5f381d9a5468e26d25dc62c092,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.089999996
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240015888444629182, guid: 25a0ca5f381d9a5468e26d25dc62c092,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.040000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240015888444629182, guid: 25a0ca5f381d9a5468e26d25dc62c092,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.88
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25a0ca5f381d9a5468e26d25dc62c092, type: 3}
@@ -1959,7 +1938,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!4 &1593969838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1240015888444629182, guid: b45d964173ad4f749ac1729a70760a2d,
@@ -2045,7 +2023,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1 &1695352929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,7 +2076,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1 &1719845849
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,7 +2145,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1 &1792796594
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,7 +2228,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1 &1849447472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,7 +2361,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1 &2086227464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2504,7 +2477,6 @@ MonoBehaviour:
   targeter: {fileID: 0}
   affects: {fileID: 0}
   affecter: {fileID: 0}
-  alreadySet: 0
 --- !u!1001 &1487636997885737784
 PrefabInstance:
   m_ObjectHideFlags: 0

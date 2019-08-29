@@ -6,7 +6,7 @@ using static GetSet;
 public class EffectTargeting : MonoBehaviour
 {
     public static bool targeting = false;
-    static List<Card> AffectedList;
+    public static List<Card> AffectedList = new List<Card>();
     public static Action<List<Card>> CardEffect { get; private set; }
 
     public Transform RedDot;
@@ -15,6 +15,8 @@ public class EffectTargeting : MonoBehaviour
     {
         targeting = true;
         // Adds the targeting card to the list.
+        Debug.Log(AffectedList);
+        Debug.Log(card.name);
         AffectedList.Add(card);
         CardEffect = Effect;
     }

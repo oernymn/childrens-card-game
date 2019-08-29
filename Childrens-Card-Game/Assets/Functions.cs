@@ -9,12 +9,14 @@ public class EffectEventArgs : EventArgs
 
     public List<Card> BeforeList;
     public List<Card> AfterList;
+    public Action<List<Card>> CardEffect;
 
 
-    public EffectEventArgs(List<Card> Before, List<Card> After)
+    public EffectEventArgs(List<Card> Before, List<Card> After, Action<List<Card>> Effect)
     {
         BeforeList = Before;
         AfterList = After;
+        CardEffect = Effect;
     }
 }
 
@@ -32,19 +34,19 @@ public class Functions : MonoBehaviour
         List<Card> BeforeList = SetBefore(AffectedList);
 
         AffectedList = RunWheneverEffects(AffectedList, CardEffect);
-        // AffectedList is now equal to ChangedAffectedList. So we need to nullify it 
+        // AffectedList is now equal to ChangedAffectedList. So we need to nullify the changed list so the next effect doesn't use it. 
         ChangedAffectedList = null;
         // Applies the effect after the whenever effects have triggered.
         CardEffect(AffectedList);
 
-        AffectedList = RunAfterEffects(BeforeList, AffectedList);
+        AffectedList = RunAfterEffects(BeforeList, AffectedList, CardEffect);
 
         if (update == true)
         {
             updateAll();
         }
 
-        AffectedList = RunFinalEffects(BeforeList, AffectedList);
+        AffectedList = RunFinalEffects(BeforeList, AffectedList, CardEffect);
 
         AffectedList = ReturnToNeutral(AffectedList);
 
@@ -68,7 +70,7 @@ public class Functions : MonoBehaviour
         // Apply the effect.
         CardEffect(Becoming);
 
-        EffectEventArgs BeforeAfter = new EffectEventArgs(AffectedList, Becoming);
+        EffectEventArgs BeforeAfter = new EffectEventArgs(AffectedList, Becoming, CardEffect);
         
         runWheneverEffects(1, BeforeAfter);
 
@@ -90,7 +92,7 @@ public class Functions : MonoBehaviour
 
  
 
-    static public List<Card> RunAfterEffects(List<Card> BeforeList, List<Card> AfterList)
+    static public List<Card> RunAfterEffects(List<Card> BeforeList, List<Card> AfterList, Action<List<Card>> CardEffect)
     {
         /*
         for (int i = 0; i < AfterList.Count; i++)
@@ -100,15 +102,15 @@ public class Functions : MonoBehaviour
 
         }
         */
-        EffectEventArgs beforeAfter = new EffectEventArgs(BeforeList, AfterList);
+        EffectEventArgs beforeAfter = new EffectEventArgs(BeforeList, AfterList, CardEffect);
         runAfterEffects(1, beforeAfter);
         return AfterList;
     }
 
-    static public List<Card> RunFinalEffects(List<Card> BeforeList, List<Card> AfterList)
+    static public List<Card> RunFinalEffects(List<Card> BeforeList, List<Card> AfterList, Action<List<Card>> CardEffect)
     {
 
-        EffectEventArgs beforeAfter = new EffectEventArgs(BeforeList, AfterList);
+        EffectEventArgs beforeAfter = new EffectEventArgs(BeforeList, AfterList, CardEffect);
         runFinalEffects(1, beforeAfter);
         return AfterList;
     }

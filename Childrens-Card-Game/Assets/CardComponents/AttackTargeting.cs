@@ -39,8 +39,6 @@ public class AttackTargeting : MonoBehaviour
             Card attacker;
             Card attacked;
 
-            List<Card> potentialTargets = GetComponent<Card>().GetAttackTargets();
-
             if (GetWhatIsMousedOver().GetComponent<Card>() != null && GetWhatIsMousedOver().GetComponent<Card>().stats != null)
             {
                 targetCard = GetWhatIsMousedOver().GetComponent<Card>();
@@ -49,6 +47,17 @@ public class AttackTargeting : MonoBehaviour
             {
                 Debug.Log("Not a card or it doesn't have stats.");
                 return;
+            }
+
+            List<Card> potentialTargets = GetComponent<Card>().GetAttackTargets();
+
+            foreach (Card card in potentialTargets)
+            {
+                if (card.IsAttackTarget() == false)
+                {
+                    Debug.Log($"{card.name} removed from list");
+                    potentialTargets.Remove(card);
+                }
             }
 
             if (potentialTargets.Contains(targetCard))

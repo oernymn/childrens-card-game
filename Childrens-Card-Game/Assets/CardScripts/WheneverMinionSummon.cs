@@ -6,7 +6,7 @@ using static Functions;
 using static Variables;
 using static GetSet;
 
-public class WheneverMinion : Card
+public class WheneverMinionSummon : Card
 {
 
 
