@@ -9,7 +9,8 @@ using static Functions;
 public class Minion : Card
 {
 
-    public new HashSet<KeyWord> KeyWords = new HashSet<KeyWord> { KeyWord.Taunt };
+    
+    
 
     public override void AfterCardEffect(object sender, EffectEventArgs e)
     {
@@ -26,6 +27,9 @@ public class Minion : Card
 
     private void Awake()
     {
+
+        KeyWords.Add(KeyWord.Taunt);
+
         if (KeyWords.Contains(KeyWord.Taunt))
         {
             Debug.Log("AAAA");

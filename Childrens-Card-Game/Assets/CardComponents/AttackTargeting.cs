@@ -50,14 +50,22 @@ public class AttackTargeting : MonoBehaviour
             }
 
             List<Card> potentialTargets = GetComponent<Card>().GetAttackTargets();
+            List<Card> cardsToRemove = new List<Card>();
 
             foreach (Card card in potentialTargets)
             {
+                Debug.Log(card.name);
                 if (card.IsAttackTarget() == false)
                 {
-                    Debug.Log($"{card.name} removed from list");
-                    potentialTargets.Remove(card);
+                    cardsToRemove.Add(card);
                 }
+            }
+
+            foreach (Card card in cardsToRemove)
+            {
+                Debug.Log($"{card.name} removed from list");
+
+                potentialTargets.Remove(card);
             }
 
             if (potentialTargets.Contains(targetCard))
@@ -68,6 +76,7 @@ public class AttackTargeting : MonoBehaviour
             else
             {
                 Debug.Log("Not valid target");
+                RedDot.position = new Vector3(69, 69, 69);
                 return;
             }
 

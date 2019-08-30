@@ -8,7 +8,7 @@ using static Functions;
 using static Variables;
 using static GetSet;
 
-public class Card : MonoBehaviour
+public  class Card : MonoBehaviour
 {
 
     // For the 'before' cards.
@@ -36,7 +36,7 @@ public class Card : MonoBehaviour
 
     public Status status;
     public CardType type;
-    public HashSet<Tribe> Tribes = new HashSet<Tribe>();
+    public HashSet<Tribe> Tribes;
     public HashSet<KeyWord> KeyWords = new HashSet<KeyWord>();
 
     public Stats stats;
@@ -49,20 +49,26 @@ public class Card : MonoBehaviour
     public virtual void AfterCardEffect(object sender, EffectEventArgs e) { }
     public virtual void WheneverCardEffect(object sender, EffectEventArgs e) { }
 
-  
+
 
     public bool IsAttackTarget()
     {
+        bool isTarget = true;
         Debug.Log("Checking if this card can be attacked");
-        foreach(Transform child in board1)
+        foreach (Transform child in board1)
         {
-            if (child.GetComponent<Card>().KeyWords.Contains(KeyWord.Taunt))
+            Card card = child.GetComponent<Card>();
+            if (card.KeyWords != null && card.KeyWords.Contains(KeyWord.Taunt) && this.KeyWords.Contains(KeyWord.Taunt) == false)
             {
-                return false;
+                isTarget = false;
             }
+           
         }
-        return true;
+        return isTarget;
     }
+            
+        
+    
 
 
     public virtual List<Card> GetEffectTargets()
