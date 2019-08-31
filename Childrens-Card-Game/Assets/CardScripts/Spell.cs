@@ -16,9 +16,6 @@ public class Spell : Card
         // When this card is played.
         for (int i = 0; i < e.AfterList.Count; i++)
         {
-
-       //     Debug.Log($"e.BeforeList[{i}].status: {e.BeforeList[i].status} | e.AfterList[{i}].status: {e.AfterList[i].status} | e.AfterList[{i}]: {e.AfterList[i].name}");
-
             if (e.BeforeList[i].status != Status.BeingPlayed && e.AfterList[i].status == Status.BeingPlayed
                 && e.AfterList[i] == this
                 && target != null)
@@ -32,9 +29,8 @@ public class Spell : Card
     {
         foreach (Card card in AffectedList)
         {
-            if (card.type == CardType.Minion && card.stats != null)
+            if (card.stats != null)
             {
-
                 Debug.Log($"From {card.stats.currentHealth} health");
                 card.stats.currentHealth -= 2;
                 Debug.Log($"To {card.stats.currentHealth} health");

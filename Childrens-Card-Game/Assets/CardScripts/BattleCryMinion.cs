@@ -17,7 +17,6 @@ public class BattleCryMinion : Card
                 && e.AfterList[i] == this)
             {
                 Debug.Log("BattleCry triggered");
-
                 EffectTargeting.SetInfo(this, DamageTarget);
 
             }
